@@ -1,0 +1,115 @@
+.selected {
+  background-color: #dddddd;
+}
+
+/* ===== MENU BUTTONS (Typy / Tagi) ===== */
+#menu-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#menu-buttons button {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
+}
+
+#menu-buttons button:hover {
+  background: #e9e9e9;
+}
+
+#menu-buttons button.selected {
+  background: #28b7ff;
+  color: white;
+  border-color: #28b7ff;
+}
+
+/* ===== INPUT + ADD BUTTON ===== */
+#new-element-name {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 250px;
+  max-width: 100%;
+  margin-right: 10px;
+  outline: none;
+  transition: 0.2s;
+}
+
+#new-element-name:focus {
+  border-color: #28b7ff;
+  box-shadow: 0 0 3px rgba(40, 183, 255, 0.4);
+}
+
+#add-new-element {
+  padding: 10px 15px;
+  border: none;
+  background: #28b7ff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#add-new-element:hover {
+  background: #1da1e6;
+}
+
+/* ===== LISTA ELEMENTÓW ===== */
+#contents-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* pojedynczy element (typ/tag) */
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.list-item:hover {
+  background: #f7f7f7;
+  transform: translateY(-1px);
+}
+
+/* nazwa */
+.list-item span {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* ===== DELETE BUTTON ===== */
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ff4d4f;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  color: #d9363e;
+  transform: scale(1.1);
+}
+
+/* ===== EMPTY STATE ===== */
+#contents-list p {
+  padding: 15px;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}

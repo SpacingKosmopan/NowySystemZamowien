@@ -1,0 +1,395 @@
+/* Formularz nowego zamówienia */
+#client-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#client-form label {
+  min-width: 60px;
+}
+
+#client-form input[type="text"] {
+  flex: 1;
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+#client-form button {
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid #d9d9d9;
+  background-color: #dadada;
+  cursor: pointer;
+}
+
+#order-desc {
+  width: 100%;
+  max-height: 20em;
+  padding: 5px;
+  font-family: "Rubik", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 15px;
+  resize: vertical;
+}
+
+.form-group {
+  margin: 15px 0;
+  position: relative;
+}
+
+#edit-tags,
+#add-link {
+  border: 0;
+  background: none;
+  color: #6e6e6e;
+  font-size: 25px;
+}
+
+#edit-tags:hover,
+#add-link:hover {
+  cursor: pointer;
+}
+
+.showbox {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+
+  border: 1px solid gray;
+  border-radius: 15px;
+  width: 300px;
+  background-color: #ebebeb;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 15px;
+
+  z-index: 5000;
+}
+
+.showbox textarea {
+  width: 100%;
+  resize: vertical;
+  max-height: 10em;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#links-showbox-close-container,
+#tags-showbox-close-container {
+  position: absolute;
+  right: 15px;
+}
+
+#links-showbox-close-button,
+#links-showbox-save-close-button,
+#tags-showbox-close-button,
+#tags-showbox-save-close-button {
+  margin: 0;
+  padding: 0;
+  color: rgb(0, 162, 255);
+  border: 0;
+  background: none;
+  font-size: 15px;
+}
+
+#links-showbox-close-button:hover,
+#links-showbox-save-close-button:hover,
+#tags-showbox-close-button:hover,
+#tags-showbox-save-close-button:hover {
+  cursor: pointer;
+}
+
+#links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+}
+
+#links li {
+  list-style: none;
+  border: 1px solid gray;
+  border-radius: 8px;
+  background: #f5f5f5;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#links li a {
+  text-decoration: none;
+  color: black;
+}
+
+#tags-list {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.tag-checkbox-label:hover {
+  cursor: pointer;
+}
+
+/* statusy */
+.status-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.status-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding: 6px 20px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+
+  min-width: 140px;
+  color: #000;
+}
+
+.anulowane {
+  background-color: #ff8f8e;
+}
+
+.nowe {
+  background-color: #ffe29a;
+}
+
+.w-realizacji {
+  background-color: #95ceff;
+}
+
+.zrealizowane {
+  background-color: #98ff9d;
+}
+
+/* zdjęcia */
+#photos-showbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+#photos-showbox .modal-content {
+  background-color: #fff;
+  width: 90%;
+  max-width: 1000px;
+  height: 90%;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* disabled fields */
+#new-order-form input:disabled,
+#new-order-form select:disabled,
+#new-order-form textarea:disabled {
+  background-color: #f5f5f5;
+  color: #686868;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* disabled buttons */
+#new-order-form button:disabled {
+  background-color: #e0e0e0;
+  color: #686868;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+/**/
+/* kontener akcji */
+.elegant-table td.actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* wspólna baza */
+.elegant-table td.actions button {
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+/* PODGLĄD */
+.check-order {
+  background-color: #e6f0ff;
+  color: #1a73e8;
+}
+
+.check-order:hover {
+  background-color: #1a73e8;
+  color: white;
+}
+
+/* EDYCJA */
+.edit-btn {
+  background-color: #fff4e5;
+  color: #ff9800;
+}
+
+.edit-btn:hover {
+  background-color: #ff9800;
+  color: white;
+}
+
+/* USUWANIE */
+.delete-btn {
+  background-color: #ffeaea;
+  color: #e53935;
+}
+
+.delete-btn:hover {
+  background-color: #e53935;
+  color: white;
+}
+
+/* modal */
+/* kontener przycisków */
+#new-order-form .container > button {
+  margin-top: 10px;
+}
+
+/* ZAPISZ */
+#btn-save {
+  background-color: #28b7ff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+#btn-save:hover {
+  background-color: #1da1e6;
+  cursor: pointer;
+}
+
+/* ANULUJ */
+#btn-cancel {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+#btn-cancel:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* modal actions */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* grupy */
+.left-actions,
+.right-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ===== DELETE ===== */
+#btn-delete {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+#btn-delete:hover {
+  background-color: #c62828;
+  cursor: pointer;
+}
+
+/* ===== CANCEL ===== */
+#btn-cancel {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+#btn-cancel:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+/* ===== SAVE (primary) ===== */
+#btn-save {
+  background-color: #2f6fed;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+#btn-save:hover {
+  background-color: #1e56c4;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .left-actions,
+  .right-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .right-actions {
+    flex-direction: column;
+  }
+
+  .right-actions button {
+    width: 100%;
+  }
+}

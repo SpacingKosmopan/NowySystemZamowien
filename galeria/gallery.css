@@ -1,0 +1,151 @@
+/* =========================
+   GALERIA - UI UPGRADE
+   ========================= */
+
+#main-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== UPLOAD FORM ===== */
+#uploadForm {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+  align-items: center;
+}
+
+#uploadForm input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+#uploadForm input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+}
+
+#uploadForm button {
+  padding: 9px 14px;
+  background: #28b7ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#uploadForm button:hover {
+  background: #1da1e6;
+}
+
+/* ===== SEARCH ===== */
+#search-by-name {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+}
+
+#search-name-input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+#reset-name-filter {
+  padding: 8px 12px;
+  border: none;
+  background: #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#reset-name-filter:hover {
+  background: #ccc;
+}
+
+/* ===== STATUS ===== */
+#status {
+  font-size: 14px;
+  color: #333;
+  padding: 5px 10px;
+}
+
+/* ===== GALERIA GRID ===== */
+#photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 15px;
+  align-items: start;
+}
+
+#photos > div {
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+  transition: 0.2s ease-in-out;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  overflow: hidden;
+  min-height: 260px;
+}
+
+#photos > div:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+#photos img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: block;
+}
+
+/* linki */
+#photos a {
+  color: #28b7ff;
+  text-decoration: none;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+#photos a:hover {
+  text-decoration: underline;
+}
+
+/* opis */
+#photos p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* data */
+#photos small {
+  color: #777;
+  font-size: 12px;
+}

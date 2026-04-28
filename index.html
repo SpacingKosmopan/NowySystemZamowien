@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ICONS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!-- RUBIK FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <aside id="dashboard-navbar">
+      <h1>
+        <a href="index.html" id="home-link">
+          <i class="bi bi-house-fill"></i> Dashboard</a
+        >
+      </h1>
+      <hr class="separator" />
+      <a class="dashboard-link" href="zamowienia/index.html"
+        ><i class="bi bi-clipboard2-fill"></i> Zamówienia</a
+      >
+      <a class="dashboard-link" href="kalendarz/index.html"
+        ><i class="bi bi-calendar-event-fill"></i> Kalendarz</a
+      >
+      <a class="dashboard-link" href="klienci/index.html"
+        ><i class="bi bi-file-person-fill"></i> Klienci</a
+      >
+      <a class="dashboard-link" href="typy_tagi/index.html"
+        ><i class="bi bi-info-circle-fill"></i> Typy zamówień | Tagi</a
+      >
+      <a class="dashboard-link" href="teksty/index.html"
+        ><i class="bi bi-chat-left-quote-fill"></i> Teksty</a
+      >
+      <a class="dashboard-link" href="galeria/index.html"
+        ><i class="bi bi-image-fill"></i> Galeria</a
+      >
+      <i
+        class="bi bi-chevron-double-left"
+        id="dashboard-toggle-visibility"
+        onclick="toggleDashboardNavbar()"
+      ></i>
+      <hr class="separator" />
+    </aside>
+
+    <main>
+      <header id="index-header">
+        <div id="user-section">
+          <p id="user-status"></p>
+          <img src="default_avatar.jpg" alt="avatar" id="user-avatar" />
+        </div>
+      </header>
+
+      <div id="dashboard-grid">
+        <div id="orders-statuses">
+          <div id="today-orders"></div>
+          <div id="doing-orders"></div>
+          <div id="done-orders"></div>
+          <div id="old-orders"></div>
+        </div>
+        <canvas id="clock" width="300" height="300"></canvas>
+
+        <div id="fast-add-order">
+          <p>Szybko Dodaj Zamówienie</p>
+          <hr
+            class="big-horizontal-separator"
+            style="margin: 10px auto 10px auto"
+          />
+          <form id="fast-add-order-form">
+            <select name="fast-client-select" id="fast-client-select" required>
+              <option value="">-- klient --</option>
+            </select>
+            <select name="fast-type" id="fast-type" required>
+              <option value="">-- typ zamówienia --</option>
+            </select>
+            <input
+              type="text"
+              name="fast-description"
+              id="fast-description"
+              required
+              placeholder="Opis..."
+            />
+            <input
+              type="date"
+              name="fast-order-date"
+              id="fast-order-date"
+              required
+            />
+            <button type="submit" id="fast-submit-btn">Dodaj</button>
+          </form>
+          <p id="fast-order-error"></p>
+        </div>
+        <!-- po prawej -->
+        <div id="closest-orders">
+          Najbliższe terminy
+          <hr
+            class="big-horizontal-separator"
+            style="margin: 10px auto 10px auto"
+          />
+          <div id="closest-orders-container"></div>
+        </div>
+      </div>
+      <footer>
+        <a href="changelog.html">Przeczytaj listę zmian</a>
+        <a href="money.html">Zobacz raporty</a>
+      </footer>
+    </main>
+
+    <button id="toggle-btn" onclick="toggleDashboardNavbar()">
+      <i class="bi bi-chevron-double-right"></i>
+    </button>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+      ///// LOGOWANIE - AUTH - SECURITY
+
+      $("#user-avatar").on("click", function () {
+        window.location.href = "logowanie/index.html";
+      });
+
+      const userStatus = document.getElementById("user-status");
+
+      async function checkAuth() {
+        const res = await fetch("logowanie/api/auth.php");
+
+        if (res.status === 401) {
+          userStatus.innerText = "Zaloguj";
+        } else if (res.status === 403) {
+          userStatus.innerText = "Zablokowany";
+        } else {
+          userStatus.innerText = "Zalogowany";
+        }
+      }
+
+      init();
+
+      async function init() {
+        const res = await fetch("logowanie/api/auth.php", {
+          credentials: "include",
+        });
+
+        //alert(res.status);
+
+        if (res.status === 401) {
+          window.location.href = "logowanie/index.html";
+          return;
+        }
+
+        if (res.status === 403) {
+          alert("Konto nieaktywne");
+          return;
+        }
+
+        loadData();
+      }
+
+      ///// CLOCK CANVAS
+      const canvas = document.getElementById("clock");
+      const ctx = canvas.getContext("2d");
+      const r = canvas.width / 2;
+
+      ctx.translate(r, r); // środek jako (0,0)
+
+      /**
+       * Funkcja generuje zegar w Dashboard
+       */
+      function drawClock() {
+        ctx.clearRect(-r, -r, canvas.width, canvas.height);
+
+        const now = new Date();
+        const sec = now.getSeconds();
+        const min = now.getMinutes();
+        const hr = now.getHours() % 12;
+
+        // tło
+        ctx.beginPath();
+        ctx.arc(0, 0, r - 5, 0, 2 * Math.PI);
+        ctx.fillStyle = "#111";
+        ctx.fill();
+
+        // tarcza
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // godziny (proste kreski)
+        for (let i = 0; i < 12; i++) {
+          const angle = (i * Math.PI) / 6;
+          ctx.beginPath();
+          ctx.rotate(angle);
+          ctx.moveTo(0, -r + 10);
+          ctx.lineTo(0, -r + 25);
+          ctx.stroke();
+          ctx.rotate(-angle);
+        }
+
+        // godziny 1–12
+        ctx.fillStyle = "white";
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        for (let i = 1; i <= 12; i++) {
+          const angle = (i * Math.PI) / 6; // 30 stopni
+          const x = Math.sin(angle) * (r - 50);
+          const y = -Math.cos(angle) * (r - 50);
+
+          ctx.fillText(i.toString(), x, y);
+        }
+
+        function hand(angle, length, width) {
+          ctx.beginPath();
+          ctx.lineWidth = width;
+          ctx.moveTo(0, 0);
+          ctx.lineTo(Math.sin(angle) * length, -Math.cos(angle) * length);
+          ctx.stroke();
+        }
+
+        const secAngle = (sec * Math.PI) / 30;
+        const minAngle = (min * Math.PI) / 30;
+        const hrAngle = (hr * Math.PI) / 6 + (min * Math.PI) / 360;
+
+        ctx.strokeStyle = "red";
+        hand(secAngle, r * 0.8, 2);
+
+        ctx.strokeStyle = "white";
+        hand(minAngle, r * 0.65, 3);
+
+        ctx.strokeStyle = "white";
+        hand(hrAngle, r * 0.5, 5);
+      }
+
+      setInterval(drawClock, 1000);
+      drawClock();
+
+      // === ORDERS COUNT ===
+      const todayOrdersDiv = $("#today-orders");
+      const doingOrdersDiv = $("#doing-orders");
+      const doneOrdersDiv = $("#done-orders");
+      const oldOrdersDiv = $("#old-orders");
+
+      function getPolishEnding(number, originalEnding) {
+        const count = Number(number);
+        if (!Number.isFinite(count)) return `[err] incorrect number: ${count}`;
+        switch (originalEnding) {
+          case "nie":
+            if (count === 0) return "ń";
+            if (count === 1) return "nie";
+            if (count >= 2 && count <= 4) return "nia";
+            return "ń";
+          default:
+            return "X";
+        }
+      }
+
+      function loadData() {
+        fetch("api/get_today_orders_count.php")
+          .then((res) => {
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            return res.json();
+          })
+          .then((data) => {
+            const todayOrders = data?.[0] || { amount: 0 };
+            todayOrdersDiv.html(`
+            Dzisiaj<hr>
+            <h1>${todayOrders.amount || 0}</h1>
+            Zamówie${getPolishEnding(todayOrders.amount || 0, "nie")}
+          `);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+
+        fetch("api/get_orders_count.php")
+          .then((res) => {
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            return res.json();
+          })
+          .then((data) => {
+            // w realizacji
+            const doingOrders = data.find(
+              (order) => order.status === "w realizacji",
+            ) || { amount: 0 };
+
+            doingOrdersDiv.html(`
+            W Trakcie<hr>
+            <h1>${doingOrders.amount}</h1>
+            Zamówie${getPolishEnding(doingOrders.amount, "nie")}
+          `);
+
+            // zakończone
+            const doneOrders = data.find(
+              (order) => order.status === "zrealizowane",
+            ) || { amount: 0 };
+
+            doneOrdersDiv.html(`
+            Zakończone<hr>
+            <h1>${doneOrders.amount}</h1>
+            Zamówie${getPolishEnding(doneOrders.amount, "nie")}
+          `);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+
+        fetch("api/get_old_orders_count.php")
+          .then((res) => {
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            return res.json();
+          })
+          .then((data) => {
+            const oldOrders = data[0];
+            oldOrdersDiv.html(`
+            Zaległe<hr>
+            <h1>${oldOrders.amount || 0}</h1>
+            Zamówie${getPolishEnding(oldOrders.amount || 0, "nie")}
+          `);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+
+        const closestOrdersDiv = $("#closest-orders-container");
+        fetch("api/get_closest_orders.php")
+          .then((res) => {
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            return res.json();
+          })
+          .then((data) => {
+            data.forEach((order) => {
+              //http://localhost/3tpjs/html/NowySystemZamowien/zamowienia/index.html?id=17&isViewOnly=true
+              closestOrdersDiv.append(` <div class='closest-order' data-id="${order.id}">
+              <label><i class="bi bi-clock-fill"></i>
+                ${order.termin_realizacji}
+                </label>
+                - ${order.tytul} dla <b>${order.imie} ${order.nazwisko}</b>
+            </div> `);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+
+        $("#closest-orders-container").on(
+          "click",
+          ".closest-order",
+          function () {
+            const id = $(this).data("id");
+            window.location.href = `zamowienia/index.html?id=${id}&isViewOnly=true`;
+          },
+        );
+
+        // === FAST ORDER ADD ===
+        fetch("typy_tagi/api/get_all_types.php")
+          .then((res) => {
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            return res.json();
+          })
+          .then((data) => {
+            $("#fast-type").empty();
+            const emptyElement = document.createElement("option");
+            emptyElement.value = "";
+            emptyElement.text = "-- typ zamówienia --";
+            $("#fast-type").append(emptyElement);
+            data.forEach((type) => {
+              $("#fast-type").append(
+                $("<option>").val(type.id).text(type.nazwa),
+              );
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+
+        fetch("klienci/api/list.php")
+          .then((res) => {
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            /*const dup = res;
+            console.log(dup.text());*/
+            return res.json();
+          })
+          .then((data) => {
+            data.sort((a, b) => a.nazwisko.localeCompare(b.nazwisko, "pl"));
+
+            const $select = $("#fast-client-select");
+            $select.empty();
+            const emptyElement = document.createElement("option");
+            emptyElement.value = "";
+            emptyElement.text = "-- klient --";
+            $select.append(emptyElement);
+            const options = data.map((client) =>
+              $("<option>")
+                .val(client.id)
+                .text(`${client.nazwisko} ${client.imie}`),
+            );
+
+            $select.append(options);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+
+        const fastAddOrderForm = $("#fast-add-order-form");
+        fastAddOrderForm.on("submit", (e) => {
+          e.preventDefault();
+          const selectedClient = $("#fast-client-select").val();
+          const clientId = Number(selectedClient);
+          if (!Number.isFinite(clientId)) {
+            console.error("Incorrect client id:", clientId);
+            $("#fast-order-error").text("Wystąpił błąd");
+            return;
+          }
+          if (selectedClient === "") {
+            $("#fast-order-error").text("Podaj klienta");
+            return;
+          }
+
+          const selectedType = $("#fast-type").val();
+          const typeId = Number(selectedType);
+          if (!Number.isFinite(typeId)) {
+            console.error("Incorrect type id:", typeId);
+            return;
+          }
+          if (selectedType === "") {
+            $("#fast-order-error").text("Podaj typ zamówienia");
+            return;
+          }
+
+          const description = $("#fast-description").val().trim();
+          const date = $("#fast-order-date").val();
+
+          //console.log({ clientId, typeId, description, date });
+
+          ///
+
+          fetch("api/fast_add_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ clientId, typeId, description, date }),
+          })
+            .then((res) => {
+              return res.json();
+            })
+            .then((res) => {
+              if (res.ok) window.location.href = "zamowienia/index.html";
+              else $("#fast-order-error").text("Wystąpił błąd");
+              return res;
+            })
+            .catch((err) => console.error(err));
+        });
+      }
+    </script>
+  </body>
+</html>

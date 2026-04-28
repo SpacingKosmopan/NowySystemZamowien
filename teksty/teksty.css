@@ -1,0 +1,313 @@
+#text-content {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ===== INPUT + ADD FOLDER ===== */
+#folder-name {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 260px;
+  max-width: 100%;
+  margin-right: 10px;
+  transition: 0.2s;
+}
+
+#folder-name:focus {
+  outline: none;
+  border-color: #28b7ff;
+  box-shadow: 0 0 3px rgba(40, 183, 255, 0.4);
+}
+
+#add-folder-btn {
+  padding: 10px 15px;
+  border: none;
+  background: #28b7ff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#add-folder-btn:hover {
+  background: #1da1e6;
+}
+
+/* ===== TREE LIST ===== */
+#tree {
+  list-style: none;
+  margin-top: 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ===== COMMON ITEM ===== */
+#tree li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: #fff;
+
+  transition: 0.2s;
+}
+
+#tree li:hover {
+  background: #f7f7f7;
+  transform: translateY(-1px);
+}
+
+/* ===== FOLDER STYLE ===== */
+#tree li.folder {
+  border-left: 4px solid #28b7ff;
+}
+
+/* ===== TEXT FILE STYLE ===== */
+#tree li.text {
+  border-left: 4px solid #7c7c7c;
+}
+
+/* ===== FOLDER NAME ===== */
+.folder-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: #222;
+}
+
+/* ===== ICONS ===== */
+#tree i {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* ===== DELETE BUTTON ===== */
+.delete-catalogue-btn {
+  background: transparent;
+  border: none;
+  color: #ff4d4f;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-catalogue-btn:hover {
+  color: #d9363e;
+  transform: scale(1.1);
+}
+
+/* ===== BREADCRUMBS ===== */
+.subnav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.subnav span {
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: #f0f0f0;
+}
+
+.subnav span:hover {
+  background: #e3e3e3;
+  cursor: pointer;
+}
+
+/* ===== BACK ITEM (..) ===== */
+#tree li:first-child {
+  background: #f5f5f5;
+  font-style: italic;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#tree li.folder,
+#tree li.text {
+  cursor: pointer;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  z-index: 3000;
+}
+
+/* ===== MODAL BOX ===== */
+.modal {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+
+  width: 400px;
+  max-width: 90%;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+  animation: modalIn 0.15s ease-out;
+}
+
+/* animacja wejścia */
+@keyframes modalIn {
+  from {
+    transform: translateY(10px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== MODAL CONTENT ===== */
+.modal .container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* input */
+#text-name {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+#text-name:focus {
+  outline: none;
+  border-color: #28b7ff;
+  box-shadow: 0 0 3px rgba(40, 183, 255, 0.4);
+}
+
+/* buttons */
+#add-text-btn {
+  padding: 10px;
+  border: none;
+  background: #28b7ff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#add-text-btn:hover {
+  background: #1da1e6;
+}
+
+#cancel-btn {
+  padding: 10px;
+  border: none;
+  background: #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#cancel-btn:hover {
+  background: #d5d5d5;
+}
+
+/* single text */
+/* ===== CONTAINER ===== */
+section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ===== TITLE ===== */
+section h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+/* ===== ACTION BAR ===== */
+section p {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+}
+
+#text-save {
+  padding: 8px 14px;
+  background: #28b7ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#text-save:hover {
+  background: #1da1e6;
+}
+
+#text-cancel {
+  padding: 8px 14px;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#text-cancel:hover {
+  background: #d5d5d5;
+}
+
+#text-delete {
+  padding: 8px 14px;
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#text-delete:hover {
+  background: #d9363e;
+}
+
+#text-content {
+  width: 100%;
+  min-height: 60vh;
+
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+
+  font-size: 1rem;
+  line-height: 1.6;
+
+  resize: vertical;
+
+  transition: 0.2s;
+  background: #fff;
+}
+
+#text-content:focus {
+  outline: none;
+  border-color: #28b7ff;
+  box-shadow: 0 0 6px rgba(40, 183, 255, 0.3);
+}

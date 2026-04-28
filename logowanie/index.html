@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ICONS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="login.css" />
+    <!-- RUBIK FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <aside id="dashboard-navbar">
+      <h1>
+        <a href="../index.html" id="home-link">
+          <i class="bi bi-house-fill"></i> Dashboard</a
+        >
+      </h1>
+      <hr class="separator" />
+      <a class="dashboard-link" href="../zamowienia/index.html"
+        ><i class="bi bi-clipboard2-fill"></i> Zamówienia</a
+      >
+      <a class="dashboard-link" href="../kalendarz/index.html"
+        ><i class="bi bi-calendar-event-fill"></i> Kalendarz</a
+      >
+      <a class="dashboard-link" href="../klienci/index.html"
+        ><i class="bi bi-file-person-fill"></i> Klienci</a
+      >
+      <a class="dashboard-link" href="../typy_tagi/index.html"
+        ><i class="bi bi-info-circle-fill"></i> Typy zamówień | Tagi</a
+      >
+      <a class="dashboard-link" href="../teksty/index.html"
+        ><i class="bi bi-chat-left-quote-fill"></i> Teksty</a
+      >
+      <a class="dashboard-link" href="../galeria/index.html"
+        ><i class="bi bi-image-fill"></i> Galeria</a
+      >
+      <i
+        class="bi bi-chevron-double-left"
+        id="dashboard-toggle-visibility"
+        onclick="toggleDashboardNavbar()"
+      ></i>
+      <hr class="separator" />
+    </aside>
+    <button id="toggle-btn" onclick="toggleDashboardNavbar()">
+      <i class="bi bi-chevron-double-right"></i>
+    </button>
+
+    <main>
+      <header>
+        <h1 id="page-name">Logowanie</h1>
+        <div>
+          <button onclick="checkAuth()" id="check-login">
+            Sprawdź czy zalogowany
+          </button>
+          <pre id="output"></pre>
+        </div>
+      </header>
+      <hr class="horizontal-separator" />
+      <section id="content"></section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../script.js"></script>
+    <script>
+      async function register() {
+        const name = document.getElementById("reg_name").value;
+        const password = document.getElementById("reg_pass").value;
+
+        const res = await fetch("api/register.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}`,
+        });
+
+        document.getElementById("output").innerText = await res.text();
+
+        toggleLoginPage(true);
+      }
+
+      async function login() {
+        const name = document.getElementById("log_name").value;
+        const password = document.getElementById("log_pass").value;
+
+        const res = await fetch("api/login.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}`,
+        });
+
+        document.getElementById("output").innerText = await res.text();
+
+        if (res.status !== 403) await checkAuth();
+      }
+
+      async function checkAuth() {
+        const res = await fetch("api/auth.php");
+        const text = await res.text();
+
+        if (res.status === 401) {
+          document.getElementById("output").innerText = "Nie jesteś zalogowany";
+          toggleLoginPage(true);
+        } else {
+          document.getElementById("output").innerHTML =
+            "Zalogowany! Użytkownik: <b style='font-weight: bold;'>" +
+            text +
+            "</b>";
+          toggleLoginPage(false);
+        }
+      }
+
+      checkAuth();
+
+      function toggleLoginPage(show) {
+        document.querySelector("#content").innerHTML = "";
+
+        if (show) {
+          document.querySelector("#content").innerHTML = `<h2>Rejestracja</h2>
+        <input id="reg_name" placeholder="nazwa..." /><br />
+        <input id="reg_pass" type="password" placeholder="hasło..." /><br />
+        <button onclick="register()">Zarejestruj</button>
+
+        <h2>Logowanie</h2>
+        <input id="log_name" placeholder="nazwa..." /><br />
+        <input id="log_pass" type="password" placeholder="hasło..." /><br />
+        <button onclick="login()">Zaloguj</button>
+        `;
+        } else {
+          document.querySelector("#content").innerHTML = `
+        <button onclick="logout()">Wyloguj</button>`;
+        }
+      }
+
+      async function logout() {
+        const res = await fetch("api/logout.php");
+        document.getElementById("output").innerText = await res.text();
+
+        toggleLoginPage(true);
+      }
+    </script>
+  </body>
+</html>

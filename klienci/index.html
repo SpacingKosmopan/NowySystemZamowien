@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ICONS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="clients.css" />
+    <!-- RUBIK FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <aside id="dashboard-navbar">
+      <h1>
+        <a href="../index.html" id="home-link">
+          <i class="bi bi-house-fill"></i> Dashboard</a
+        >
+      </h1>
+      <hr class="separator" />
+      <a class="dashboard-link" href="../zamowienia/index.html"
+        ><i class="bi bi-clipboard2-fill"></i> Zamówienia</a
+      >
+      <a class="dashboard-link" href="../kalendarz/index.html"
+        ><i class="bi bi-calendar-event-fill"></i> Kalendarz</a
+      >
+      <a class="dashboard-link" href="index.html"
+        ><i class="bi bi-file-person-fill"></i> Klienci</a
+      >
+      <a class="dashboard-link" href="../typy_tagi/index.html"
+        ><i class="bi bi-info-circle-fill"></i> Typy zamówień | Tagi</a
+      >
+      <a class="dashboard-link" href="../teksty/index.html"
+        ><i class="bi bi-chat-left-quote-fill"></i> Teksty</a
+      >
+      <a class="dashboard-link" href="../galeria/index.html"
+        ><i class="bi bi-image-fill"></i> Galeria</a
+      >
+      <i
+        class="bi bi-chevron-double-left"
+        id="dashboard-toggle-visibility"
+        onclick="toggleDashboardNavbar()"
+      ></i>
+      <hr class="separator" />
+    </aside>
+    <button id="toggle-btn" onclick="toggleDashboardNavbar()">
+      <i class="bi bi-chevron-double-right"></i>
+    </button>
+
+    <main>
+      <header>
+        <h1 id="page-name">Klienci</h1>
+        <nav class="subnav"></nav>
+      </header>
+      <hr class="horizontal-separator" />
+      <section id="content"></section>
+    </main>
+
+    <!-- wyskakujące okienko -->
+    <div class="overlay hidden" id="new-order-overlay">
+      <div class="modal">
+        <div class="container">
+          <input type="text" id="text-name" placeholder="Nazwa tekstu" />
+          <button id="add-text-btn">Dodaj tekst</button>
+          <button id="cancel-btn">Anuluj</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../script.js"></script>
+    <script>
+      // === LOGOWANIE ===
+
+      init();
+
+      async function init() {
+        const res = await fetch("../logowanie/api/auth.php", {
+          credentials: "include",
+        });
+
+        if (res.status === 401 || res.status === 403) {
+          alert("Brak dostępu. Należy się zalogować");
+          return;
+        }
+
+        loadData();
+      }
+
+      /////
+
+      function loadData() {
+        const content = $("#content");
+        function renderNewClientForm() {
+          const html = `
+          <h2>
+            <i class="space-20"></i>
+            Nowy klient</h2>
+          <form id="clientForm">
+            <input type="text" name="imie" placeholder="Imię" required>
+            <input type="text" name="nazwisko" placeholder="Nazwisko" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="telefon" placeholder="Telefon">
+            <input type="text" name="adres" placeholder="Adres">
+            <button type="submit">Dodaj</button>
+            <button id="cancel">Anuluj</button>
+          </form>
+        `;
+
+          content.html(html);
+
+          $("#clientForm #cancel").on("click", function () {
+            $("#clientForm")[0].reset();
+            renderClients();
+          });
+
+          $("#clientForm").on("submit", async function (e) {
+            e.preventDefault();
+
+            const formData = Object.fromEntries(new FormData(this));
+
+            const res = await fetch("api/create.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+              alert("Dodano klienta");
+              renderClients();
+            } else {
+              alert("Błąd: " + data.error);
+            }
+          });
+        }
+
+        async function renderClients() {
+          const res = await fetch("api/list.php");
+          const clients = await res.json();
+
+          let html = `
+          <h2>
+            <i class="space-20"></i>
+            Lista klientów</h2>
+          <button onclick="renderNewClientForm()">+ Nowy klient</button>
+          <table border="1" cellpadding="8">
+            <tr>
+              <th>ID</th>
+              <th>Imię i nazwisko</th>
+              <th>Email</th>
+              <th>Telefon</th>
+              <th>Akcje</th>
+            </tr>
+        `;
+
+          clients.forEach((c) => {
+            html += `
+            <tr>
+              <td>${c.id}</td>
+              <td>${c.imie} ${c.nazwisko}</td>
+              <td>${c.email}</td>
+              <td>${c.telefon || ""}</td>
+              <td>
+                <button onclick="editClient(${c.id})">Edytuj</button>
+                <button onclick="deleteClient(${c.id})">Usuń</button>
+              </td>
+            </tr>
+          `;
+          });
+
+          html += `</table>`;
+
+          content.html(html);
+        }
+
+        async function deleteClient(id) {
+          if (!confirm("Na pewno usunąć?")) return;
+
+          const res = await fetch("api/delete.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id }),
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+            renderClients();
+          } else {
+            alert("Błąd");
+          }
+        }
+
+        async function editClient(id) {
+          const res = await fetch(`api/get.php?id=${id}`);
+          const c = await res.json();
+
+          const html = `
+          <h2>
+            <i class="space-20"></i>
+            Edytuj klienta</h2>
+          <form id="editForm">
+            <input type="hidden" name="id" value="${c.id}">
+            <input type="text" name="imie" value="${c.imie}" required>
+            <input type="text" name="nazwisko" value="${c.nazwisko}" required>
+            <input type="email" name="email" value="${c.email}" required>
+            <input type="text" name="telefon" value="${c.telefon || ""}">
+            <input type="text" name="adres" value="${c.adres || ""}">
+            <button type="submit">Zapisz</button>
+            <button id="cancel">Anuluj</button>
+          </form>
+        `;
+
+          content.html(html);
+
+          $("#editForm #cancel").on("click", function () {
+            $("#editForm")[0].reset();
+            renderClients();
+          });
+
+          $("#editForm").on("submit", async function (e) {
+            e.preventDefault();
+
+            const formData = Object.fromEntries(new FormData(this));
+
+            const res = await fetch("api/update.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+              renderClients();
+            } else {
+              alert("Błąd");
+            }
+          });
+        }
+
+        $(document).ready(function () {
+          renderClients();
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ICONS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="orders.css" />
+    <link rel="stylesheet" href="elegant_table.css" />
+    <!-- RUBIK FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <aside id="dashboard-navbar">
+      <h1>
+        <a href="../index.html" id="home-link">
+          <i class="bi bi-house-fill"></i> Dashboard</a
+        >
+      </h1>
+      <hr class="separator" />
+      <a class="dashboard-link" href="index.html"
+        ><i class="bi bi-clipboard2-fill"></i> Zamówienia</a
+      >
+      <a class="dashboard-link" href="../kalendarz/index.html"
+        ><i class="bi bi-calendar-event-fill"></i> Kalendarz</a
+      >
+      <a class="dashboard-link" href="../klienci/index.html"
+        ><i class="bi bi-file-person-fill"></i> Klienci</a
+      >
+      <a class="dashboard-link" href="../typy_tagi/index.html"
+        ><i class="bi bi-info-circle-fill"></i> Typy zamówień | Tagi</a
+      >
+      <a class="dashboard-link" href="../teksty/index.html"
+        ><i class="bi bi-chat-left-quote-fill"></i> Teksty</a
+      >
+      <a class="dashboard-link" href="../galeria/index.html"
+        ><i class="bi bi-image-fill"></i> Galeria</a
+      >
+      <i
+        class="bi bi-chevron-double-left"
+        id="dashboard-toggle-visibility"
+        onclick="toggleDashboardNavbar()"
+      ></i>
+      <hr class="separator" />
+    </aside>
+    <button id="toggle-btn" onclick="toggleDashboardNavbar()">
+      <i class="bi bi-chevron-double-right"></i>
+    </button>
+
+    <main>
+      <header>
+        <h1 id="page-name">
+          Zamówienia
+          <button id="add-order" class="footer-button">
+            <i class="bi bi-file-plus-fill"></i> Nowe zamówienie
+          </button>
+        </h1>
+        <!-- sortowanie -->
+        <nav class="subnav">
+          <label for="status-sort" class="sort-type">
+            <i class="sort-type-name">Status</i>
+            <select name="status-sort" id="status-sort">
+              <option value="">-- Wszystkie --</option>
+              <option value="nowe">Nowe</option>
+              <option value="w realizacji">W realizacji</option>
+              <option value="zrealizowane">Zrealizowane</option>
+              <option value="anulowane">Anulowane</option>
+            </select>
+          </label>
+          <label for="title-sort" class="sort-type">
+            <i class="sort-type-name">Typ</i>
+            <select id="title-sort"></select>
+          </label>
+          <label for="date-sort" class="sort-type">
+            <i class="sort-type-name">Czas</i>
+            <select id="month-filter"></select>
+          </label>
+          <label for="client-sort" class="sort-type">
+            <i class="sort-type-name">Klient</i>
+            <input
+              type="text"
+              name="client-selected"
+              id="client-selected"
+              disabled
+            />
+            <button id="select-client">Wybierz</button>
+          </label>
+          <span class="vertical-separator"></span>
+          <button id="reset-sort">Resetuj</button>
+        </nav>
+      </header>
+      <hr class="horizontal-separator" />
+      <!-- wszystkie zamówienia -->
+      <section id="all-orders">
+        <div class="table-scroll">
+          <table class="elegant-table">
+            <thead>
+              <tr>
+                <th>Numer</th>
+                <th>Klient</th>
+                <th>Typ zamówienia</th>
+                <th>Data</th>
+                <th>Termin</th>
+                <th>Status</th>
+                <th>Akcje</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- wyskakujące okienko -->
+    <div class="overlay hidden" id="new-order-overlay">
+      <form id="new-order-form">
+        <div class="modal">
+          <div class="container">
+            <h2>Zamówienie</h2>
+            <br />
+            <hr class="horizontal-separator" />
+            <br />
+            <div class="form-group" id="client-form">
+              <label>Klient:</label>
+              <input
+                type="text"
+                name="selected-client"
+                id="selected-client"
+                disabled
+                readonly
+              />
+              <button class="select-client">Wybierz</button>
+              <div class="error-tooltip hidden">
+                Wymagane jest podanie klienta
+              </div>
+              <input type="hidden" name="client-id" id="client-id" />
+            </div>
+
+            <div class="form-group">
+              <label>Typ zamówienia</label>
+              <select name="order-type" id="order-type"></select>
+            </div>
+
+            <div class="form-group" id="description-form">
+              <label>Opis zamówienia</label>
+              <textarea name="opis" rows="4" id="order-desc"></textarea>
+            </div>
+
+            <div class="form-group" id="price-form">
+              <label>Cena</label>
+              <input
+                type="number"
+                name="price"
+                id="order-price"
+                min="0"
+                value="0.00"
+                step="0.01"
+              />
+              <div class="error-tooltip hidden">
+                Cena musi być liczbą i dodatnia
+              </div>
+            </div>
+
+            <div class="form-group" id="date-form">
+              <label>Termin realizacji</label>
+              <input type="date" id="order-date" />
+              <div class="error-tooltip hidden">
+                Należy podać prawidłowy termin realizacji
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Data utworzenia</label>
+              <input type="text" id="creation-date" disabled readonly />
+            </div>
+
+            <!-- tagi -->
+            <div class="form-group">
+              <label>Tagi</label>
+              <button id="edit-tags">
+                <i class="bi bi-plus-circle-fill"></i>
+              </button>
+              <div id="tags"></div>
+              <!-- showbox -->
+              <div id="tags-showbox" class="showbox">
+                <p style="font-weight: bold">Wybierz tagi</p>
+                <div id="tags-showbox-close-container">
+                  <button id="tags-showbox-save-close-button">
+                    Zapisz i zamknij
+                  </button>
+                  <button id="tags-showbox-close-button">Anuluj</button>
+                </div>
+                <div id="tags-list"></div>
+              </div>
+            </div>
+
+            <!-- załączniki -->
+            <div class="form-group">
+              <label>Załączniki</label>
+              <button id="add-link">
+                <i class="bi bi-plus-circle-fill"></i>
+              </button>
+              <ul id="links"></ul>
+              <!-- showbox -->
+              <div id="links-showbox" class="showbox">
+                <p style="font-weight: bold">Edycja linku</p>
+                <div id="links-showbox-close-container">
+                  <button id="links-showbox-save-close-button">
+                    Zapisz i zamknij
+                  </button>
+                  <button id="links-showbox-close-button">Anuluj</button>
+                </div>
+                <div class="field">
+                  <label for="link-title-input">Tytuł</label>
+                  <textarea
+                    name="link-title-input"
+                    id="link-title-input"
+                  ></textarea>
+                </div>
+                <div class="field">
+                  <label for="link-href-input">Źródło</label>
+                  <textarea
+                    name="link-href-input"
+                    id="link-href-input"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Zdjęcia</label>
+              <button type="button" id="edit-photos">
+                <i class="bi bi-plus-circle-fill"></i> Wybierz zdjęcia
+              </button>
+              <div id="photos-selected"></div>
+            </div>
+
+            <div class="modal-actions">
+              <div class="left-actions">
+                <button id="btn-delete">Usuń</button>
+              </div>
+
+              <div class="right-actions">
+                <button type="button" id="btn-cancel">Anuluj</button>
+                <button type="submit" id="btn-save">Zapisz</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- zdjęcia modal showbox -->
+    <div id="photos-showbox" class="modal-overlay overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Wybierz zdjęcia</h3>
+          <button id="photos-showbox-close-button">&times;</button>
+        </div>
+        <div id="photos-list-container">
+          <div id="photos-list"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="photos-showbox-save-close-button">Zapisz</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- client select modal -->
+    <div id="client-modal" class="overlay" style="display: none">
+      <div class="modal">
+        <div class="container">
+          <h2>Wybierz klienta</h2>
+          <button id="clear-client" style="margin-bottom: 10px">
+            Wyczyść wybór
+          </button>
+
+          <input
+            type="text"
+            id="client-search"
+            placeholder="Szukaj klienta..."
+            style="margin-bottom: 10px; width: 100%"
+          />
+
+          <table class="elegant-table" id="clients-table">
+            <thead>
+              <tr>
+                <th data-sort="id">ID</th>
+                <th data-sort="name">Imię i nazwisko</th>
+                <th>Akcja</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <br />
+          <button id="client-modal-close">Zamknij</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="orders.js"></script>
+    <script src="clients_controller.js"></script>
+    <script src="tags_controller.js"></script>
+    <script src="links_controller.js"></script>
+    <script src="orders_controller.js"></script>
+    <script src="order_types_controller.js"></script>
+    <script src="photos.js"></script>
+    <script src="../script.js"></script>
+    <script>
+      // === LOGOWANIE ===
+
+      init();
+
+      async function init() {
+        const res = await fetch("../logowanie/api/auth.php", {
+          credentials: "include",
+        });
+
+        if (res.status === 401 || res.status === 403) {
+          alert("Brak dostępu. Należy się zalogować");
+          return;
+        }
+
+        loadLinksController();
+        loadPhotosController();
+        loadClientsController();
+        loadTagsController();
+
+        loadOrdersController();
+        loadOrders();
+      }
+
+      // =====
+
+      function formatDatePL(date) {
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // miesiące liczone od 0
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        return `${day}-${month}-${year} ${hours}:${minutes}`;
+      }
+
+      window.addEventListener("load", () => {
+        function setCreationDate(date = new Date()) {
+          const formatted = formatDatePL(date);
+          $("#creation-date").val(formatted);
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("isViewOnly")) setFormDisabled();
+        else setFormDisabled(false);
+      });
+
+      function setFormDisabled(disabled = true) {
+        const form = $("#new-order-form");
+
+        form
+          .find("input, select, textarea, button")
+          .not("#btn-cancel")
+          .prop("disabled", disabled);
+
+        if (disabled) {
+          $("#btn-delete").hide();
+        } else {
+          $("#btn-delete").show();
+        }
+
+        $("#creation-date").prop("disabled", true);
+      }
+    </script>
+  </body>
+</html>
