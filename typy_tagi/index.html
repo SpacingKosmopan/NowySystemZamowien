@@ -210,8 +210,9 @@
             },
             body: JSON.stringify({ nazwa: name }),
           })
-            .then((res) => res.json())
-            .then(() => {
+            .then((res) => res.text())
+            .then((data) => {
+              console.log(data);
               $("#new-element-name").val("");
               RenderList();
             })

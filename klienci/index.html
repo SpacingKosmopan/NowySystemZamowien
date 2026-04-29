@@ -98,9 +98,16 @@
       /////
 
       function loadData() {
-        const content = $("#content");
-        function renderNewClientForm() {
-          const html = `
+        $(document).ready(function () {
+          renderClients();
+        });
+
+        $(document).on("click", "#add-new-client-btn", renderNewClientForm);
+      }
+
+      const content = $("#content");
+      function renderNewClientForm() {
+        const html = `
           <h2>
             <i class="space-20"></i>
             Nowy klient</h2>
@@ -115,46 +122,46 @@
           </form>
         `;
 
-          content.html(html);
+        content.html(html);
 
-          $("#clientForm #cancel").on("click", function () {
-            $("#clientForm")[0].reset();
+        $("#clientForm #cancel").on("click", function () {
+          $("#clientForm")[0].reset();
+          renderClients();
+        });
+
+        $("#clientForm").on("submit", async function (e) {
+          e.preventDefault();
+
+          const formData = Object.fromEntries(new FormData(this));
+
+          const res = await fetch("api/create.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+            alert("Dodano klienta");
             renderClients();
-          });
+          } else {
+            alert("Błąd: " + data.error);
+          }
+        });
+      }
 
-          $("#clientForm").on("submit", async function (e) {
-            e.preventDefault();
+      async function renderClients() {
+        const res = await fetch("api/list.php");
+        const clients = await res.json();
 
-            const formData = Object.fromEntries(new FormData(this));
-
-            const res = await fetch("api/create.php", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(formData),
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-              alert("Dodano klienta");
-              renderClients();
-            } else {
-              alert("Błąd: " + data.error);
-            }
-          });
-        }
-
-        async function renderClients() {
-          const res = await fetch("api/list.php");
-          const clients = await res.json();
-
-          let html = `
+        let html = `
           <h2>
             <i class="space-20"></i>
             Lista klientów</h2>
-          <button onclick="renderNewClientForm()">+ Nowy klient</button>
+          <button id="add-new-client-btn" type="button">+ Nowy klient</button>
           <table border="1" cellpadding="8">
             <tr>
               <th>ID</th>
@@ -165,8 +172,8 @@
             </tr>
         `;
 
-          clients.forEach((c) => {
-            html += `
+        clients.forEach((c) => {
+          html += `
             <tr>
               <td>${c.id}</td>
               <td>${c.imie} ${c.nazwisko}</td>
@@ -178,38 +185,38 @@
               </td>
             </tr>
           `;
-          });
+        });
 
-          html += `</table>`;
+        html += `</table>`;
 
-          content.html(html);
+        content.html(html);
+      }
+
+      async function deleteClient(id) {
+        if (!confirm("Na pewno usunąć?")) return;
+
+        const res = await fetch("api/delete.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          renderClients();
+        } else {
+          alert("Błąd");
         }
+      }
 
-        async function deleteClient(id) {
-          if (!confirm("Na pewno usunąć?")) return;
+      async function editClient(id) {
+        const res = await fetch(`api/get.php?id=${id}`);
+        const c = await res.json();
 
-          const res = await fetch("api/delete.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id }),
-          });
-
-          const data = await res.json();
-
-          if (data.success) {
-            renderClients();
-          } else {
-            alert("Błąd");
-          }
-        }
-
-        async function editClient(id) {
-          const res = await fetch(`api/get.php?id=${id}`);
-          const c = await res.json();
-
-          const html = `
+        const html = `
           <h2>
             <i class="space-20"></i>
             Edytuj klienta</h2>
@@ -221,42 +228,37 @@
             <input type="text" name="telefon" value="${c.telefon || ""}">
             <input type="text" name="adres" value="${c.adres || ""}">
             <button type="submit">Zapisz</button>
-            <button id="cancel">Anuluj</button>
+            <button id="cancel" type="button">Anuluj</button>
           </form>
         `;
 
-          content.html(html);
+        content.html(html);
 
-          $("#editForm #cancel").on("click", function () {
-            $("#editForm")[0].reset();
-            renderClients();
-          });
-
-          $("#editForm").on("submit", async function (e) {
-            e.preventDefault();
-
-            const formData = Object.fromEntries(new FormData(this));
-
-            const res = await fetch("api/update.php", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(formData),
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-              renderClients();
-            } else {
-              alert("Błąd");
-            }
-          });
-        }
-
-        $(document).ready(function () {
+        $("#editForm #cancel").on("click", function () {
+          $("#editForm")[0].reset();
           renderClients();
+        });
+
+        $("#editForm").on("submit", async function (e) {
+          e.preventDefault();
+
+          const formData = Object.fromEntries(new FormData(this));
+
+          const res = await fetch("api/update.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+            renderClients();
+          } else {
+            alert("Błąd");
+          }
         });
       }
     </script>

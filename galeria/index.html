@@ -118,8 +118,8 @@
 
       function loadData() {
         const form = document.getElementById("uploadForm");
-        console.log("JS działa");
-        console.log(document.getElementById("uploadForm"));
+        //console.log("JS działa");
+        //console.log(document.getElementById("uploadForm"));
         const fileInput = document.getElementById("fileInput");
         const opisInput = document.getElementById("opisInput");
         const status = document.getElementById("status");
@@ -127,7 +127,7 @@
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          console.log("Form submitted");
+          //console.log("Form submitted");
 
           const file = fileInput.files[0];
           const opis = opisInput.value;
@@ -165,7 +165,7 @@
             }
 
             const text = await res.text();
-            console.log("Odpowiedź:", text);
+            //console.log("Odpowiedź:", text);
             if (text === "ok") loadFiles();
 
             status.innerText = text;
