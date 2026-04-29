@@ -1,0 +1,5 @@
+<?php
+define('DB_HOST', 'server_provider');
+define('DB_USER', 'user');
+define('DB_PASS', 'password');
+define('DB_NAME', 'database');
