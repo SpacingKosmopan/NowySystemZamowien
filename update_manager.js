@@ -4,7 +4,7 @@ let remoteVersion = "xXx";
 async function getRemoteVersion() {
   try {
     const res = await fetch(
-      "https://raw.githubusercontent.com/SpacingKosmopan/NowySystemZamowien/main/latest_v.txt",
+      "https://raw.githubusercontent.com/SpacingKosmopan/NowySystemZamowien/main/version.txt",
     );
 
     if (!res.ok) throw new Error(res.status);
@@ -17,7 +17,7 @@ async function getRemoteVersion() {
 
 async function getLocalVersion() {
   try {
-    const res = await fetch("local_v.txt");
+    const res = await fetch("version.txt");
 
     if (!res.ok) throw new Error(res.status);
 
