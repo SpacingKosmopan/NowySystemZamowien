@@ -7,6 +7,7 @@ Dokonano nieznacznych poprawek i zmian
 ### Naprawione błędy
 
 - system sprawdzania wersji nie działał poprawnie
+- szybkie dodawanie zamówienia nie przenosiło i wyświetlało błąd (mimo że błędu nie było i zamówienie było dodawane)
 
 ## v1.1
 
