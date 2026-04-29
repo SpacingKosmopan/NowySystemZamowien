@@ -1,12 +1,21 @@
 ## v1.2
 
---
+> 29.04.2026
 
 Dokonano nieznacznych poprawek i zmian
+
+### Zmiany
+
+- teraz raport zarobków z miesiąca liczy tylko te zamówienia, które są zrealizowane
 
 ### Naprawione błędy
 
 - system sprawdzania wersji nie działał poprawnie
+- szybkie dodawanie zamówienia nie przenosiło i wyświetlało błąd (mimo że błędu nie było i zamówienie było dodawane)
+
+### Eksperymenty
+
+Zauważono, że występuje duży problem z prawidłowym kodowaniem polskich znaków. W tej wersji deweloperzy wypuścili specjalne narzędzie do zweryfikowania przyczyny problemu. Występuje on nadal, więc prosimy o nie korzystanie z aplikacji do naprawienia tego błędu
 
 ## v1.1
 

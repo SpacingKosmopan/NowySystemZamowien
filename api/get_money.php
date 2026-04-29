@@ -21,6 +21,7 @@ $sql = "SELECT
             SUM(kwota) AS zarobek,
             COUNT(*) AS ilosc
         FROM zamowienia
+        WHERE status = 'zrealizowane'
         GROUP BY 
             EXTRACT(YEAR FROM termin_realizacji),
             EXTRACT(MONTH FROM termin_realizacji)

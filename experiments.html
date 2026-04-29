@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script>
+      fetch("experimentals/show_table.php")
+        .then((res) => res.text())
+        .then((data) => {
+          document.querySelector("#content").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>
