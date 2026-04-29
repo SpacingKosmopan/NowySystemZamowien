@@ -1,8 +1,8 @@
 ## v1.0 - Oficjalne uruchomienie
 
-> DD-MM-YYY
+> 29.04.2026
 
-w dniu DD-MM-YYYY aplikacja Systemu Zamówień zostaje oficjalnie uruchomiona do użytku! Pierwszym klientem jest p. Alicja Starmach z _Na Polanie_.
+w dniu 29.04.2026 aplikacja Systemu Zamówień zostaje oficjalnie uruchomiona do użytku! Pierwszym klientem jest p. Alicja Starmach z _Na Polanie_.
 
 ### Co nowego?
 
