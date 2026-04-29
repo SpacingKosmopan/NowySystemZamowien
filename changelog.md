@@ -7,6 +7,8 @@ Naprawiono kilka krytycznych błędów
 ### Naprawione błędy
 
 - przycisk dodawania klienta nie działał
+- dodawanie typów zamówień i tagów nie działało
+- usunięto zbędne informacje wypisywane do konsoli przeglądarki
 
 ## v1.0 - Oficjalne uruchomienie
 
