@@ -163,7 +163,7 @@
 
         // ================== RENDER ==================
         function render() {
-          console.log(`Render->CurrentParentId: ${currentParentId}`);
+          //console.log(`Render->CurrentParentId: ${currentParentId}`);
           const tree = document.getElementById("tree");
           tree.innerHTML = "";
 
@@ -185,7 +185,7 @@
             if (a.typ === "text/plain" && b.typ === "catalogue") return 1;
             return 0;
           });
-          console.log({ sorted });
+          //console.log({ sorted });
 
           sorted.forEach((item) => {
             const li = document.createElement("li");
@@ -229,7 +229,7 @@
 
         // ================== NAVIGATION ==================
         function enterFolder(folder) {
-          console.log(`Entering Folder: `, folder);
+          //console.log(`Entering Folder: `, folder);
           path.push(folder);
           currentParentId = folder.struktura_id;
           history.pushState(null, "", "?id-folderu=" + currentParentId);
@@ -237,7 +237,7 @@
         }
 
         function goBack(index) {
-          console.log(`Entering Folder: ${index}`);
+          //console.log(`Entering Folder: ${index}`);
           path = path.slice(0, index + 1);
           currentParentId = path.length
             ? path[path.length - 1].struktura_id
@@ -271,7 +271,7 @@
 
         // ================== OPEN TEXT ==================
         function openText(item) {
-          console.log(`Opening Text:`, item);
+          //console.log(`Opening Text:`, item);
           // Przekierowanie GET - spójne z tym, co robisz po dodaniu tekstu
           window.location.href = `./tekst/index.php?id=${item.tekst_id}`;
         }
@@ -299,9 +299,9 @@
         document.getElementById("add-folder-btn").onclick = () => {
           const name = document.getElementById("folder-name").value;
           if (!name) return alert("Podaj nazwę folderu");
-          console.log(`Adding folder: ${name}`);
+          //console.log(`Adding folder: ${name}`);
 
-          console.log("Wysyłam do rodzica: (dodaję folder)", currentParentId);
+          //console.log("Wysyłam do rodzica: (dodaję folder)", currentParentId);
           fetch("api/add_structure.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -341,7 +341,7 @@
           if (!name) return alert("Podaj nazwę tekstu");
 
           try {
-            console.log("Wysyłam do rodzica: (dodaję tekst)", currentParentId);
+            //console.log("Wysyłam do rodzica: (dodaję tekst)", currentParentId);
             const res = await fetch("api/add_text.php", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
