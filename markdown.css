@@ -113,6 +113,6 @@
 /* HR */
 .markdown-body hr {
   border: none;
-  border-top: 1px solid #d0d7de;
+  border-top: 3px solid #d0d7de;
   margin: 2em 0;
 }

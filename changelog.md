@@ -10,7 +10,7 @@ Naprawiono kilka krytycznych błędów
 - dodawanie typów zamówień i tagów nie działało
 - usunięto zbędne informacje wypisywane do konsoli przeglądarki
 
-===
+---
 
 ## v1.0 - Oficjalne uruchomienie
 
