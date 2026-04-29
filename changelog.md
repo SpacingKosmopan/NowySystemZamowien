@@ -4,6 +4,10 @@
 
 Dokonano nieznacznych poprawek i zmian
 
+### Zmiany
+
+- teraz raport zarobków z miesiąca liczy tylko te zamówienia, które są zrealizowane
+
 ### Naprawione błędy
 
 - system sprawdzania wersji nie działał poprawnie
