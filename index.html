@@ -417,7 +417,7 @@
           const selectedClient = $("#fast-client-select").val();
           const clientId = Number(selectedClient);
           if (!Number.isFinite(clientId)) {
-            console.error("Incorrect client id:", clientId);
+            console.warn("Incorrect client id:", clientId);
             $("#fast-order-error").text("Wystąpił błąd");
             return;
           }
@@ -453,8 +453,12 @@
               return res.json();
             })
             .then((res) => {
-              if (res.ok) window.location.href = "zamowienia/index.html";
-              else $("#fast-order-error").text("Wystąpił błąd");
+              if (res.ok === true)
+                window.location.href = "zamowienia/index.html";
+              else
+                $("#fast-order-error").text(
+                  "Wystąpił błąd: " + JSON.stringify(res),
+                );
               return res;
             })
             .catch((err) => console.error(err));

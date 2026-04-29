@@ -40,5 +40,5 @@ $typeId
 $success = $stmt->execute();
 
 echo json_encode([
-  "success" => $success
+  "ok" => $success
 ]);
