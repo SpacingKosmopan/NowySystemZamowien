@@ -1,4 +1,4 @@
-## v.1.1
+## v1.1
 
 > 29.04.2026
 
@@ -9,6 +9,8 @@ Naprawiono kilka krytycznych błędów
 - przycisk dodawania klienta nie działał
 - dodawanie typów zamówień i tagów nie działało
 - usunięto zbędne informacje wypisywane do konsoli przeglądarki
+
+===
 
 ## v1.0 - Oficjalne uruchomienie
 
