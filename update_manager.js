@@ -33,7 +33,7 @@ async function checkUpdate() {
   const remote_v = await getRemoteVersion();
   remoteVersion = remote_v;
 
-  return local_v.trim() === remote_v.trim();
+  return local_v.trim() !== remote_v.trim();
 }
 
 checkUpdate().then((hasUpdate) => {
