@@ -1,3 +1,13 @@
+## v1.2
+
+--
+
+Dokonano nieznacznych poprawek i zmian
+
+### Naprawione błędy
+
+- system sprawdzania wersji nie działał poprawnie
+
 ## v1.1
 
 > 29.04.2026
