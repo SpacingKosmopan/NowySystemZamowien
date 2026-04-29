@@ -1,3 +1,13 @@
+## v.1.1
+
+> 29.04.2026
+
+Naprawiono kilka krytycznych błędów
+
+### Naprawione błędy
+
+- przycisk dodawania klienta nie działał
+
 ## v1.0 - Oficjalne uruchomienie
 
 > 29.04.2026
