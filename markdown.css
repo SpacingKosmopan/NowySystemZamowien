@@ -116,3 +116,7 @@
   border-top: 3px solid #d0d7de;
   margin: 2em 0;
 }
+
+.markdown-body strong {
+  font-weight: bold;
+}
