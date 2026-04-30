@@ -186,8 +186,10 @@
             },
             body: JSON.stringify({ id }),
           })
-            .then((res) => res.json())
-            .then(() => RenderList())
+            .then((res) => res.text())
+            .then((data) => {
+              RenderList();
+            })
             .catch((err) => console.error("Błąd usuwania:", err));
         });
 

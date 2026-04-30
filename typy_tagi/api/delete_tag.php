@@ -20,7 +20,11 @@ if (!$id) {
     exit;
 }
 
-$stmt = $pdo->prepare("DELETE FROM tagi WHERE id = ?");
-$stmt->execute([$id]);
+$stmt = $conn->prepare("DELETE FROM tagi WHERE id = ?");
+$stmt->bind_param("i", $id);
+
+$stmt->execute();
+
+$stmt->close();
 
 echo json_encode(["success" => true]);
