@@ -2,6 +2,15 @@
 
 > data
 
+### Nowości
+
+- dodano tytuł do zamówień - teraz nie tylko "Zaproszenie", ale i "dla Basi na 50tkę"
+  (aby system działał prawidłowo, należy uaktualnić bazę danych poniższym zapytaniem)
+
+  ```sql
+  ALTER TABLE zamowienia ADD COLUMN tytul VARCHAR(255) NOT NULL DEFAULT 'brak tytułu';
+  ```
+
 ### Zmiany
 
 - zmniejszono zegar w Dashboard i zmieniono kolor jego tarczy na ciemnoszary
