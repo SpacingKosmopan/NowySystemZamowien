@@ -7,6 +7,7 @@
 ### Naprawione błędy
 
 - naprawiono błędy związane z nieprawidłowym kodowaniem polskich znaków (szczególnie przy dodawaniu nowego klienta)
+- w niektórych przeglądarkach formularz dodawania nowego zamówienia nie był resetowany po dodaniu
 
 ---
 

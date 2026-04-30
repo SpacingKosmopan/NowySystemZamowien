@@ -504,9 +504,9 @@ body:not(.sidebar-closed) #toggle-btn {
 /* ===== ZEGAR ===== */
 #clock {
   grid-column: span 1;
-  width: 100%;
+  width: 60%;
   aspect-ratio: 1;
-  background: #111;
+  background: #252525;
   border-radius: 50%;
   justify-self: center;
   align-self: center;
