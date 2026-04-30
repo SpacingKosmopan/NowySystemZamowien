@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+header("Content-Type: application/json; charset=utf-8");
 
 session_start();
 
@@ -21,18 +21,19 @@ $termin = $data["termin"];
 $typ_id = $data["typ_id"];
 $tagi = json_encode($data["tagi"]);
 $zalaczniki = json_encode($data["zalaczniki"]);
+$tytul = $data["tytul"];
 
 
 $zdjecia = json_encode($data["zdjecia"] ?? []);
 
 $stmt = $conn->prepare("
 UPDATE zamowienia 
-SET klient_id = ?, opis = ?, kwota = ?, termin_realizacji = ?, typ_id = ?, tagi = ?, zalaczniki = ?, zdjecia = ?
+SET klient_id = ?, opis = ?, kwota = ?, termin_realizacji = ?, typ_id = ?, tagi = ?, zalaczniki = ?, zdjecia = ?, tytul = ?
 WHERE id = ?
 ");
 
 $stmt->bind_param(
-    "isdsssssi",
+    "isdssssssi",
     $client_id,
     $opis,
     $kwota,
@@ -40,7 +41,8 @@ $stmt->bind_param(
     $typ_id,
     $tagi,
     $zalaczniki,
-    $zdjecia, // <-- tutaj
+    $zdjecia,
+    $tytul,
     $order_id
 );
 

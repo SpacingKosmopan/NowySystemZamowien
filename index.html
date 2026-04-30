@@ -66,7 +66,10 @@
           <div id="done-orders"></div>
           <div id="old-orders"></div>
         </div>
-        <canvas id="clock" width="300" height="300"></canvas>
+        <div id="clock-and-timer">
+          <canvas id="clock" width="300" height="300"></canvas>
+          <div id="timer"></div>
+        </div>
 
         <div id="fast-add-order">
           <p>Szybko Dodaj Zamówienie</p>
@@ -81,6 +84,13 @@
             <select name="fast-type" id="fast-type" required>
               <option value="">-- typ zamówienia --</option>
             </select>
+            <input
+              type="text"
+              name="fast-title"
+              id="fast-title"
+              required
+              placeholder="Tytuł..."
+            />
             <input
               type="text"
               name="fast-description"
@@ -186,7 +196,7 @@
         // tło
         ctx.beginPath();
         ctx.arc(0, 0, r - 5, 0, 2 * Math.PI);
-        ctx.fillStyle = "#111";
+        ctx.fillStyle = "#464646";
         ctx.fill();
 
         // tarcza
@@ -232,7 +242,7 @@
         const hrAngle = (hr * Math.PI) / 6 + (min * Math.PI) / 360;
 
         ctx.strokeStyle = "red";
-        hand(secAngle, r * 0.8, 2);
+        hand(secAngle, r * 0.8, 3);
 
         ctx.strokeStyle = "white";
         hand(minAngle, r * 0.65, 3);
@@ -265,6 +275,8 @@
       }
 
       function loadData() {
+        loadTimer();
+
         fetch("api/get_today_orders_count.php")
           .then((res) => {
             if (!res.ok) throw new Error("HTTP error " + res.status);
@@ -416,6 +428,7 @@
           e.preventDefault();
           const selectedClient = $("#fast-client-select").val();
           const clientId = Number(selectedClient);
+          const title = $("#fast-title").val().trim();
           if (!Number.isFinite(clientId)) {
             console.warn("Incorrect client id:", clientId);
             $("#fast-order-error").text("Wystąpił błąd");
@@ -423,6 +436,10 @@
           }
           if (selectedClient === "") {
             $("#fast-order-error").text("Podaj klienta");
+            return;
+          }
+          if (title === "") {
+            $("#fast-order-error").text("Podaj tytuł");
             return;
           }
 
@@ -447,7 +464,13 @@
           fetch("api/fast_add_order.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ clientId, typeId, description, date }),
+            body: JSON.stringify({
+              clientId,
+              typeId,
+              description,
+              date,
+              title,
+            }),
           })
             .then((res) => {
               return res.json();
@@ -463,6 +486,24 @@
             })
             .catch((err) => console.error(err));
         });
+      }
+
+      function loadTimer() {
+        const timerDiv = document.querySelector("#timer");
+        const teraz = new Date();
+
+        const dzien = String(teraz.getDate()).padStart(2, "0");
+        const miesiac = String(teraz.getMonth() + 1).padStart(2, "0");
+        const rok = teraz.getFullYear();
+
+        const godzina = String(teraz.getHours()).padStart(2, "0");
+        const minuty = String(teraz.getMinutes()).padStart(2, "0");
+
+        const wynik = `${dzien}.${miesiac}.${rok} ${godzina}:${minuty}`;
+
+        timerDiv.innerHTML = wynik;
+
+        setTimeout(() => loadTimer(), 10000);
       }
     </script>
   </body>

@@ -1,4 +1,6 @@
 <?php
+header("Content-Type: application/json; charset=utf-8");
+
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -16,6 +18,7 @@ $opis = $data["opis"];
 $kwota = $data["kwota"];
 $termin = $data["termin"];
 $typ_id = $data["typ_id"];
+$tytul = $data["tytul"];
 
 $tagi = json_encode($data["tagi"]);
 $zalaczniki = json_encode($data["zalaczniki"]);
@@ -29,12 +32,12 @@ $zdjecia = json_encode($data["zdjecia"] ?? []);
 
 $stmt = $conn->prepare(
 "INSERT INTO zamowienia 
-(klient_id, data_utworzenia, status, kwota, opis, termin_realizacji, tagi, zalaczniki, zdjecia, typ_id) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+(klient_id, data_utworzenia, status, kwota, opis, termin_realizacji, tagi, zalaczniki, zdjecia, typ_id, tytul) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 );
 
 $stmt->bind_param(
-"issdsssssi",
+"issdsssssis",
 $client_id,
 $data_utworzenia,
 $status,
@@ -44,7 +47,8 @@ $termin,
 $tagi,
 $zalaczniki,
 $zdjecia,
-$typ_id
+$typ_id,
+$tytul
 );
 
 $success = $stmt->execute();

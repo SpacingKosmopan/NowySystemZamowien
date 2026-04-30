@@ -1,4 +1,6 @@
 <?php
+header("Content-Type: application/json; charset=utf-8");
+
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -9,7 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 
 require 'db.php';
 
-$id = $_POST['id'];
+$data = json_decode(file_get_contents("php://input"), true);
+$id = $data["id"];
 
 // zabezpieczenie (BARDZO ważne)
 $stmt = $conn->prepare("DELETE FROM zamowienia WHERE id = ?");

@@ -1,3 +1,30 @@
+## v1.3
+
+> data
+
+### Nowości
+
+- dodano tytuł do zamówień - teraz nie tylko "Zaproszenie", ale i "dla Basi na 50tkę"
+  (aby system działał prawidłowo, należy uaktualnić bazę danych poniższym zapytaniem)
+
+  ```sql
+  ALTER TABLE zamowienia ADD COLUMN tytul VARCHAR(255) NOT NULL DEFAULT 'brak tytułu';
+  ```
+
+### Zmiany
+
+- zmniejszono zegar w Dashboard i zmieniono kolor jego tarczy na ciemnoszary
+- obok zegara dodano dzisiejszą datę i godzinę
+
+### Naprawione błędy
+
+- naprawiono błędy związane z nieprawidłowym kodowaniem polskich znaków (szczególnie przy dodawaniu nowego klienta)
+- powiadomienia o błędach w formularzu nie pokazywały się, przez co po niepoprawnym uzupełnieniu formularza resetował się on, a zamówienie nie dodawało
+- w niektórych przeglądarkach formularz dodawania nowego zamówienia nie był resetowany po dodaniu
+- usuwanie typów zamówień i tagów nie działało
+
+---
+
 ## v1.2
 
 > 29.04.2026
@@ -16,6 +43,8 @@ Dokonano nieznacznych poprawek i zmian
 ### Eksperymenty
 
 Zauważono, że występuje duży problem z prawidłowym kodowaniem polskich znaków. W tej wersji deweloperzy wypuścili specjalne narzędzie do zweryfikowania przyczyny problemu. Występuje on nadal, więc prosimy o nie korzystanie z aplikacji do naprawienia tego błędu
+
+---
 
 ## v1.1
 

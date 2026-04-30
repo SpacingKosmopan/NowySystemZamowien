@@ -1,4 +1,6 @@
 <?php
+header("Content-Type: application/json; charset=utf-8");
+
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -18,7 +20,11 @@ if (!$id) {
     exit;
 }
 
-$stmt = $pdo->prepare("DELETE FROM typy_zamowien WHERE id = ?");
-$stmt->execute([$id]);
+$stmt = $conn->prepare("DELETE FROM typy_zamowien WHERE id = ?");
+$stmt->bind_param("i", $id);
+
+$stmt->execute();
+
+$stmt->close();
 
 echo json_encode(["success" => true]);

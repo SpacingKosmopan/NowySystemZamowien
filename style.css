@@ -504,9 +504,9 @@ body:not(.sidebar-closed) #toggle-btn {
 /* ===== ZEGAR ===== */
 #clock {
   grid-column: span 1;
-  width: 100%;
+  width: 60%;
   aspect-ratio: 1;
-  background: #111;
+  background: #252525;
   border-radius: 50%;
   justify-self: center;
   align-self: center;
@@ -731,4 +731,29 @@ aside {
 .vip {
   color: gold;
   font-weight: bold;
+}
+
+/* === MAŁY ZEGAR === */
+#timer {
+  margin-top: 12px;
+  font-family: "Rubik", sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #ffffff;
+
+  background: rgba(0, 0, 0, 0.25);
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  display: inline-block;
+  text-align: center;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  transition: all 0.2s ease-in-out;
 }

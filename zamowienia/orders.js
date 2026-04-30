@@ -24,6 +24,7 @@ function loadOrders() {
         tr.append(`<td>${o.id}</td>`);
         tr.append(`<td>${o.imie} ${o.nazwisko}</td>`);
         tr.append(`<td>${o.typ}</td>`);
+        tr.append(`<td>${o.tytul}</td>`);
         tr.append(`<td>${o.data_utworzenia}</td>`);
         tr.append(`<td>${o.termin_realizacji}</td>`);
 
@@ -121,7 +122,11 @@ function loadOrders() {
 
       if (!ok) return;
 
-      $.post("api/delete_order.php", { id }, () => {
+      fetch("api/delete_order.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      }).then((res) => {
         ordersData = ordersData.filter((o) => o.id != id);
         renderTable(ordersData);
       });
@@ -188,6 +193,7 @@ function openOrder(order, readOnly = false) {
   $("#selected-client").val(order.imie + " " + order.nazwisko);
   $("#order-desc").val(order.opis);
   $("#order-price").val(order.kwota);
+  $("#order-title").val(order.tytul);
 
   $("#order-date").val(order.termin_realizacji?.split(" ")[0]);
   $("#creation-date").val(order.data_utworzenia);

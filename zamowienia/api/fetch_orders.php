@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+header("Content-Type: application/json; charset=utf-8");
 
 session_start();
 
@@ -32,6 +32,7 @@ SELECT
   o.tagi,
   o.zalaczniki,
   o.zdjecia,
+  o.tytul,
   t.tytul AS typ,
   k.imie,
   k.nazwisko
