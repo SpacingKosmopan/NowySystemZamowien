@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2026 at 05:32 PM
+-- Generation Time: Apr 30, 2026 at 03:03 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -118,7 +118,8 @@ CREATE TABLE `zamowienia` (
   `tagi` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`tagi`)),
   `zalaczniki` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`zalaczniki`)),
   `zdjecia` text DEFAULT NULL,
-  `typ_id` int(11) NOT NULL
+  `typ_id` int(11) NOT NULL,
+  `tytul` varchar(255) NOT NULL DEFAULT 'brak tytułu'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
