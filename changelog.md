@@ -4,6 +4,9 @@
 
 ### Zmiany
 
+- zmniejszono zegar w Dashboard i zmieniono kolor jego tarczy na ciemnoszary
+- obok zegara dodano dzisiejszą datę i godzinę
+
 ### Naprawione błędy
 
 - naprawiono błędy związane z nieprawidłowym kodowaniem polskich znaków (szczególnie przy dodawaniu nowego klienta)
