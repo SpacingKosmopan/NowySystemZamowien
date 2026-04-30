@@ -32,6 +32,7 @@ SELECT
   o.tagi,
   o.zalaczniki,
   o.zdjecia,
+  o.tytul,
   t.tytul AS typ,
   k.imie,
   k.nazwisko

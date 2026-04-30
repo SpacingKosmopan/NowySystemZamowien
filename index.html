@@ -86,6 +86,13 @@
             </select>
             <input
               type="text"
+              name="fast-title"
+              id="fast-title"
+              required
+              placeholder="Tytuł..."
+            />
+            <input
+              type="text"
               name="fast-description"
               id="fast-description"
               required
@@ -421,6 +428,7 @@
           e.preventDefault();
           const selectedClient = $("#fast-client-select").val();
           const clientId = Number(selectedClient);
+          const title = $("#fast-title").val().trim();
           if (!Number.isFinite(clientId)) {
             console.warn("Incorrect client id:", clientId);
             $("#fast-order-error").text("Wystąpił błąd");
@@ -428,6 +436,10 @@
           }
           if (selectedClient === "") {
             $("#fast-order-error").text("Podaj klienta");
+            return;
+          }
+          if (title === "") {
+            $("#fast-order-error").text("Podaj tytuł");
             return;
           }
 
@@ -452,7 +464,13 @@
           fetch("api/fast_add_order.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ clientId, typeId, description, date }),
+            body: JSON.stringify({
+              clientId,
+              typeId,
+              description,
+              date,
+              title,
+            }),
           })
             .then((res) => {
               return res.json();
