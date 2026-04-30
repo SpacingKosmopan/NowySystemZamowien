@@ -68,6 +68,7 @@ function clearInputs() {
   document.querySelector("#order-desc").value = "";
   document.querySelector("#order-price").value = 0.0;
   document.querySelector("#order-date").value = "";
+  document.querySelector("#order-title").value = "";
 
   document.querySelector("#tags").innerHTML = "";
   document.querySelector("#links").innerHTML = "";

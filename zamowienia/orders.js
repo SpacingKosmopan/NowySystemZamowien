@@ -122,7 +122,11 @@ function loadOrders() {
 
       if (!ok) return;
 
-      $.post("api/delete_order.php", { id }, () => {
+      fetch("api/delete_order.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      }).then((res) => {
         ordersData = ordersData.filter((o) => o.id != id);
         renderTable(ordersData);
       });
