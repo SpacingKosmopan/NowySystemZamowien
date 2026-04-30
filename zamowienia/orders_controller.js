@@ -32,7 +32,36 @@ function loadOrdersController() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
-    }).then(() => location.reload());
+    }).then(() => {
+      clearInputs();
+      location.reload();
+    });
   });
 }
 let editingOrderId = null;
+
+function clearInputs() {
+  document.querySelector("#selected-client").value = "";
+  document.querySelector("#order-type").value = "";
+  document.querySelector("#order-desc").value = "";
+  document.querySelector("#order-price").value = 0.0;
+  document.querySelector("#order-date").value = "";
+
+  document.querySelector("#tags").innerHTML = "";
+  document.querySelector("#links").innerHTML = "";
+  document.querySelector("#photos-selected").innerHTML = "";
+
+  $("#new-order-form")[0].reset();
+
+  selectedTags = [];
+  tempSelectedTags = [];
+  selectedPhotoIds = [];
+  links = [];
+
+  setCreationDate();
+}
+
+function setCreationDate(date = new Date()) {
+  const formatted = formatDatePL(date);
+  $("#creation-date").val(formatted);
+}
