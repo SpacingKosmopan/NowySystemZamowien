@@ -108,6 +108,7 @@
                 <th>Numer</th>
                 <th>Klient</th>
                 <th>Typ zamówienia</th>
+                <th>Tytuł</th>
                 <th>Data</th>
                 <th>Termin</th>
                 <th>Status</th>
@@ -148,6 +149,17 @@
             <div class="form-group">
               <label>Typ zamówienia</label>
               <select name="order-type" id="order-type"></select>
+            </div>
+
+            <div class="form-group">
+              <label>Tytuł</label>
+              <input
+                type="text"
+                name="order-title"
+                id="order-title"
+                required
+                placeholder="Podaj tytuł..."
+              />
             </div>
 
             <div class="form-group" id="description-form">

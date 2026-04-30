@@ -24,6 +24,7 @@ function loadOrders() {
         tr.append(`<td>${o.id}</td>`);
         tr.append(`<td>${o.imie} ${o.nazwisko}</td>`);
         tr.append(`<td>${o.typ}</td>`);
+        tr.append(`<td>${o.tytuł}</td>`);
         tr.append(`<td>${o.data_utworzenia}</td>`);
         tr.append(`<td>${o.termin_realizacji}</td>`);
 
@@ -188,6 +189,7 @@ function openOrder(order, readOnly = false) {
   $("#selected-client").val(order.imie + " " + order.nazwisko);
   $("#order-desc").val(order.opis);
   $("#order-price").val(order.kwota);
+  $("#order-title").val(order.tytul);
 
   $("#order-date").val(order.termin_realizacji?.split(" ")[0]);
   $("#creation-date").val(order.data_utworzenia);

@@ -20,6 +20,7 @@ function loadOrdersController() {
       kwota: parseFloat($("#order-price").val()),
       termin: $("#order-date").val(),
       typ_id: parseInt($("#order-type").val()),
+      tytul: $("#order-title").val(),
     };
 
     console.log(payload);
