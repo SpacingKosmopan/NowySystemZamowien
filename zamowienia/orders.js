@@ -24,7 +24,7 @@ function loadOrders() {
         tr.append(`<td>${o.id}</td>`);
         tr.append(`<td>${o.imie} ${o.nazwisko}</td>`);
         tr.append(`<td>${o.typ}</td>`);
-        tr.append(`<td>${o.tytuł}</td>`);
+        tr.append(`<td>${o.tytul}</td>`);
         tr.append(`<td>${o.data_utworzenia}</td>`);
         tr.append(`<td>${o.termin_realizacji}</td>`);
 
