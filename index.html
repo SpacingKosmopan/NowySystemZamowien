@@ -66,7 +66,10 @@
           <div id="done-orders"></div>
           <div id="old-orders"></div>
         </div>
-        <canvas id="clock" width="300" height="300"></canvas>
+        <div id="clock-and-timer">
+          <canvas id="clock" width="300" height="300"></canvas>
+          <div id="timer"></div>
+        </div>
 
         <div id="fast-add-order">
           <p>Szybko Dodaj Zamówienie</p>
@@ -232,7 +235,7 @@
         const hrAngle = (hr * Math.PI) / 6 + (min * Math.PI) / 360;
 
         ctx.strokeStyle = "red";
-        hand(secAngle, r * 0.8, 2);
+        hand(secAngle, r * 0.8, 3);
 
         ctx.strokeStyle = "white";
         hand(minAngle, r * 0.65, 3);
@@ -265,6 +268,8 @@
       }
 
       function loadData() {
+        loadTimer();
+
         fetch("api/get_today_orders_count.php")
           .then((res) => {
             if (!res.ok) throw new Error("HTTP error " + res.status);
@@ -463,6 +468,24 @@
             })
             .catch((err) => console.error(err));
         });
+      }
+
+      function loadTimer() {
+        const timerDiv = document.querySelector("#timer");
+        const teraz = new Date();
+
+        const dzien = String(teraz.getDate()).padStart(2, "0");
+        const miesiac = String(teraz.getMonth() + 1).padStart(2, "0");
+        const rok = teraz.getFullYear();
+
+        const godzina = String(teraz.getHours()).padStart(2, "0");
+        const minuty = String(teraz.getMinutes()).padStart(2, "0");
+
+        const wynik = `${dzien}.${miesiac}.${rok} ${godzina}:${minuty}`;
+
+        timerDiv.innerHTML = wynik;
+
+        setTimeout(() => loadTimer(), 10000);
       }
     </script>
   </body>
