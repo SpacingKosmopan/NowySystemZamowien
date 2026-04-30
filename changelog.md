@@ -19,6 +19,7 @@
 ### Naprawione błędy
 
 - naprawiono błędy związane z nieprawidłowym kodowaniem polskich znaków (szczególnie przy dodawaniu nowego klienta)
+- powiadomienia o błędach w formularzu nie pokazywały się, przez co po niepoprawnym uzupełnieniu formularza resetował się on, a zamówienie nie dodawało
 
 ---
 
