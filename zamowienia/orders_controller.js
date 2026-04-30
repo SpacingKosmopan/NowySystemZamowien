@@ -14,6 +14,27 @@ function loadOrdersController() {
   $("#btn-save").on("click", function (e) {
     e.preventDefault();
 
+    if ($("#client-id").val() === "") {
+      $("#client-form .error-tooltip").removeClass("hidden");
+      return;
+    } else {
+      $("#client-form .error-tooltip").addClass("hidden");
+    }
+
+    if ($("#order-type").val() === "") {
+      $("#order-type-form .error-tooltip").removeClass("hidden");
+      return;
+    } else {
+      $("#order-type-form .error-tooltip").addClass("hidden");
+    }
+
+    if ($("#order-date").val() === "") {
+      $("#date-form .error-tooltip").removeClass("hidden");
+      return;
+    } else {
+      $("#date-form .error-tooltip").addClass("hidden");
+    }
+
     const payload = {
       client_id: parseInt($("#client-id").val()),
       opis: $("#order-desc").val(),

@@ -137,6 +137,7 @@
                 id="selected-client"
                 disabled
                 readonly
+                required
               />
               <button class="select-client">Wybierz</button>
               <div class="error-tooltip hidden">
@@ -145,9 +146,12 @@
               <input type="hidden" name="client-id" id="client-id" />
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="order-type-form">
               <label>Typ zamówienia</label>
               <select name="order-type" id="order-type"></select>
+              <div class="error-tooltip hidden">
+                Wymagane jest podanie typu zamówienia
+              </div>
             </div>
 
             <div class="form-group" id="description-form">
