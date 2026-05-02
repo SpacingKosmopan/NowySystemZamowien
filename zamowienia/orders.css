@@ -286,7 +286,8 @@
 
 /* ZAPISZ */
 #btn-save,
-#btn-client {
+#btn-client,
+#btn-edit {
   background-color: #28b7ff;
   color: white;
   border: none;

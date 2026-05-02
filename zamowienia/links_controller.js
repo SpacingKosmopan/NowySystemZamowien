@@ -70,13 +70,13 @@ function renderLinks() {
 
   links.forEach((link, index) => {
     const li = $(`
-            <li>
-              <a href="${link.href}" target="_blank" class="link-title" data-index="${index}">
-                ${link.title}
-              </a>
-              <i class="bi bi-trash delete-link" data-index="${index}" style="cursor:pointer;margin-left:8px;"></i>
-            </li>
-        `);
+      <li>
+        <a href="${link.href}" target="_blank" class="link-title" data-index="${index}">
+          ${link.title}
+        </a>
+        <i class="bi bi-trash delete-link" data-index="${index}" style="cursor:pointer;margin-left:8px;"></i>
+      </li>
+      `);
 
     list.append(li);
   });
