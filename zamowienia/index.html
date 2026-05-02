@@ -390,6 +390,7 @@
         form
           .find("input, select, textarea, button")
           .not("#btn-cancel")
+          .not("#btn-client")
           .prop("disabled", disabled);
 
         if (disabled) {

@@ -4,6 +4,8 @@
 
 ### Zmiany
 
+- zaktualizowano zamówienia danego klienta i dodano przycisk Zobacz zamówienia klienta przy wyświetlaniu zamówienia
+
 ---
 
 ## v1.4

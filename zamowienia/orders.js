@@ -212,14 +212,12 @@ function openOrder(order, readOnly = false) {
   $("#creation-date").val(order.data_utworzenia);
 
   $("#order-left-btns").html("");
-  if (!readOnly) {
-    $("#order-left-btns").append(
-      `<button type="button" id="btn-client">Zobacz klienta</button>`,
-    );
-    $("#btn-client").on("click", function () {
-      window.location.href = `../klienci/zamowienia/index.html?id=${order.klient_id}`;
-    });
-  }
+  $("#order-left-btns").append(
+    `<button type="button" id="btn-client">Zobacz klienta</button>`,
+  );
+  $("#btn-client").on("click", function () {
+    window.location.href = `../klienci/zamowienia/index.html?id=${order.klient_id}`;
+  });
 
   loadOrderTypes(order.typ_id);
 
