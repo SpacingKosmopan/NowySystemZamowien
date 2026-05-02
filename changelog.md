@@ -1,6 +1,6 @@
 ## v1.4
 
-> DATA WYDANIA
+> 02.05.2026
 
 ### Zmiany
 
