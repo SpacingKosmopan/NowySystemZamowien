@@ -1,6 +1,12 @@
+## v1.4
+
+> DATA WYDANIA
+
+---
+
 ## v1.3
 
-> data
+> 30.04.2026
 
 ### Nowości
 
