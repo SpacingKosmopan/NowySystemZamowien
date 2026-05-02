@@ -2,6 +2,10 @@
 
 > DATA WYDANIA
 
+### Naprawione błędy
+
+- naprawiono błąd związany z prawidłowym kodowaniem polskich znaków (znowu)
+
 ---
 
 ## v1.3
