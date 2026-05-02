@@ -8,6 +8,10 @@
 - kalendarz wyświetla teraz nie tylko klienta, ale i tytuł
 - dodano możliwość edytowania zamówienia podczas wyświetlania (readonly)
 
+### Naprawione błędy
+
+- typ zamówienia w zamówieniach klienta był niepoprawnie wyświetlany
+
 ---
 
 ## v1.4
