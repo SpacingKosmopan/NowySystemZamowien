@@ -351,7 +351,6 @@
           })
           .then((data) => {
             data.forEach((order) => {
-              //http://localhost/3tpjs/html/NowySystemZamowien/zamowienia/index.html?id=17&isViewOnly=true
               closestOrdersDiv.append(` <div class='closest-order' data-id="${order.id}">
               <label><i class="bi bi-clock-fill"></i>
                 ${order.termin_realizacji}
@@ -398,8 +397,6 @@
         fetch("klienci/api/list.php")
           .then((res) => {
             if (!res.ok) throw new Error("HTTP error " + res.status);
-            /*const dup = res;
-            console.log(dup.text());*/
             return res.json();
           })
           .then((data) => {
