@@ -11,6 +11,7 @@
 - naprawiono błąd związany z prawidłowym kodowaniem polskich znaków (znowu)
 - informacja o nieuzupełneniu tytułu nie pojawiała się (tytuł zamówienia jest obowiązkowy)
 - gdy wyświetlała się informacja o błędzie, po anulowaniu dodawania zamówienia nie znikała ona
+- sortowanie po kliencie nie działało (właściwie to całe sortowanie nie działało, więc naprawiono wszystko + usunięto sortowanie po kliencie w głównej zakładce z zamówieniami)
 
 ---
 
