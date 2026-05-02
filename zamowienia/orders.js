@@ -63,6 +63,7 @@ function loadOrders() {
       const status = $("#status-sort").val()?.toLowerCase();
       const type = $("#title-sort").val();
       const month = $("#month-filter").val();
+      const title = $("#order-title-filter").val().trim();
 
       //console.log(`Filter: ${status} + ${type} + ${month}`);
 
@@ -70,6 +71,13 @@ function loadOrders() {
         // sort by status
         //console.log(`Status: sorting_${status} - ${o.status}`);
         if (status !== "" && o.status !== status) return false;
+
+        //console.log(`Title: sorting_${title} - ${o.tytul}`);
+        if (
+          title !== "" &&
+          !o.tytul?.toLowerCase().includes(title.toLowerCase())
+        )
+          return false;
 
         // type sort
         //console.log(`Type: sorting_${type} - ${o.typ_id}`);
@@ -91,6 +99,7 @@ function loadOrders() {
     $("#month-filter").on("change", filterOrders);
     $("#title-sort").on("change", filterOrders);
     $("#status-sort").on("change", filterOrders);
+    $("#order-title-filter").on("input", filterOrders);
 
     // LOAD ORDERS
     $.getJSON("api/fetch_orders.php", (data) => {
@@ -182,6 +191,7 @@ function loadOrders() {
       $("#status-sort").val("");
       $("#title-sort").val("");
       $("#month-filter").val("");
+      $("#order-title-filter").val("");
 
       renderTable(ordersData);
     });

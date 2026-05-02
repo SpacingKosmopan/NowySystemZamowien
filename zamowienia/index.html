@@ -84,6 +84,14 @@
             <i class="sort-type-name">Czas</i>
             <select id="month-filter"></select>
           </label>
+          <label for="order-title-sort" class="sort-type">
+            <i class="sort-type-name">Tytuł</i>
+            <input
+              type="text"
+              name="order-title-filter"
+              id="order-title-filter"
+            />
+          </label>
           <span class="vertical-separator"></span>
           <button id="reset-sort">Resetuj</button>
         </nav>
@@ -356,7 +364,6 @@
         const isViewOnly = new URLSearchParams(window.location.search).has(
           "isViewOnly",
         );
-        console.log(`isViewOnly:${isViewOnly}`);
         setFormDisabled(isViewOnly);
       }
 

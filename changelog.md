@@ -6,6 +6,7 @@
 
 - dodano wyświetlanie zamówień złożonych przez konkretnego klienta (należy wejść w klientów -> zamówienia)
 - teraz klienci są sortowani alfabetycznie po nazwisku w zakładce "Klienci"
+- dodano sortowanie zamówień po Tytule
 
 ### Naprawione błędy
 
