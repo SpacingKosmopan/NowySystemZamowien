@@ -9,6 +9,7 @@
 ### Naprawione błędy
 
 - naprawiono błąd związany z prawidłowym kodowaniem polskich znaków (znowu)
+- informacja o nieuzupełneniu tytułu nie pojawiała się (tytuł zamówienia jest obowiązkowy)
 
 ---
 

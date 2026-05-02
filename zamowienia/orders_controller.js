@@ -28,6 +28,13 @@ function loadOrdersController() {
       $("#order-type-form .error-tooltip").addClass("hidden");
     }
 
+    if ($("#order-title").val() === "") {
+      $("#order-title-form .error-tooltip").removeClass("hidden");
+      return;
+    } else {
+      $("#order-title-form .error-tooltip").addClass("hidden");
+    }
+
     if ($("#order-date").val() === "") {
       $("#date-form .error-tooltip").removeClass("hidden");
       return;
