@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 require "db.php";
 
-$sql = "SELECT * FROM klienci ORDER BY id DESC";
+$sql = "SELECT * FROM klienci ORDER BY nazwisko ASC";
 
 $result = $conn->query($sql);
 

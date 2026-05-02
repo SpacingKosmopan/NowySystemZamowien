@@ -2,6 +2,10 @@
 
 > DATA WYDANIA
 
+### Zmiany
+
+- teraz klienci są sortowani alfabetycznie po nazwisku w zakładce "Klienci"
+
 ### Naprawione błędy
 
 - naprawiono błąd związany z prawidłowym kodowaniem polskich znaków (znowu)
