@@ -85,7 +85,7 @@ function loadData() {
         }
         eventDiv.setAttribute("data-id", event.id);
 
-        // Tytuł
+        // Typ
         const titleEl = document.createElement("div");
         titleEl.classList.add("event-title");
         titleEl.textContent = event.tytul;
@@ -95,8 +95,14 @@ function loadData() {
         clientEl.classList.add("event-client");
         clientEl.textContent = event.klient;
 
+        // Tytuł
+        const orderTitleEl = document.createElement("div");
+        orderTitleEl.classList.add("event-order-title");
+        orderTitleEl.textContent = event.tytul_zamowienia;
+
         eventDiv.appendChild(titleEl);
         eventDiv.appendChild(clientEl);
+        eventDiv.appendChild(orderTitleEl);
         eventsContainer.appendChild(eventDiv);
 
         eventDiv.addEventListener("click", (e) => {

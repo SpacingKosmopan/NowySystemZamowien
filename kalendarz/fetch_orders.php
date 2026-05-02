@@ -37,7 +37,8 @@ SELECT
     k.imie,
     k.nazwisko,
     o.termin_realizacji,
-    o.status
+    o.status,
+    o.tytul AS tytul_zamowienia
 FROM zamowienia o
 JOIN klienci k ON o.klient_id = k.id
 JOIN typy_zamowien t ON t.id = o.typ_id
@@ -73,7 +74,8 @@ while ($row = $result->fetch_assoc()) {
         "tytul" => $row['tytul'],
         "klient" => $row['imie'] . ' ' . $row['nazwisko'],
         "data" => $date,
-        "status" => $row['status']
+        "status" => $row['status'],
+        "tytul_zamowienia" => $row['tytul_zamowienia']
     ];
 }
 
