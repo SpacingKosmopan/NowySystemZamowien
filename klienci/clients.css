@@ -129,6 +129,7 @@ td button:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
+  width: 500px;
 }
 
 /* delikatny overlay dla czytelności */

@@ -285,7 +285,8 @@
 }
 
 /* ZAPISZ */
-#btn-save {
+#btn-save,
+#btn-client {
   background-color: #28b7ff;
   color: white;
   border: none;
