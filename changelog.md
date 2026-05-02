@@ -10,6 +10,7 @@
 
 - naprawiono błąd związany z prawidłowym kodowaniem polskich znaków (znowu)
 - informacja o nieuzupełneniu tytułu nie pojawiała się (tytuł zamówienia jest obowiązkowy)
+- gdy wyświetlała się informacja o błędzie, po anulowaniu dodawania zamówienia nie znikała ona
 
 ---
 

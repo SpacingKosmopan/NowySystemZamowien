@@ -9,6 +9,11 @@ function loadOrdersController() {
     $("#new-order-form")[0].reset();
     $("#new-order-overlay").addClass("hidden");
     editingOrderId = null;
+
+    $("#order-title-form .error-tooltip").addClass("hidden");
+    $("#client-form .error-tooltip").addClass("hidden");
+    $("#order-type-form .error-tooltip").addClass("hidden");
+    $("#date-form .error-tooltip").addClass("hidden");
   });
 
   $("#btn-save").on("click", function (e) {
