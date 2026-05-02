@@ -136,7 +136,7 @@
           path = tempPath;
         }
 
-        function loadData() {
+        function fetchData() {
           fetch("api/get_all.php")
             .then(async (res) => {
               return res;
@@ -151,6 +151,7 @@
               }
             })
             .then((data) => {
+              console.log(data);
               allData = data;
 
               if (currentParentId !== null) {
@@ -312,7 +313,6 @@
             }),
           })
             .then(async (res) => {
-              console.log(`api/add_structure.php->`, res);
               return res;
             })
             .then(async (res) => {
@@ -325,9 +325,10 @@
               }
             })
             .then((res) => {
+              //console.log(res);
               if (res.success) {
                 document.getElementById("folder-name").value = "";
-                loadData();
+                fetchData();
               } else {
                 alert("Błąd dodawania folderu");
               }
@@ -372,7 +373,7 @@
               .getElementById("new-order-overlay")
               .classList.add("hidden");
 
-            loadData();
+            fetchData();
 
             window.location.href = "./tekst/index.php?id=" + data.tekst_id;
           } catch (err) {
@@ -387,7 +388,7 @@
         };
 
         // ================== INIT ==================
-        loadData();
+        fetchData();
 
         // ================== DELETE FOLDER ==================
         function attachDeleteFolderButtons() {
@@ -423,7 +424,7 @@
 
                 if (result.success) {
                   alert("Folder i cała zawartość zostały usunięte.");
-                  loadData();
+                  fetchData();
                 } else {
                   alert("Błąd przy usuwaniu folderu");
                 }
