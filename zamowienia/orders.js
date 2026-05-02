@@ -243,7 +243,7 @@ function loadMonthFilter() {
   select.empty();
   select.append(`<option value="">-- Wszystkie --</option>`);
 
-  for (let year = 2026; year <= 2040; year++) {
+  for (let year = 2010; year <= 2040; year++) {
     for (let month = 1; month <= 12; month++) {
       const label = `${year}-${String(month).padStart(2, "0")}`;
       const text = `${monthNames[month - 1]} ${year}`;
