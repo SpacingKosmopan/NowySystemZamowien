@@ -187,17 +187,19 @@
               </div>
             </div>
 
-            <div class="form-group" id="date-form">
-              <label>Termin realizacji</label>
-              <input type="date" id="order-date" />
-              <div class="error-tooltip hidden">
-                Należy podać prawidłowy termin realizacji
+            <div id="date-row">
+              <div class="form-group" id="date-form">
+                <label>Termin realizacji</label>
+                <input type="date" id="order-date" />
+                <div class="error-tooltip hidden">
+                  Należy podać prawidłowy termin realizacji
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label>Data utworzenia</label>
-              <input type="text" id="creation-date" disabled readonly />
+              <div class="form-group">
+                <label>Data utworzenia</label>
+                <input type="text" id="creation-date" disabled readonly />
+              </div>
             </div>
 
             <!-- tagi -->
@@ -221,7 +223,7 @@
             </div>
 
             <!-- załączniki -->
-            <div class="form-group">
+            <div class="form-group" id="attachments-group">
               <label>Załączniki</label>
               <button id="add-link">
                 <i class="bi bi-plus-circle-fill"></i>
@@ -253,10 +255,10 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="photos-group">
               <label>Zdjęcia</label>
               <button type="button" id="edit-photos">
-                <i class="bi bi-plus-circle-fill"></i> Wybierz zdjęcia
+                <i class="bi bi-plus-circle-fill"></i>
               </button>
               <div id="photos-selected"></div>
             </div>
