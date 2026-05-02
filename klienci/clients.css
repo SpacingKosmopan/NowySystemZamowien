@@ -109,3 +109,151 @@ td button:hover {
 #content {
   padding: 10px;
 }
+
+.orders-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* KARTA */
+.order-card {
+  background: linear-gradient(135deg, #00c8ff, #008cff);
+  color: #fff;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* delikatny overlay dla czytelności */
+.order-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+/* hover */
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+}
+
+/* HEADER */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.order-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+/* META 2 KOLUMNY */
+.order-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.meta-left,
+.meta-right {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.order-meta p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* CENA */
+.order-price {
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 900;
+  font-size: 16px;
+  color: #00ff8c;
+  position: relative;
+  z-index: 1;
+}
+
+/* STATUS */
+.order-status {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+/* TAGI */
+.order-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.tag {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  backdrop-filter: blur(4px);
+}
+
+/* STATUSY */
+.status-pending {
+  background: #ffe29a;
+  color: #1a1a1a;
+}
+
+.status-done {
+  background: #98ff9d;
+  color: #0b1a10;
+}
+
+.status-cancel {
+  background: #ff8f8e;
+  color: white;
+}
+
+.status-realis {
+  background: #95ceff;
+  color: white;
+}
+
+.status-unknown {
+  background: #7f8c8d;
+  color: white;
+}
+
+/* EMPTY */
+.empty-state {
+  margin-top: 20px;
+  opacity: 0.6;
+  font-style: italic;
+}

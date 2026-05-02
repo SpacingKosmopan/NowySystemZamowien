@@ -347,7 +347,17 @@
         loadTagsController();
 
         loadOrdersController();
-        loadOrders();
+        await loadOrders();
+
+        applyViewMode();
+      }
+
+      function applyViewMode() {
+        const isViewOnly = new URLSearchParams(window.location.search).has(
+          "isViewOnly",
+        );
+        console.log(`isViewOnly:${isViewOnly}`);
+        setFormDisabled(isViewOnly);
       }
 
       // =====
@@ -366,10 +376,6 @@
           const formatted = formatDatePL(date);
           $("#creation-date").val(formatted);
         }
-
-        const params = new URLSearchParams(window.location.search);
-        if (params.get("isViewOnly")) setFormDisabled();
-        else setFormDisabled(false);
       });
 
       function setFormDisabled(disabled = true) {

@@ -64,17 +64,6 @@
       <section id="content"></section>
     </main>
 
-    <!-- wyskakujące okienko -->
-    <div class="overlay hidden" id="new-order-overlay">
-      <div class="modal">
-        <div class="container">
-          <input type="text" id="text-name" placeholder="Nazwa tekstu" />
-          <button id="add-text-btn">Dodaj tekst</button>
-          <button id="cancel-btn">Anuluj</button>
-        </div>
-      </div>
-    </div>
-
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../script.js"></script>
     <script>
@@ -182,6 +171,7 @@
               <td>
                 <button onclick="editClient(${c.id})">Edytuj</button>
                 <button onclick="deleteClient(${c.id})">Usuń</button>
+                <button onclick="showOrders(${c.id})">Zamówienia</button>
               </td>
             </tr>
           `;
@@ -260,6 +250,10 @@
             alert("Błąd");
           }
         });
+      }
+
+      async function showOrders(clientId) {
+        window.location.href = `zamowienia/index.html?id=${clientId}`;
       }
     </script>
   </body>
