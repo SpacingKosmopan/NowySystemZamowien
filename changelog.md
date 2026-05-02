@@ -1,6 +1,25 @@
+## v1.4
+
+> 02.05.2026
+
+### Zmiany
+
+- dodano wyświetlanie zamówień złożonych przez konkretnego klienta (należy wejść w klientów -> zamówienia)
+- teraz klienci są sortowani alfabetycznie po nazwisku w zakładce "Klienci"
+- dodano sortowanie zamówień po Tytule
+
+### Naprawione błędy
+
+- naprawiono błąd związany z prawidłowym kodowaniem polskich znaków (znowu)
+- informacja o nieuzupełneniu tytułu nie pojawiała się (tytuł zamówienia jest obowiązkowy)
+- gdy wyświetlała się informacja o błędzie, po anulowaniu dodawania zamówienia nie znikała ona
+- sortowanie po kliencie nie działało (właściwie to całe sortowanie nie działało, więc naprawiono wszystko + usunięto sortowanie po kliencie w głównej zakładce z zamówieniami)
+
+---
+
 ## v1.3
 
-> data
+> 30.04.2026
 
 ### Nowości
 

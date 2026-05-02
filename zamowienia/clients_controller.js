@@ -52,6 +52,7 @@ function loadClientsController() {
     $("#client-modal").hide();
   });
 }
+
 // ---------- DANE ----------
 let clients = [];
 let clientsLoaded = false;

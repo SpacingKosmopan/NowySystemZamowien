@@ -58,21 +58,35 @@ function loadOrders() {
       });
     }
 
+    // ===== SORTOWANIE =====
     function filterOrders() {
       const status = $("#status-sort").val()?.toLowerCase();
       const type = $("#title-sort").val();
-      const client = $("#client-selected").val()?.toLowerCase();
       const month = $("#month-filter").val();
+      const title = $("#order-title-filter").val().trim();
+
+      //console.log(`Filter: ${status} + ${type} + ${month}`);
 
       const filtered = ordersData.filter((o) => {
-        if (status && o.status.toLowerCase() !== status) return false;
-        if (type && String(o.typ_id) !== String(type)) return false;
+        // sort by status
+        //console.log(`Status: sorting_${status} - ${o.status}`);
+        if (status !== "" && o.status !== status) return false;
 
-        const name = `${o.imie} ${o.nazwisko}`.toLowerCase();
-        if (client && !name.includes(client)) return false;
+        //console.log(`Title: sorting_${title} - ${o.tytul}`);
+        if (
+          title !== "" &&
+          !o.tytul?.toLowerCase().includes(title.toLowerCase())
+        )
+          return false;
 
-        if (month) {
+        // type sort
+        //console.log(`Type: sorting_${type} - ${o.typ_id}`);
+        if (type && type !== o.typ_id) return false;
+
+        // date sort
+        if (month && month !== "") {
           const orderMonth = o.termin_realizacji?.slice(0, 7); // YYYY-MM
+          //console.log(`Month: sorting_${month} - ${orderMonth}`);
           if (orderMonth !== month) return false;
         }
 
@@ -82,12 +96,10 @@ function loadOrders() {
       renderTable(filtered);
     }
 
-    $("#status-sort, #title-sort, #client-selected").on(
-      "input change",
-      filterOrders,
-    );
-
     $("#month-filter").on("change", filterOrders);
+    $("#title-sort").on("change", filterOrders);
+    $("#status-sort").on("change", filterOrders);
+    $("#order-title-filter").on("input", filterOrders);
 
     // LOAD ORDERS
     $.getJSON("api/fetch_orders.php", (data) => {
@@ -100,13 +112,14 @@ function loadOrders() {
     function handleDeepLink() {
       const params = new URLSearchParams(window.location.search);
       const orderId = params.get("id");
+      const isViewOnly = params.get("isViewOnly");
 
       if (!orderId) return;
 
       const order = ordersData.find((o) => o.id == orderId);
       if (!order) return;
 
-      openOrder(order, false);
+      openOrder(order, isViewOnly);
     }
 
     // DELETE
@@ -177,8 +190,8 @@ function loadOrders() {
     $("#reset-sort").on("click", function () {
       $("#status-sort").val("");
       $("#title-sort").val("");
-      $("#client-selected").val("");
       $("#month-filter").val("");
+      $("#order-title-filter").val("");
 
       renderTable(ordersData);
     });
@@ -189,7 +202,7 @@ let ordersData = [];
 function openOrder(order, readOnly = false) {
   editingOrderId = readOnly ? null : order.id;
 
-  $("#client-id").val(order.client_id ?? order.klient_id ?? 0);
+  $("#client-id").val(order.klient_id ?? 0);
   $("#selected-client").val(order.imie + " " + order.nazwisko);
   $("#order-desc").val(order.opis);
   $("#order-price").val(order.kwota);
@@ -228,6 +241,7 @@ const monthNames = [
 function loadMonthFilter() {
   const select = $("#month-filter");
   select.empty();
+  select.append(`<option value="">-- Wszystkie --</option>`);
 
   for (let year = 2026; year <= 2040; year++) {
     for (let month = 1; month <= 12; month++) {

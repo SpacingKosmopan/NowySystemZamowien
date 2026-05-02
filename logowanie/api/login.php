@@ -31,8 +31,11 @@ if ($status !== 'aktywny') {
     exit;
 }
 
-// OK
 session_regenerate_id(true);
 $_SESSION['user_id'] = $user['id'];
+
+$update = $conn->prepare("UPDATE uzytkownicy SET ostatnie_logowanie = NOW() WHERE id = ?");
+$update->bind_param("i", $user['id']);
+$update->execute();
 
 echo "OK";
