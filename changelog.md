@@ -7,6 +7,7 @@
 - zaktualizowano zamówienia danego klienta i dodano przycisk Zobacz zamówienia klienta przy wyświetlaniu zamówienia
 - kalendarz wyświetla teraz nie tylko klienta, ale i tytuł
 - dodano możliwość edytowania zamówienia podczas wyświetlania (readonly)
+- zaktualizowano wygląd formularza zamówienia
 
 ### Naprawione błędy
 

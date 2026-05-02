@@ -574,7 +574,8 @@ button:active {
   margin: 0 auto;
 }
 
-#client-form button {
+#client-form button,
+#clear-client {
   width: 75px;
   height: 30px;
 
