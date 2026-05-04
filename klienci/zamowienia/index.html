@@ -10,6 +10,7 @@
     />
     <link rel="stylesheet" href="../../style.css" />
     <link rel="stylesheet" href="../clients.css" />
+    <link rel="stylesheet" href="../../root_colors.css" />
     <!-- RUBIK FONT -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,7 +62,24 @@
         <nav class="subnav"></nav>
       </header>
       <hr class="horizontal-separator" />
-      <section id="content"></section>
+      <section id="content">
+        <button id="back-btn">Wróć</button>
+        <div id="which-client"></div>
+        <table id="client-orders-content">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tytuł</th>
+              <th>Typ</th>
+              <th>Cena</th>
+              <th>Termin</th>
+              <th>Status</th>
+              <th>Utworzono</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -101,84 +119,59 @@
       }
 
       async function showOrders(clientId) {
+        const clientRes = await fetch(`../api/get.php?id=${clientId}`);
+        const clientJson = await clientRes.json();
+        if (!clientJson.success) {
+          alert("Błąd wczytywania klienta");
+          console.error(clientJson);
+          return;
+        }
+        $("#which-client").append(
+          `<h1>${clientJson.client.imie} ${clientJson.client.nazwisko}</h1>`,
+        );
+
         const res = await fetch(`../api/orders.php?id=${clientId}`);
         const c = await res.json();
         if (!c.success) {
-          alert("Błąd wczytywania");
+          alert("Błąd wczytywania zamówień");
           console.error(c);
           return;
         }
 
-        content.html("");
-        content.html(content.html() + `<button onClick=goBack()>Wróć</button>`);
+        $("#back-btn").on("click", goBack);
         renderOrders(c.orders);
       }
 
       function renderOrders(orders) {
-        const container = $("#content");
+        const container = $("#client-orders-content tbody");
+        container.empty();
 
         if (!orders || orders.length === 0) {
-          container.append(
-            `<p class="empty-state">Brak zamówień dla tego klienta</p>`,
-          );
+          container.append(`<tr><td colspan="7">Brak zamówień</td></tr>`);
           return;
         }
-
-        const wrapper = $('<div class="orders-wrapper"></div>');
 
         orders.forEach((order) => {
           const statusClass = getStatusClass(order.status);
 
-          // tagi: backend daje "null" jako string -> trzeba ogarnąć
-          let tags = [];
-          try {
-            tags = JSON.parse(order.tagi);
-            if (!Array.isArray(tags)) tags = [];
-          } catch {
-            tags = [];
-          }
+          const row = $(`
+        <tr class="trow">
+          <td>${order.id}</td>
+          <td>${order.tytul}</td>
+          <td>${order.typ}</td>
+          <td>${order.kwota} zł</td>
+          <td>${order.termin_realizacji}</td>
+          <td><span class="order-status ${statusClass}">${order.status}</span></td>
+          <td>${order.data_utworzenia}</td>
+        </tr>
+      `);
 
-          const card = $(`
-      <div class="order-card" data-id="${order.id}">
-        <div class="order-header">
-          <span class="order-title">${order.tytul || "Brak tytułu"}</span>
-          <span class="order-status ${statusClass}">${order.status}</span>
-        </div>
-
-<div class="order-meta">
-  <div class="meta-left">
-    <p><strong>ID:</strong> ${order.id}</p>
-    <p><strong>Typ:</strong> ${order.typ_id}</p>
-  </div>
-
-  <div class="meta-right">
-    <p><strong>Utworzono:</strong> ${order.data_utworzenia}</p>
-    <p><strong>Termin:</strong> ${order.termin_realizacji}</p>
-  </div>
-</div>
-
-        <div class="order-footer">
-          <span class="order-price">${order.kwota} PLN</span>
-        </div>
-
-        ${
-          tags.length
-            ? `<div class="order-tags">
-                ${tags.map((t) => `<span class="tag">${t}</span>`).join("")}
-              </div>`
-            : ""
-        }
-      </div>
-    `);
-
-          card.on("click", function () {
+          row.on("click", function () {
             window.location.href = `../../zamowienia/index.html?id=${order.id}&isViewOnly=true`;
           });
 
-          wrapper.append(card);
+          container.append(row);
         });
-
-        container.append(wrapper);
       }
 
       function getStatusClass(status) {
@@ -186,14 +179,10 @@
 
         const s = status.toLowerCase();
 
-        if (s.includes("nowe") || s.includes("pending"))
-          return "status-pending";
-        if (s.includes("zrealizowane") || s.includes("done"))
-          return "status-done";
-        if (s.includes("anulowane") || s.includes("cancel"))
-          return "status-cancel";
-        if (s.includes("w realizacji") || s.includes("in realisation"))
-          return "status-realis";
+        if (s.includes("nowe")) return "status-new";
+        if (s.includes("zrealizowane")) return "status-done";
+        if (s.includes("anulowane")) return "status-cancel";
+        if (s.includes("w realizacji")) return "status-in-progress";
 
         return "status-unknown";
       }

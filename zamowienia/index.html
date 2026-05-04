@@ -81,7 +81,7 @@
             <select id="title-sort"></select>
           </label>
           <label for="date-sort" class="sort-type">
-            <i class="sort-type-name">Czas</i>
+            <i class="sort-type-name">Termin realizacji</i>
             <select id="month-filter"></select>
           </label>
           <label for="order-title-sort" class="sort-type">
@@ -107,7 +107,7 @@
                 <th>Klient</th>
                 <th>Typ zamówienia</th>
                 <th>Tytuł</th>
-                <th>Data</th>
+                <th>Data utworzenia</th>
                 <th>Termin</th>
                 <th>Status</th>
                 <th>Akcje</th>
@@ -187,17 +187,19 @@
               </div>
             </div>
 
-            <div class="form-group" id="date-form">
-              <label>Termin realizacji</label>
-              <input type="date" id="order-date" />
-              <div class="error-tooltip hidden">
-                Należy podać prawidłowy termin realizacji
+            <div id="date-row">
+              <div class="form-group" id="date-form">
+                <label>Termin realizacji</label>
+                <input type="date" id="order-date" />
+                <div class="error-tooltip hidden">
+                  Należy podać prawidłowy termin realizacji
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label>Data utworzenia</label>
-              <input type="text" id="creation-date" disabled readonly />
+              <div class="form-group">
+                <label>Data utworzenia</label>
+                <input type="text" id="creation-date" disabled readonly />
+              </div>
             </div>
 
             <!-- tagi -->
@@ -221,7 +223,7 @@
             </div>
 
             <!-- załączniki -->
-            <div class="form-group">
+            <div class="form-group" id="attachments-group">
               <label>Załączniki</label>
               <button id="add-link">
                 <i class="bi bi-plus-circle-fill"></i>
@@ -253,22 +255,21 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="photos-group">
               <label>Zdjęcia</label>
               <button type="button" id="edit-photos">
-                <i class="bi bi-plus-circle-fill"></i> Wybierz zdjęcia
+                <i class="bi bi-plus-circle-fill"></i>
               </button>
               <div id="photos-selected"></div>
             </div>
 
             <div class="modal-actions">
-              <div class="left-actions">
-                <button id="btn-delete">Usuń</button>
-              </div>
+              <div class="left-actions" id="order-left-btns"></div>
 
-              <div class="right-actions">
-                <button type="button" id="btn-cancel">Anuluj</button>
+              <div class="right-actions" id="order-right-btns">
                 <button type="submit" id="btn-save">Zapisz</button>
+                <button type="button" id="btn-cancel">Anuluj</button>
+                <button id="btn-delete" type="button">Usuń</button>
               </div>
             </div>
           </div>
@@ -281,6 +282,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3>Wybierz zdjęcia</h3>
+          <input
+            type="text"
+            name="photos-search"
+            id="photos-search"
+            placeholder="Szukaj..."
+          />
           <button id="photos-showbox-close-button">&times;</button>
         </div>
         <div id="photos-list-container">
@@ -391,6 +398,8 @@
         form
           .find("input, select, textarea, button")
           .not("#btn-cancel")
+          .not("#btn-client")
+          .not("#btn-edit")
           .prop("disabled", disabled);
 
         if (disabled) {

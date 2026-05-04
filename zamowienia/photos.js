@@ -96,15 +96,16 @@ async function loadPhotos() {
       });
 
       const label = document.createElement("label");
+      const fileName = document.createElement("span");
+      fileName.classList.add("photo-name");
+      fileName.textContent = photo.nazwa_pliku;
       label.appendChild(checkbox);
-      label.appendChild(document.createTextNode(" " + photo.nazwa_pliku));
+      label.appendChild(fileName);
 
       // miniatura dla jpg/png
       if (photo.sciezka.match(/\.(jpg|jpeg|png)$/i)) {
         const img = document.createElement("img");
         img.src = "../galeria/uploads/" + photo.sciezka;
-        img.width = 80;
-        img.style.marginLeft = "5px";
         img.style.borderRadius = "5px";
         img.style.objectFit = "cover";
         label.appendChild(img);

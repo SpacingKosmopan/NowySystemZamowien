@@ -16,9 +16,6 @@ if (!isset($_SESSION['user_id'])) {
 
 require_once "db.php";
 
-/*
-    DB CHECK
-*/
 if (!isset($conn) || $conn->connect_error) {
     http_response_code(500);
     echo json_encode([
@@ -27,9 +24,6 @@ if (!isset($conn) || $conn->connect_error) {
     exit;
 }
 
-/*
-    SQL — bez duplikatów, czysty SELECT
-*/
 $sql = "
 SELECT 
     o.id AS order_id,
@@ -37,7 +31,8 @@ SELECT
     k.imie,
     k.nazwisko,
     o.termin_realizacji,
-    o.status
+    o.status,
+    o.tytul AS tytul_zamowienia
 FROM zamowienia o
 JOIN klienci k ON o.klient_id = k.id
 JOIN typy_zamowien t ON t.id = o.typ_id
@@ -57,9 +52,7 @@ if (!$result) {
 
 $events = [];
 
-/*
-    Grupowanie po dacie
-*/
+/* Grupowanie po dacie */
 while ($row = $result->fetch_assoc()) {
 
     $date = $row['termin_realizacji'];
@@ -73,11 +66,9 @@ while ($row = $result->fetch_assoc()) {
         "tytul" => $row['tytul'],
         "klient" => $row['imie'] . ' ' . $row['nazwisko'],
         "data" => $date,
-        "status" => $row['status']
+        "status" => $row['status'],
+        "tytul_zamowienia" => $row['tytul_zamowienia']
     ];
 }
 
-/*
-    Zwracamy JSON zawsze w poprawnym formacie
-*/
 echo json_encode($events, JSON_UNESCAPED_UNICODE);

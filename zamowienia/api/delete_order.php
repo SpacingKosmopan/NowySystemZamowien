@@ -12,17 +12,27 @@ if (!isset($_SESSION['user_id'])) {
 require 'db.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
+
+if (!isset($data["id"])) {
+    http_response_code(400);
+    echo json_encode(["status" => false, "error" => "NO_ID"]);
+    exit;
+}
+
 $id = $data["id"];
 
-// zabezpieczenie (BARDZO ważne)
 $stmt = $conn->prepare("DELETE FROM zamowienia WHERE id = ?");
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {
-    echo "OK";
+    echo json_encode(["success" => true]);
 } else {
     http_response_code(500);
-    echo "Błąd";
+    echo json_encode([
+        "success" => false,
+        "error" => "error 500 - stmt execution",
+        "status" => 500
+    ]);
 }
 
 $stmt->close();

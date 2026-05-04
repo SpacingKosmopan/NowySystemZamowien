@@ -73,7 +73,7 @@
 
 /* Dzień dzisiejszy */
 .day.today {
-  background-color: #007bff;
+  background: linear-gradient(135deg, #0077ff, #00ddff);
   color: #fff;
   font-weight: 600;
 }
@@ -94,7 +94,7 @@
 
 /* Kafelki wydarzeń */
 .day .event {
-  color: #007bff;
+  color: #000000;
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 0.85rem;
@@ -104,25 +104,29 @@
 }
 
 .day .anulowane-event {
-  background-color: rgb(224, 224, 224);
+  background-color: var(--cal-canceled);
 }
 
 .day .nowe-event {
-  background-color: #e7f1ff;
+  background-color: var(--cal-new-event);
 }
 
 .day .w-realizacji-event {
-  background-color: rgb(196, 255, 196);
+  background-color: var(--cal-in-progress);
 }
 
 .day .zrealizowane-event {
-  background-color: rgb(244, 215, 255);
+  background-color: var(--cal-done);
 }
 
 .day .zalegle-event {
-  background-color: rgb(255, 209, 209);
+  background-color: var(--cal-overdue);
 }
 
 .day .event:hover {
   cursor: pointer;
+}
+
+.event-client {
+  font-weight: bold;
 }
