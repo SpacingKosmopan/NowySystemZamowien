@@ -16,6 +16,34 @@ function loadOrdersController() {
     $("#date-form .error-tooltip").addClass("hidden");
   });
 
+  $("#btn-delete").on("click", function () {
+    const ok = confirm(
+      `Czy jesteś pewien, że chcesz usunąć zamówienie ${editingOrderId}?`,
+    );
+    if (!ok) return;
+
+    fetch("api/delete_order.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: editingOrderId }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.success) {
+          alert("Błąd usuwania");
+          console.error(res.error);
+          return;
+        }
+
+        ordersData = ordersData.filter((o) => o.id != editingOrderId);
+        $("#new-order-form")[0].reset();
+        clearInputs();
+        alert("Usunięto.");
+        $("#new-order-overlay").addClass("hidden");
+        window.location.reload();
+      });
+  });
+
   $("#btn-save").on("click", function (e) {
     e.preventDefault();
 
@@ -56,7 +84,7 @@ function loadOrdersController() {
       tytul: $("#order-title").val(),
     };
 
-    console.log(payload);
+    //console.log(payload);
 
     const url = editingOrderId ? "api/update_order.php" : "api/add_order.php";
 

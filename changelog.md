@@ -7,13 +7,14 @@
 - zaktualizowano zamówienia danego klienta i dodano przycisk Zobacz zamówienia klienta przy wyświetlaniu zamówienia
 - kalendarz wyświetla teraz nie tylko klienta, ale i tytuł
 - dodano możliwość edytowania zamówienia podczas wyświetlania (readonly)
-- zaktualizowano wygląd formularza zamówienia oraz kilku innych miejsc
+- zaktualizowano wygląd formularza zamówienia oraz kilku innych miejsc, m.in. podglądu zamówień danego klienta
 - dodano prymitywne ustawienia, dostęp do nich znajduje się w dolnej części Dashboardu
-- !!! dodano możliwość zmiany koloru wydarzeń w kalendarzu i statusu zamówień !!!
+- dodano możliwość zmiany koloru wydarzeń w kalendarzu i statusu zamówień - funkcja ta będzie intensywnie rozwijana w przyszłości. Będzie obejmowała nie tylko zmianę kolorów
 
 ### Naprawione błędy
 
 - typ zamówienia w zamówieniach klienta był niepoprawnie wyświetlany
+- przycisk usunięcia zamówienia z widoku zamówienia nie działał
 
 ---
 
