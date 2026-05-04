@@ -16,9 +16,6 @@ if (!isset($_SESSION['user_id'])) {
 
 require_once "db.php";
 
-/*
-    DB CHECK
-*/
 if (!isset($conn) || $conn->connect_error) {
     http_response_code(500);
     echo json_encode([
@@ -27,9 +24,6 @@ if (!isset($conn) || $conn->connect_error) {
     exit;
 }
 
-/*
-    SQL — bez duplikatów, czysty SELECT
-*/
 $sql = "
 SELECT 
     o.id AS order_id,
@@ -58,9 +52,7 @@ if (!$result) {
 
 $events = [];
 
-/*
-    Grupowanie po dacie
-*/
+/* Grupowanie po dacie */
 while ($row = $result->fetch_assoc()) {
 
     $date = $row['termin_realizacji'];
@@ -79,7 +71,4 @@ while ($row = $result->fetch_assoc()) {
     ];
 }
 
-/*
-    Zwracamy JSON zawsze w poprawnym formacie
-*/
 echo json_encode($events, JSON_UNESCAPED_UNICODE);

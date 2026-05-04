@@ -55,9 +55,7 @@ function loadData() {
     }
   }
 
-  // ======================
   // Wyświetlanie wydarzeń
-  // ======================
   function displayEventsForDay(dayDiv, dateKey) {
     const eventsContainer = document.createElement("div");
     eventsContainer.classList.add("events");

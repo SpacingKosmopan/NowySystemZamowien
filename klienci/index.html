@@ -204,7 +204,8 @@
 
       async function editClient(id) {
         const res = await fetch(`api/get.php?id=${id}`);
-        const c = await res.json();
+        const client = await res.json();
+        const c = client.c;
 
         const html = `
           <h2>

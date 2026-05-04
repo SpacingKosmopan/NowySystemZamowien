@@ -126,3 +126,7 @@
 .day .event:hover {
   cursor: pointer;
 }
+
+.event-client {
+  font-weight: bold;
+}
