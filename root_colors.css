@@ -1,0 +1,95 @@
+:root {
+  /* CALENDAR */
+  --cal-new-event: #ffe29a;
+  --cal-done: #98ff9d;
+  --cal-in-progress: #95ceff;
+  --cal-canceled: #e4e4e4;
+  --cal-overdue: #ff8f8e;
+
+  /* ORDERS */
+  --ord-new: #ffe29a;
+  --ord-done: #98ff9d;
+  --ord-in-progress: #95ceff;
+  --ord-canceled: #ff8f8e;
+}
+
+#theme-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 24px;
+
+  background: #ffffff;
+  border-radius: 12px;
+
+  color: #1f1f1f;
+  font-family: "Rubik", sans-serif;
+
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+#theme-form h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #222;
+
+  border-left: 4px solid #4caf50;
+  padding-left: 10px;
+}
+
+#theme-form label {
+  display: block;
+
+  margin-top: 12px;
+  margin-bottom: 4px;
+
+  font-size: 13px;
+  color: #555;
+}
+
+#theme-form input[type="color"] {
+  width: 100%;
+  height: 38px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  background: #fff;
+  cursor: pointer;
+
+  padding: 2px;
+}
+
+#theme-form hr {
+  margin: 18px 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+#save-theme {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #4caf50;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+#save-theme:hover {
+  background: #43a047;
+  transform: translateY(-1px);
+}

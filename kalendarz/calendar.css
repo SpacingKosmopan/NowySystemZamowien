@@ -104,23 +104,23 @@
 }
 
 .day .anulowane-event {
-  background-color: rgb(224, 224, 224);
+  background-color: var(--cal-canceled);
 }
 
 .day .nowe-event {
-  background-color: #ffe29a;
+  background-color: var(--cal-new-event);
 }
 
 .day .w-realizacji-event {
-  background-color: #95ceff;
+  background-color: var(--cal-in-progress);
 }
 
 .day .zrealizowane-event {
-  background-color: #98ff9d;
+  background-color: var(--cal-done);
 }
 
 .day .zalegle-event {
-  background-color: #ff8f8e;
+  background-color: var(--cal-overdue);
 }
 
 .day .event:hover {

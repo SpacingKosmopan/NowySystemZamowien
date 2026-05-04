@@ -112,19 +112,19 @@
 }
 
 .anulowane {
-  background-color: #ff8f8e;
+  background-color: var(--ord-canceled);
 }
 
 .nowe {
-  background-color: #ffe29a;
+  background-color: var(--ord-new);
 }
 
 .w-realizacji {
-  background-color: #95ceff;
+  background-color: var(--ord-in-progress);
 }
 
 .zrealizowane {
-  background-color: #98ff9d;
+  background-color: var(--ord-done);
 }
 
 /* zdjęcia */

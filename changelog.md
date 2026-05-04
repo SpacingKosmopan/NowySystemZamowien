@@ -8,6 +8,8 @@
 - kalendarz wyświetla teraz nie tylko klienta, ale i tytuł
 - dodano możliwość edytowania zamówienia podczas wyświetlania (readonly)
 - zaktualizowano wygląd formularza zamówienia oraz kilku innych miejsc
+- dodano prymitywne ustawienia, dostęp do nich znajduje się w dolnej części Dashboardu
+- !!! dodano możliwość zmiany koloru wydarzeń w kalendarzu i statusu zamówień !!!
 
 ### Naprawione błędy
 
