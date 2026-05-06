@@ -26,11 +26,12 @@ function loadPhotosController() {
     ?.addEventListener("input", loadPhotos);
 }
 
-let selectedPhotoIds = []; // globalnie dla formularza
-let allPhotos = []; // wszystkie zdjęcia z bazy
+let selectedPhotoIds = [];
+let allPhotos = [];
 
 // --- Render miniatur w formularzu ---
-function renderSelectedPhotos() {
+async function renderSelectedPhotos() {
+  await loadPhotos();
   const container = document.getElementById("photos-selected");
   container.innerHTML = "";
 

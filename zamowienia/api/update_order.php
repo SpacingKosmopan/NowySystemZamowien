@@ -19,12 +19,31 @@ $opis = $data["opis"];
 $kwota = $data["kwota"];
 $termin = $data["termin"];
 $typ_id = $data["typ_id"];
-$tagi = json_encode($data["tagi"]);
-$zalaczniki = json_encode($data["zalaczniki"]);
 $tytul = $data["tytul"];
 
+$tagi = json_encode($data["tagi"] ?? []);
+if ($tagi === false) {
+    die(json_encode([
+        "success" => false,
+        "json_error" => json_last_error_msg()
+    ]));
+}
+
+$zalaczniki = json_encode($data["zalaczniki"]);
+if ($zalaczniki === false) {
+    die(json_encode([
+        "success" => false,
+        "json_error" => json_last_error_msg()
+    ]));
+}
 
 $zdjecia = json_encode($data["zdjecia"] ?? []);
+if ($zdjecia === false) {
+    die(json_encode([
+        "success" => false,
+        "json_error" => json_last_error_msg()
+    ]));
+}
 
 $stmt = $conn->prepare("
 UPDATE zamowienia 
@@ -33,7 +52,7 @@ WHERE id = ?
 ");
 
 $stmt->bind_param(
-    "isdssssssi",
+    "isdsissssi",
     $client_id,
     $opis,
     $kwota,

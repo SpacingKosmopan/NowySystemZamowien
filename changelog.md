@@ -1,3 +1,24 @@
+## v1.6
+
+> Data
+
+### Zmiany i nowości
+
+- teraz ustawienia są zapisywane do pliku
+- zaktualizowano stopkę w Dashboardzie
+- poprawiono sortowanie zamówień:
+  - najpierw są nowe i w trakcie realizacji sortowane rosnąco po terminie realizacji
+  - dopiero później zrealizowane i anulowane sortowane malejąco po terminie realizacji
+- poprawiono stylowanie okienka z zamówieniem
+- dodano sortowanie klientów w zakładce z klientami
+
+### Naprawione błędy
+
+- po pierwszym uruchomieniu strony niektóre kolory z ustawień domyślnie były czarne
+- przy podglądaniu zamówienia z linku (w linku znajdowało się id zamówienia, np. zamowienia/index.html?id=n), po zapisie zamówienie otwierało się ponownie
+- naprawiono dodawanie zdjęć, tagów i linków do zamówienia
+- naprawiono edytowanie klienta
+
 ## v1.5
 
 > 04.05.2026

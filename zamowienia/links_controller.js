@@ -61,6 +61,7 @@ function loadLinksController() {
     renderLinks();
   });
 }
+
 let links = [];
 let editingIndex = null;
 

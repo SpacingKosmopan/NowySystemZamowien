@@ -5,7 +5,6 @@ function toggleDashboardNavbar() {
   document.body.classList.toggle("sidebar-closed");
 }
 
-// === STYLE ===
 const themeMap = {
   calNew: "--cal-new-event",
   calDone: "--cal-done",
@@ -19,42 +18,40 @@ const themeMap = {
   ordCanceled: "--ord-canceled",
 };
 
+async function loadColorsFromFile() {
+  const res = await fetch("/NowySystemZamowien/api/filesystem.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      action: "load",
+      filename: "colors.json",
+      content: JSON.stringify({}),
+    }),
+  });
+
+  const data = await res.json();
+  //console.log("script.js: ", data);
+  if (!data.success) return;
+
+  const parsed = JSON.parse(data.content);
+  //console.log("Wczytano dane:", parsed);
+  applyTheme(parsed);
+}
+
 function applyTheme(data) {
-  Object.entries(data).forEach(([key, value]) => {
+  //console.log("ApplyTheme: ", data);
+  for (const [key, value] of Object.entries(data)) {
     const cssVar = themeMap[key];
 
-    if (!cssVar) return;
+    if (!cssVar) {
+      console.warn("Brak mapowania dla:", key);
+      continue;
+    }
 
     document.documentElement.style.setProperty(cssVar, value);
-  });
-}
-
-function loadTheme() {
-  const raw = localStorage.getItem("theme-colors");
-  if (!raw) return;
-
-  const data = JSON.parse(raw);
-
-  applyTheme(data);
-}
-
-loadTheme();
-loadStyles();
-
-function loadStyles() {
-  const savedStyles = localStorage.getItem("saved-styles");
-
-  if (!savedStyles) {
-    console.warn("No saved styles");
-    return;
   }
-
-  const styles = JSON.parse(savedStyles);
-
-  styles.forEach((element) => {
-    document.documentElement.style.setProperty(
-      element.propertyName,
-      element.propertyValue,
-    );
-  });
 }
+
+loadColorsFromFile();

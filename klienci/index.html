@@ -61,7 +61,18 @@
         <nav class="subnav"></nav>
       </header>
       <hr class="horizontal-separator" />
-      <section id="content"></section>
+      <section id="wrapper">
+        <div id="content-header">
+          <h2>
+            <i class="space-20"></i>
+            Lista klientów
+          </h2>
+          <button id="add-new-client-btn" type="button">+ Nowy klient</button>
+          Sortowanie <button id="client-sort-by"></button>
+          <button id="client-sort-order"></button>
+        </div>
+        <div id="content"></div>
+      </section>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -86,12 +97,38 @@
 
       /////
 
-      function loadData() {
-        $(document).ready(function () {
-          renderClients();
+      // === SORT SETTINGS ===
+      let clientSortBy = "imie";
+      let clientSortOrder = "asc";
+
+      async function loadData() {
+        await renderClients();
+
+        $("#add-new-client-btn").on("click", renderNewClientForm);
+
+        const clientSortOrderBtn = $("#client-sort-order");
+        const clientSortByBtn = $("#client-sort-by");
+
+        clientSortByBtn.text(clientSortBy === "imie" ? "Imię" : "Nazwisko");
+        clientSortOrderBtn.text(
+          clientSortOrder === "asc" ? "Rosnąco" : "Malejąco",
+        );
+
+        // imię | nazwisko
+        $("#client-sort-by").on("click", async function () {
+          clientSortBy = clientSortBy === "imie" ? "nazwisko" : "imie";
+          clientSortByBtn.text(clientSortBy === "imie" ? "Imię" : "Nazwisko");
+          await renderClients();
         });
 
-        $(document).on("click", "#add-new-client-btn", renderNewClientForm);
+        // rosnąco | malejąco
+        $("#client-sort-order").on("click", async function () {
+          clientSortOrder = clientSortOrder === "asc" ? "desc" : "asc";
+          clientSortOrderBtn.text(
+            clientSortOrder === "asc" ? "Rosnąco" : "Malejąco",
+          );
+          await renderClients();
+        });
       }
 
       const content = $("#content");
@@ -107,7 +144,7 @@
             <input type="text" name="telefon" placeholder="Telefon">
             <input type="text" name="adres" placeholder="Adres">
             <button type="submit">Dodaj</button>
-            <button id="cancel">Anuluj</button>
+            <button id="cancel" type="button">Anuluj</button>
           </form>
         `;
 
@@ -144,13 +181,18 @@
 
       async function renderClients() {
         const res = await fetch("api/list.php");
-        const clients = await res.json();
+        let clients = await res.json();
+
+        clients.sort((a, b) => {
+          const valA = (a[clientSortBy] || "").toLowerCase();
+          const valB = (b[clientSortBy] || "").toLowerCase();
+
+          if (valA < valB) return clientSortOrder === "asc" ? -1 : 1;
+          if (valA > valB) return clientSortOrder === "asc" ? 1 : -1;
+          return 0;
+        });
 
         let html = `
-          <h2>
-            <i class="space-20"></i>
-            Lista klientów</h2>
-          <button id="add-new-client-btn" type="button">+ Nowy klient</button>
           <table border="1" cellpadding="8">
             <tr>
               <th>ID</th>
@@ -203,21 +245,23 @@
       }
 
       async function editClient(id) {
+        $("#content-header").addClass("hidden");
+
         const res = await fetch(`api/get.php?id=${id}`);
         const client = await res.json();
-        const c = client.c;
+        const c = client.client;
 
         const html = `
           <h2>
             <i class="space-20"></i>
             Edytuj klienta</h2>
           <form id="editForm">
-            <input type="hidden" name="id" value="${c.id}">
-            <input type="text" name="imie" value="${c.imie}" required>
-            <input type="text" name="nazwisko" value="${c.nazwisko}" required>
-            <input type="email" name="email" value="${c.email}" required>
-            <input type="text" name="telefon" value="${c.telefon || ""}">
-            <input type="text" name="adres" value="${c.adres || ""}">
+            <input type="hidden" name="id" value="${id}">
+            <input type="text" name="imie" value="${c.imie}" required placeholder="Imię...">
+            <input type="text" name="nazwisko" value="${c.nazwisko}" required placeholder="Nazwisko...">
+            <input type="email" name="email" value="${c.email}" required placeholder="Email...">
+            <input type="text" name="telefon" value="${c.telefon || ""}" placeholder="Telefon...">
+            <input type="text" name="adres" value="${c.adres || ""}" placeholder="Adres...">
             <button type="submit">Zapisz</button>
             <button id="cancel" type="button">Anuluj</button>
           </form>
@@ -226,8 +270,8 @@
         content.html(html);
 
         $("#editForm #cancel").on("click", function () {
-          $("#editForm")[0].reset();
           renderClients();
+          $("#content-header").removeClass("hidden");
         });
 
         $("#editForm").on("submit", async function (e) {
@@ -247,6 +291,7 @@
 
           if (data.success) {
             renderClients();
+            $("#content-header").removeClass("hidden");
           } else {
             alert("Błąd");
           }

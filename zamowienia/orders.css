@@ -2,10 +2,6 @@
 
 .showbox {
   position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 8px;
-
   border: 1px solid gray;
   border-radius: 15px;
   width: 300px;
@@ -54,6 +50,10 @@
 #tags-showbox-close-button:hover,
 #tags-showbox-save-close-button:hover {
   cursor: pointer;
+}
+
+#tags-showbox {
+  max-height: 200px;
 }
 
 #links {
@@ -336,7 +336,7 @@ button:active {
 
 /* ====== INPUTY ====== */
 
-#new-order-form input,
+#new-order-form input:not([type="checkbox"]),
 #new-order-form select,
 #new-order-form textarea {
   width: 100%;
@@ -375,7 +375,7 @@ button:active {
 /* textarea */
 
 #new-order-form textarea {
-  min-height: 90px;
+  min-height: 30px;
   resize: vertical;
 }
 
@@ -400,6 +400,11 @@ button:active {
 }
 
 #client-form label {
+  grid-column: 1 / -1;
+}
+
+#order-title-form,
+#description-form {
   grid-column: 1 / -1;
 }
 

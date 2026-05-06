@@ -20,15 +20,32 @@ $termin = $data["termin"];
 $typ_id = $data["typ_id"];
 $tytul = $data["tytul"];
 
-$tagi = json_encode($data["tagi"]);
+$tagi = json_encode($data["tagi"] ?? []);
+if ($tagi === false) {
+    die(json_encode([
+        "success" => false,
+        "json_error" => json_last_error_msg()
+    ]));
+}
+
 $zalaczniki = json_encode($data["zalaczniki"]);
+if ($zalaczniki === false) {
+    die(json_encode([
+        "success" => false,
+        "json_error" => json_last_error_msg()
+    ]));
+}
+
+$zdjecia = json_encode($data["zdjecia"] ?? []);
+if ($zdjecia === false) {
+    die(json_encode([
+        "success" => false,
+        "json_error" => json_last_error_msg()
+    ]));
+}
 
 $data_utworzenia = date("Y-m-d H:i:s");
 $status = "nowe";
-
-//
-
-$zdjecia = json_encode($data["zdjecia"] ?? []);
 
 $stmt = $conn->prepare(
 "INSERT INTO zamowienia 
