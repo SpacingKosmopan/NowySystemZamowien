@@ -5,6 +5,7 @@
 ### Zmiany i nowości
 
 - teraz ustawienia są zapisywane do pliku
+- zaktualizowano stopkę w Dashboardzie
 
 ### Naprawione błędy
 

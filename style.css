@@ -757,3 +757,52 @@ aside {
 
   transition: all 0.2s ease-in-out;
 }
+
+/* === FOOTER === */
+
+footer a {
+  display: inline;
+  margin: 0 5px;
+  color: #717171;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: 0.2s ease;
+  background-color: #f0f0f0;
+}
+
+footer a i {
+  font-size: 16px;
+  color: #717171;
+  transition: 0.2s ease;
+}
+
+footer a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #242424;
+  background-color: #e0e0e0;
+}
+
+footer a:hover i {
+  color: #242424;
+}
+
+#upd-text {
+  margin: 5px 0 0 0;
+  font-size: 14px;
+  color: #909090;
+  white-space: nowrap;
+  display: inline;
+}
+
+@media (max-width: 700px) {
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  footer a {
+    width: 100%;
+  }
+}
