@@ -1,6 +1,14 @@
+## v1.6.1 Hotfix
+
+> 06.05.2026
+
+naprawiono błąd związany z wczytywaniem kolorów, który powodował, że zamówienia znikały
+
+---
+
 ## v1.6
 
-> Data
+> 06.05.2026
 
 ### Zmiany i nowości
 
@@ -18,6 +26,8 @@
 - przy podglądaniu zamówienia z linku (w linku znajdowało się id zamówienia, np. zamowienia/index.html?id=n), po zapisie zamówienie otwierało się ponownie
 - naprawiono dodawanie zdjęć, tagów i linków do zamówienia
 - naprawiono edytowanie klienta
+
+---
 
 ## v1.5
 
