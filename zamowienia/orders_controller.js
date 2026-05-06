@@ -14,6 +14,8 @@ function loadOrdersController() {
     $("#client-form .error-tooltip").addClass("hidden");
     $("#order-type-form .error-tooltip").addClass("hidden");
     $("#date-form .error-tooltip").addClass("hidden");
+
+    clearInputs();
   });
 
   $("#btn-delete").on("click", function () {
@@ -40,7 +42,7 @@ function loadOrdersController() {
         clearInputs();
         alert("Usunięto.");
         $("#new-order-overlay").addClass("hidden");
-        window.location.reload();
+        window.location.href = "../zamowienia/index.html";
       });
   });
 
@@ -82,13 +84,16 @@ function loadOrdersController() {
       termin: $("#order-date").val(),
       typ_id: parseInt($("#order-type").val()),
       tytul: $("#order-title").val(),
+      tagi: selectedTags,
+      zalaczniki: links,
+      zdjecia: selectedPhotoIds,
     };
-
-    //console.log(payload);
 
     const url = editingOrderId ? "api/update_order.php" : "api/add_order.php";
 
     if (editingOrderId) payload.id = editingOrderId;
+
+    // console.log(payload);
 
     fetch(url, {
       method: "POST",
@@ -111,16 +116,16 @@ function clearInputs() {
   document.querySelector("#order-date").value = "";
   document.querySelector("#order-title").value = "";
 
-  document.querySelector("#tags").innerHTML = "";
-  document.querySelector("#links").innerHTML = "";
-  document.querySelector("#photos-selected").innerHTML = "";
-
   $("#new-order-form")[0].reset();
 
   selectedTags = [];
   tempSelectedTags = [];
   selectedPhotoIds = [];
   links = [];
+
+  document.querySelector("#tags").innerHTML = "";
+  document.querySelector("#links").innerHTML = "";
+  document.querySelector("#photos-selected").innerHTML = "";
 
   setCreationDate();
 }

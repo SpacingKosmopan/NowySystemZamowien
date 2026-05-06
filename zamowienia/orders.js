@@ -11,6 +11,8 @@ function loadOrders() {
     }
 
     function renderTable(data) {
+      //console.log("Rendering: ", data);
+
       tbody.empty();
 
       if (!data.length) {
@@ -160,7 +162,7 @@ function loadOrders() {
         })
         .catch(() => {
           alert("Nie udało się zmienić statusu");
-          renderTable(ordersData); // rollback UI
+          renderTable(ordersData);
         });
 
       const order = ordersData.find((o) => o.id == id);
@@ -199,9 +201,11 @@ function loadOrders() {
 }
 let ordersData = [];
 
-function openOrder(order, readOnly = false) {
+async function openOrder(order, readOnly = false) {
+  //console.log("Opening order: ", order);
   editingOrderId = readOnly ? null : order.id;
 
+  // normal data
   $("#client-id").val(order.klient_id ?? 0);
   $("#selected-client").val(order.imie + " " + order.nazwisko);
   $("#order-desc").val(order.opis);
@@ -210,6 +214,14 @@ function openOrder(order, readOnly = false) {
 
   $("#order-date").val(order.termin_realizacji?.split(" ")[0]);
   $("#creation-date").val(order.data_utworzenia);
+
+  // links, photos and tags
+
+  links = [...order.zalaczniki];
+  renderLinks(order.zalaczniki);
+  await renderTags(order.tagi);
+  selectedPhotoIds = [...order.zdjecia];
+  renderSelectedPhotos();
 
   $("#order-left-btns").html("");
 
@@ -234,6 +246,23 @@ function openOrder(order, readOnly = false) {
   $("#new-order-overlay").removeClass("hidden");
 
   setFormDisabled(readOnly);
+}
+
+async function renderTags(data) {
+  $("#tags").html("");
+
+  const res = await fetch("api/fetch_tags.php");
+  const fetchedTags = await res.json();
+  selectedTags = [...fetchedTags];
+
+  fetchedTags.forEach((tag) => {
+    const tagId = Number.parseInt(tag.id);
+    if (Number.isInteger(tagId)) {
+      if (data.includes(tagId)) {
+        $("#tags").append(`<span class="tag">${tag.name}</span>`);
+      }
+    }
+  });
 }
 
 function setCreationDateFromNow() {

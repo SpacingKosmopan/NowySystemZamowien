@@ -67,6 +67,10 @@ if (!$result) {
 $orders = [];
 
 while ($row = $result->fetch_assoc()) {
+    $row["tagi"] = json_decode($row["tagi"], true) ?? [];
+    $row["zalaczniki"] = json_decode($row["zalaczniki"], true) ?? [];
+    $row["zdjecia"] = json_decode($row["zdjecia"], true) ?? [];
+
     $orders[] = $row;
 }
 
