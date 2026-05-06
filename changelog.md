@@ -1,3 +1,15 @@
+## v1.6
+
+> Data
+
+### Zmiany i nowości
+
+- teraz ustawienia są zapisywane do pliku
+
+### Naprawione błędy
+
+- po pierwszym uruchomieniu strony niektóre kolory z ustawień domyślnie były czarne
+
 ## v1.5
 
 > 04.05.2026

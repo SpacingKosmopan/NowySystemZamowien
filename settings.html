@@ -148,13 +148,13 @@
       function loadData() {
         document
           .getElementById("save-theme")
-          .addEventListener("click", saveTheme);
+          .addEventListener("click", saveColorsToFile);
 
-        syncFormWithStorage();
+        loadColorsFromFile();
       }
 
-      function saveTheme() {
-        const data = {
+      async function saveColorsToFile() {
+        const saveData = {
           calNew: document.getElementById("cal-new-event").value,
           calDone: document.getElementById("cal-done").value,
           calInProgress: document.getElementById("cal-in-progress").value,
@@ -167,27 +167,67 @@
           ordCanceled: document.getElementById("ord-canceled").value,
         };
 
-        localStorage.setItem("theme-colors", JSON.stringify(data));
-
-        alert("Zapisano");
+        fetch("/NowySystemZamowien/api/filesystem.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            action: "save",
+            filename: "colors.json",
+            content: JSON.stringify(saveData),
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            //console.log("Zapisano: ", saveData);
+            if (data.success == true) alert("Zapisano");
+            else alert("Błąd zapisu");
+          });
       }
 
-      function syncFormWithStorage() {
-        const raw = localStorage.getItem("theme-colors");
-        if (!raw) return;
+      async function loadColorsFromFile() {
+        const defaultColorsData = {
+          calNew: "#ffe29a",
+          calDone: "#98ff9d",
+          calInProgress: "#95ceff",
+          calCanceled: "#e4e4e4",
+          calOverdue: "#ff8f8e",
 
-        const data = JSON.parse(raw);
+          ordNew: "#ffe29a",
+          ordDone: "#98ff9d",
+          ordInProgress: "#95ceff",
+          ordCanceled: "#ff8f8e",
+        };
 
-        document.getElementById("cal-new-event").value = data.calNew;
-        document.getElementById("cal-done").value = data.calDone;
-        document.getElementById("cal-in-progress").value = data.calInProgress;
-        document.getElementById("cal-canceled").value = data.calCanceled;
-        document.getElementById("cal-overdue").value = data.calOverdue;
+        fetch("/NowySystemZamowien/api/filesystem.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            action: "load",
+            filename: "colors.json",
+            content: JSON.stringify(defaultColorsData),
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const parsed = JSON.parse(data.content);
 
-        document.getElementById("ord-new").value = data.ordNew;
-        document.getElementById("ord-done").value = data.ordDone;
-        document.getElementById("ord-in-progress").value = data.ordInProgress;
-        document.getElementById("ord-canceled").value = data.ordCanceled;
+            document.getElementById("cal-new-event").value = parsed.calNew;
+            document.getElementById("cal-done").value = parsed.calDone;
+            document.getElementById("cal-in-progress").value =
+              parsed.calInProgress;
+            document.getElementById("cal-canceled").value = parsed.calCanceled;
+            document.getElementById("cal-overdue").value = parsed.calOverdue;
+
+            document.getElementById("ord-new").value = parsed.ordNew;
+            document.getElementById("ord-done").value = parsed.ordDone;
+            document.getElementById("ord-in-progress").value =
+              parsed.ordInProgress;
+            document.getElementById("ord-canceled").value = parsed.ordCanceled;
+          });
       }
     </script>
   </body>
