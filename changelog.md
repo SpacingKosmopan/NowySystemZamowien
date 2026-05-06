@@ -9,6 +9,7 @@
 - poprawiono sortowanie zamówień:
   - najpierw są nowe i w trakcie realizacji sortowane rosnąco po terminie realizacji
   - dopiero później zrealizowane i anulowane sortowane malejąco po terminie realizacji
+- poprawiono stylowanie okienka z zamówieniem
 
 ### Naprawione błędy
 
