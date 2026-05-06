@@ -11,7 +11,7 @@ function loadOrders() {
     }
 
     function renderTable(data) {
-      //console.log("Rendering: ", data);
+      console.log("Rendering: ", data);
 
       tbody.empty();
 
@@ -104,12 +104,14 @@ function loadOrders() {
     $("#order-title-filter").on("input", filterOrders);
 
     // LOAD ORDERS
-    $.getJSON("api/fetch_orders.php", (data) => {
-      ordersData = data;
-      renderTable(ordersData);
-
-      handleDeepLink();
-    });
+    fetch("api/fetch_orders.php")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Loading orders...");
+        ordersData = data;
+        renderTable(ordersData);
+        handleDeepLink();
+      });
 
     function handleDeepLink() {
       const params = new URLSearchParams(window.location.search);
