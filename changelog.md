@@ -15,6 +15,7 @@
 
 - po pierwszym uruchomieniu strony niektóre kolory z ustawień domyślnie były czarne
 - przy podglądaniu zamówienia z linku (w linku znajdowało się id zamówienia, np. zamowienia/index.html?id=n), po zapisie zamówienie otwierało się ponownie
+- naprawiono dodawanie zdjęć, tagów i linków do zamówienia
 
 ## v1.5
 
