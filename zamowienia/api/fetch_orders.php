@@ -37,7 +37,23 @@ SELECT
 FROM zamowienia o
 JOIN klienci k ON o.klient_id = k.id
 JOIN typy_zamowien t ON t.id = o.typ_id
-ORDER BY o.data_utworzenia DESC
+ORDER BY
+  CASE
+    WHEN o.status IN ('nowe', 'w realizacji') THEN 0
+    ELSE 1
+  END ASC,
+
+  CASE
+    WHEN o.status IN ('nowe', 'w realizacji')
+      THEN o.termin_realizacji
+    ELSE NULL
+  END ASC,
+
+  CASE
+    WHEN o.status NOT IN ('nowe', 'w realizacji')
+      THEN o.termin_realizacji
+    ELSE NULL
+  END DESC;
 ";
 
 $result = $conn->query($sql);
