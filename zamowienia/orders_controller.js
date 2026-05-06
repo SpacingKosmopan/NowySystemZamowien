@@ -96,7 +96,8 @@ function loadOrdersController() {
       body: JSON.stringify(payload),
     }).then(() => {
       clearInputs();
-      location.reload();
+      //location.reload();
+      window.location.href = "../zamowienia/index.html";
     });
   });
 }

@@ -10,6 +10,7 @@
 ### Naprawione błędy
 
 - po pierwszym uruchomieniu strony niektóre kolory z ustawień domyślnie były czarne
+- przy podglądaniu zamówienia z linku (w linku znajdowało się id zamówienia, np. zamowienia/index.html?id=n), po zapisie zamówienie otwierało się ponownie
 
 ## v1.5
 
