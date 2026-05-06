@@ -19,6 +19,19 @@ const themeMap = {
 };
 
 async function loadColorsFromFile() {
+  const defaultColorsData = {
+    calNew: "#ffe29a",
+    calDone: "#98ff9d",
+    calInProgress: "#95ceff",
+    calCanceled: "#e4e4e4",
+    calOverdue: "#ff8f8e",
+
+    ordNew: "#ffe29a",
+    ordDone: "#98ff9d",
+    ordInProgress: "#95ceff",
+    ordCanceled: "#ff8f8e",
+  };
+
   const res = await fetch("/NowySystemZamowien/api/filesystem.php", {
     method: "POST",
     headers: {
@@ -27,7 +40,7 @@ async function loadColorsFromFile() {
     body: JSON.stringify({
       action: "load",
       filename: "colors.json",
-      content: JSON.stringify({}),
+      content: JSON.stringify(defaultColorsData),
     }),
   });
 
