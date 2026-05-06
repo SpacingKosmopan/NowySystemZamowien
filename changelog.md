@@ -2,7 +2,7 @@
 
 > 06.05.2026
 
-naprawiono błąd związany z wczytywaniem kolorów, który powodował, że zamówienia znikały
+naprawiono błąd, który powodował, że zamówienia znikały
 
 ---
 
