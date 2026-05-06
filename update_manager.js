@@ -40,5 +40,8 @@ checkUpdate().then((hasUpdate) => {
   if (hasUpdate) {
     document.querySelector("#upd-text").innerText =
       `Dostępna jest aktualizacja! Nowa wersja: ${remoteVersion}, obecnie zainstalowana wersja: ${localVersion}`;
+  } else {
+    document.querySelector("#upd-text").innerText =
+      `Obecnie zainstalowana wersja: ${localVersion}`;
   }
 });
