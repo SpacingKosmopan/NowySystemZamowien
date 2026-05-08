@@ -5,754 +5,7 @@ Zamówienia - linia 752
 
 # Dokumentacja techniczna – System Zarządzania Zamówieniami
 
-## Dashboard
-
-![Dashboard](images/dashboard.png)
-
-Podstrona pełni rolę głównego panelu administracyjnego aplikacji do zarządzania zamówieniami. Dashboard agreguje najważniejsze informacje systemowe oraz umożliwia szybki dostęp do kluczowych funkcji aplikacji.
-
-Użytkownik po zalogowaniu może:
-
-- sprawdzić status zamówień,
-- wyświetlić najbliższe terminy realizacji,
-- szybko dodać nowe zamówienie,
-- przejść do innych modułów systemu,
-- sprawdzić aktualną datę i godzinę,
-- monitorować stan autoryzacji użytkownika.
-
----
-
-### 1. Struktura HTML
-
-#### 1.1 Sekcja `<head>`
-
-W sekcji `head` znajdują się:
-
-##### Import biblioteki ikon Bootstrap Icons
-
-```html
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
-/>
-```
-
-Biblioteka odpowiada za wyświetlanie ikon używanych w interfejsie użytkownika.
-
-##### Import pliku CSS
-
-```html
-<link rel="stylesheet" href="style.css" />
-```
-
-Plik zawiera style całego dashboardu.
-
-##### Import fontu Rubik
-
-```html
-<link
-  href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-  rel="stylesheet"
-/>
-```
-
-Font Rubik jest używany jako główna czcionka aplikacji.
-
----
-
-#### 2. Nawigacja boczna (`aside`)
-
-Sekcja:
-
-```html
-<aside id="dashboard-navbar"></aside>
-```
-
-odpowiada za menu boczne aplikacji.
-
-##### Funkcje menu:
-
-- przejście do strony głównej,
-- przejście do modułu zamówień,
-- przejście do kalendarza,
-- przejście do klientów,
-- przejście do typów zamówień i tagów,
-- przejście do tekstów,
-- przejście do galerii.
-
-##### Mechanizm zwijania menu
-
-Element:
-
-```html
-<i
-  class="bi bi-chevron-double-left"
-  id="dashboard-toggle-visibility"
-  onclick="toggleDashboardNavbar()"
-></i>
-```
-
-wywołuje funkcję `toggleDashboardNavbar()`, która odpowiada za ukrywanie lub pokazywanie panelu bocznego.
-
-Funkcja została zaimplementowana w pliku `script.js`.
-
----
-
-#### 3. Główna zawartość strony (`main`)
-
-##### 3.1 Sekcja użytkownika
-
-```html
-<div id="user-section"></div>
-```
-
-Wyświetla:
-
-- status użytkownika,
-- avatar użytkownika.
-
-Kliknięcie avatara:
-
-```javascript
-$("#user-avatar").on("click", function () {
-  window.location.href = "logowanie/index.html";
-});
-```
-
-powoduje przejście do modułu logowania.
-
----
-
-#### 4. Mechanizm autoryzacji użytkownika
-
-##### Funkcja `checkAuth()`
-
-```javascript
-async function checkAuth() {
-```
-
-Funkcja sprawdza stan autoryzacji użytkownika poprzez żądanie:
-
-```javascript
-fetch("logowanie/api/auth.php");
-```
-
-###### Możliwe odpowiedzi serwera:
-
-| Kod HTTP | Znaczenie                |
-| -------- | ------------------------ |
-| 401      | użytkownik niezalogowany |
-| 403      | konto zablokowane        |
-| 200      | użytkownik zalogowany    |
-
-##### Funkcja `init()`
-
-Funkcja uruchamiana podczas startu aplikacji.
-
-Odpowiada za:
-
-- sprawdzenie autoryzacji,
-- przekierowanie do logowania,
-- blokadę dostępu dla nieaktywnych kont,
-- inicjalizację danych dashboardu.
-
-###### Fragment odpowiedzialny za przekierowanie:
-
-```javascript
-if (res.status === 401) {
-  window.location.href = "logowanie/index.html";
-  return;
-}
-```
-
----
-
-#### 5. Zegar analogowy Canvas
-
-Dashboard zawiera zegar analogowy renderowany przy pomocy elementu:
-
-```html
-<canvas id="clock" width="300" height="300"></canvas>
-```
-
-##### Funkcja `drawClock()`
-
-Funkcja odpowiada za:
-
-- rysowanie tarczy,
-- generowanie cyfr 1–12,
-- rysowanie wskazówek,
-- aktualizację czasu.
-
-###### Aktualizacja zegara
-
-```javascript
-setInterval(drawClock, 1000);
-```
-
-Zegar odświeżany jest co 1 sekundę.
-
-##### Wykorzystane elementy Canvas API
-
-- `ctx.arc()` – rysowanie okręgu,
-- `ctx.fill()` – wypełnienie tarczy,
-- `ctx.stroke()` – rysowanie obramowań,
-- `ctx.rotate()` – obracanie elementów,
-- `ctx.fillText()` – wyświetlanie numerów godzin.
-
----
-
-#### 6. Statystyki zamówień
-
-Dashboard wyświetla liczbę:
-
-- dzisiejszych zamówień,
-- zamówień w realizacji,
-- zamówień zakończonych,
-- zaległych zamówień.
-
-##### Pobieranie danych
-
-Dane pobierane są metodą `fetch()` z endpointów API:
-
-```javascript
-api / get_today_orders_count.php;
-api / get_orders_count.php;
-api / get_old_orders_count.php;
-```
-
-##### Obsługa błędów
-
-Każde zapytanie posiada obsługę błędów:
-
-```javascript
-.catch((err) => {
-  console.error(err);
-});
-```
-
----
-
-#### 7. Funkcja odmiany języka polskiego
-
-##### Funkcja `getPolishEnding()`
-
-Funkcja odpowiada za poprawną odmianę słowa „zamówienie”.
-
-###### Przykłady:
-
-| Liczba | Wynik      |
-| ------ | ---------- |
-| 1      | zamówienie |
-| 2      | zamówienia |
-| 5      | zamówień   |
-
-##### Implementacja
-
-```javascript
-function getPolishEnding(number, originalEnding)
-```
-
-Funkcja wykorzystuje instrukcję `switch` oraz analizę wartości liczbowych.
-
----
-
-#### 8. Najbliższe terminy realizacji
-
-Sekcja:
-
-```html
-<div id="closest-orders-container"></div>
-```
-
-wyświetla zamówienia o najbliższym terminie realizacji.
-
-##### Endpoint API
-
-```javascript
-api / get_closest_orders.php;
-```
-
-##### Dynamiczne generowanie elementów
-
-Każde zamówienie jest dodawane metodą:
-
-```javascript
-closestOrdersDiv.append();
-```
-
-##### Obsługa kliknięcia
-
-```javascript
-$("#closest-orders-container").on(
-  "click",
-  ".closest-order",
-  function () {
-```
-
-Po kliknięciu użytkownik zostaje przekierowany do widoku szczegółowego zamówienia.
-
----
-
-#### 9. Szybkie dodawanie zamówienia
-
-Sekcja umożliwia utworzenie zamówienia bez przechodzenia do pełnego formularza.
-
-##### Formularz
-
-```html
-<form id="fast-add-order-form"></form>
-```
-
-##### Pola formularza
-
-| Pole           | Opis              |
-| -------------- | ----------------- |
-| klient         | wybór klienta     |
-| typ zamówienia | wybór typu        |
-| tytuł          | nazwa zamówienia  |
-| opis           | opis zamówienia   |
-| data           | termin realizacji |
-
----
-
-#### 10. Ładowanie danych formularza
-
-##### Typy zamówień
-
-Dane pobierane z endpointu:
-
-```javascript
-fetch("typy_tagi/api/get_all_types.php");
-```
-
-##### Lista klientów
-
-Dane pobierane z:
-
-```javascript
-fetch("klienci/api/list.php");
-```
-
-###### Sortowanie klientów
-
-```javascript
-data.sort((a, b) => a.nazwisko.localeCompare(b.nazwisko, "pl"));
-```
-
-Sortowanie odbywa się alfabetycznie według nazwiska.
-
----
-
-#### 11. Walidacja formularza
-
-Przed wysłaniem formularza wykonywana jest walidacja:
-
-##### Sprawdzane warunki
-
-- czy wybrano klienta,
-- czy podano tytuł,
-- czy wybrano typ zamówienia,
-- poprawność identyfikatorów liczbowych.
-
-##### Przykład walidacji
-
-```javascript
-if (selectedClient === "") {
-  $("#fast-order-error").text("Podaj klienta");
-  return;
-}
-```
-
----
-
-#### 12. Dodawanie zamówienia
-
-##### Endpoint API
-
-```javascript
-api / fast_add_order.php;
-```
-
-##### Metoda HTTP
-
-```javascript
-POST;
-```
-
-##### Format danych
-
-```javascript
-body: JSON.stringify({
-  clientId,
-  typeId,
-  description,
-  date,
-  title,
-});
-```
-
-##### Po poprawnym dodaniu
-
-Użytkownik zostaje przekierowany do modułu zamówień:
-
-```javascript
-window.location.href = "zamowienia/index.html";
-```
-
----
-
-#### 13. Zegar cyfrowy
-
-Funkcja:
-
-```javascript
-function loadTimer()
-```
-
-odpowiada za wyświetlanie:
-
-- aktualnej daty,
-- aktualnej godziny.
-
-##### Format daty
-
-```text
-DD.MM.RRRR HH:MM
-```
-
-##### Automatyczna aktualizacja
-
-```javascript
-setTimeout(() => loadTimer(), 10000);
-```
-
-Odświeżanie następuje co 10 sekund.
-
----
-
-#### 14. Architektura komunikacji
-
-Frontend komunikuje się z backendem poprzez endpointy API zwracające dane JSON.
-
-Schemat działania:
-
-```text
-Frontend → fetch() → API PHP → Baza danych → JSON → Frontend
-```
-
----
-
-### 2. Moduł `update_manager.js`
-
-#### Cel modułu
-
-Plik `update_manager.js` odpowiada za sprawdzanie dostępności aktualizacji aplikacji poprzez porównanie lokalnej wersji systemu z wersją opublikowaną w repozytorium GitHub.
-
----
-
-#### Mechanizm działania
-
-System wykorzystuje dwa pliki tekstowe:
-
-| Plik                    | Funkcja                        |
-| ----------------------- | ------------------------------ |
-| `version.txt` (lokalny) | aktualnie zainstalowana wersja |
-| `version.txt` (GitHub)  | najnowsza dostępna wersja      |
-
----
-
-#### Pobieranie wersji zdalnej
-
-Funkcja:
-
-```javascript id="f7i7hu"
-getRemoteVersion();
-```
-
-pobiera numer najnowszej wersji z repozytorium GitHub przy użyciu `fetch()`.
-
-Źródło:
-
-```javascript id="7a5xg5"
-https://raw.githubusercontent.com/SpacingKosmopan/NowySystemZamowien/main/version.txt
-```
-
----
-
-#### Pobieranie wersji lokalnej
-
-Funkcja:
-
-```javascript id="3m7pov"
-getLocalVersion();
-```
-
-odczytuje lokalny plik `version.txt` znajdujący się w katalogu aplikacji.
-
----
-
-#### Sprawdzanie aktualizacji
-
-Funkcja:
-
-```javascript id="7f03cm"
-checkUpdate();
-```
-
-porównuje:
-
-- lokalną wersję aplikacji,
-- wersję zdalną.
-
-Porównanie wykonywane jest po usunięciu białych znaków metodą:
-
-```javascript id="g6c0c2"
-trim();
-```
-
----
-
-#### Informowanie użytkownika
-
-Po wykryciu nowej wersji system wyświetla komunikat:
-
-```text id="whgt8x"
-Dostępna jest aktualizacja!
-```
-
-Informacja renderowana jest w elemencie:
-
-```html id="xh0hbm"
-#upd-text
-```
-
----
-
-#### Obsługa błędów
-
-Każda operacja `fetch()` posiada obsługę wyjątków:
-
-```javascript id="90n1o2"
-try/catch
-```
-
-Błędy są logowane do konsoli przeglądarki.
-
----
-
-### 3. Moduł ustawień (`settings.html`)
-
-Moduł umożliwia personalizację kolorystyki aplikacji poprzez konfigurację kolorów statusów zamówień i kalendarza.
-
----
-
-#### 2. Funkcjonalność modułu
-
-##### Konfigurowane elementy
-
-###### Kalendarz
-
-- nowe zamówienie,
-- zrealizowane,
-- w realizacji,
-- anulowane,
-- zaległe.
-
-###### Zamówienia
-
-- nowe,
-- zrealizowane,
-- w realizacji,
-- anulowane.
-
----
-
-#### 3. System trwałego zapisu ustawień
-
-##### Mechanizm działania
-
-Ustawienia zapisywane są do pliku:
-
-```text
-colors.json
-```
-
-Komunikacja odbywa się przez endpoint:
-
-```text
-/api/filesystem.php
-```
-
----
-
-#### 4. Architektura API filesystem
-
-##### Operacje API
-
-| Operacja | Opis         |
-| -------- | ------------ |
-| save     | zapis pliku  |
-| load     | odczyt pliku |
-
----
-
-#### 5. Zapis ustawień
-
-##### Funkcja
-
-```javascript
-saveColorsToFile();
-```
-
-odpowiada za:
-
-- pobranie danych z formularza,
-- serializację do JSON,
-- wysłanie danych do backendu.
-
-##### Format danych
-
-```json
-{
-  "calNew": "#ffe29a",
-  "calDone": "#98ff9d"
-}
-```
-
----
-
-#### 6. Odczyt ustawień
-
-##### Funkcja
-
-```javascript
-loadColorsFromFile();
-```
-
-odpowiada za:
-
-- pobranie danych z pliku,
-- parsowanie JSON,
-- ustawienie wartości pól formularza.
-
----
-
-#### 7. Domyślna konfiguracja
-
-System posiada fallback defaults:
-
-```javascript
-const defaultColorsData = {
-```
-
-W przypadku braku pliku konfiguracyjnego system wykorzystuje domyślne wartości kolorów zapisane po stronie frontendowej.
-
----
-
-#### 8. Persystencja ustawień
-
-System:
-
-- zapisuje konfigurację,
-- odczytuje ją po restarcie,
-- utrzymuje stan aplikacji.
-  Tutaj dokumentacja powinna być już bardzo krótka, bo ten moduł jest prosty i robi jedną rzecz.
-
-Ale są 2 rzeczy, które są naprawdę ważne technicznie:
-
-- dynamiczny rendering Markdown,
-- renderowanie HTML z zewnętrznego pliku.
-
-To już jest coś więcej niż zwykły statyczny HTML.
-
----
-
-### 4. Moduł changeloga (`changelog.html`)
-
-Moduł odpowiada za wyświetlanie historii zmian aplikacji w formacie Markdown.
-
----
-
-### 2. Źródło danych
-
-Treść changeloga pobierana jest z pliku:
-
-```text id="rjx9r2"
-changelog.md
-```
-
-Plik zawiera historię zmian projektu w formacie Markdown.
-
----
-
-### 3. Dynamiczne renderowanie Markdown
-
-#### Mechanizm działania
-
-1. Frontend pobiera plik `.md` metodą `fetch()`
-2. Zawartość konwertowana jest do HTML
-3. HTML renderowany jest w kontenerze strony
-
----
-
-### 4. Biblioteka `marked.js`
-
-Aplikacja wykorzystuje bibliotekę:
-
-```html id="4v4xq0"
-https://cdn.jsdelivr.net/npm/marked/marked.min.js
-```
-
-Biblioteka odpowiada za konwersję Markdown → HTML.
-
----
-
-### 5. Funkcja `loadMd()`
-
-#### Odpowiedzialność funkcji
-
-```javascript id="i9d89j"
-async function loadMd()
-```
-
-Funkcja:
-
-- pobiera plik Markdown,
-- parsuje zawartość,
-- renderuje HTML w interfejsie użytkownika.
-
----
-
-### 6. Renderowanie treści
-
-Wygenerowany HTML umieszczany jest w elemencie:
-
-```html id="m91m2g"
-#changelog-content
-```
-
-przy użyciu:
-
-```javascript id="ryv7d7"
-$("#changelog-content").html(html);
-```
-
----
-
-### 7. Stylowanie Markdown
-
-Do formatowania treści wykorzystywany jest plik:
-
-```text id="2uw8sv"
-markdown.css
-```
-
-oraz klasa:
-
-```html id="dfszpo"
-markdown-body
-```
+- [Dashboard](README/DASHBOARD.md)
 
 ## `zamowienia/index.html`
 
@@ -1461,3 +714,577 @@ Moduł współpracuje z formularzem zamówień poprzez:
 | `#client-id`       | przechowywanie ID klienta  |
 | `#selected-client` | wyświetlanie nazwy klienta |
 | `#client-selected` | integracja z filtrowaniem  |
+
+### `links_controller.js`
+
+#### Opis pliku
+
+Plik odpowiada za obsługę załączników w formie linków przypisanych do zamówienia.
+Umożliwia:
+
+- dodawanie linków,
+- edytowanie istniejących linków,
+- usuwanie linków,
+- renderowanie listy linków w formularzu zamówienia.
+
+Dane przechowywane są tymczasowo w tablicy JavaScript `links`.
+
+---
+
+#### Główne elementy
+
+##### Zmienne globalne
+
+```js
+let links = [];
+let editingIndex = null;
+```
+
+###### `links`
+
+Tablica przechowująca wszystkie linki przypisane do aktualnie edytowanego zamówienia.
+
+Przykładowy element:
+
+```js
+{
+  title: "Projekt logo",
+  href: "https://example.com/logo.png"
+}
+```
+
+---
+
+###### `editingIndex`
+
+Przechowuje indeks aktualnie edytowanego linku.
+
+- `null` → dodawanie nowego linku,
+- liczba → edycja istniejącego linku.
+
+---
+
+#### Funkcja `loadLinksController()`
+
+###### Opis
+
+Funkcja inicjalizująca wszystkie event listenery związane z obsługą linków.
+
+Wywoływana podczas inicjalizacji strony zamówień.
+
+---
+
+#### Dodawanie nowego linku
+
+```js
+$("#add-link").on("click", function (e)
+```
+
+###### Działanie
+
+Po kliknięciu przycisku:
+
+1. resetowany jest `editingIndex`,
+2. czyszczone są pola formularza,
+3. otwierany jest modal `#links-showbox`.
+
+---
+
+#### Zapisywanie linku
+
+```js
+$("#links-showbox-save-close-button").on("click", function (e)
+```
+
+###### Działanie
+
+Po kliknięciu przycisku:
+
+1. pobierany jest tytuł i adres URL,
+2. wykonywana jest podstawowa walidacja,
+3. tworzony jest obiekt linku,
+4. link zostaje:
+   - dodany do tablicy,
+   - lub nadpisany podczas edycji,
+
+5. wykonywany jest ponowny render listy,
+6. modal zostaje zamknięty.
+
+---
+
+##### Walidacja
+
+```js
+if (!title || !href) return;
+```
+
+Sprawdzane jest jedynie, czy pola nie są puste.
+
+Nie jest wykonywana walidacja poprawności URL.
+
+---
+
+#### Zamknięcie okna edycji
+
+```js
+$("#links-showbox-close-button").on("click", function (e)
+```
+
+###### Działanie
+
+Ukrywa modal bez zapisywania zmian.
+
+---
+
+#### Edycja istniejącego linku
+
+```js
+$("#links").on("click", ".link-title", function (e)
+```
+
+###### Działanie
+
+Po kliknięciu w nazwę linku:
+
+1. pobierany jest indeks elementu,
+2. odczytywany jest obiekt z tablicy `links`,
+3. formularz zostaje uzupełniony danymi,
+4. ustawiany jest `editingIndex`,
+5. otwierany jest modal edycji.
+
+---
+
+#### Usuwanie linku
+
+```js
+$("#links").on("click", ".delete-link", function ()
+```
+
+###### Działanie
+
+1. pobierany jest indeks linku,
+2. wyświetlane jest okno potwierdzenia,
+3. element zostaje usunięty z tablicy `links`,
+4. wykonywany jest ponowny render listy.
+
+---
+
+#### Funkcja `renderLinks()`
+
+###### Opis
+
+Funkcja generuje listę linków widoczną w formularzu zamówienia.
+
+---
+
+##### Działanie
+
+###### 1. Czyszczenie listy
+
+```js
+list.empty();
+```
+
+Usuwane są wszystkie wcześniejsze elementy HTML.
+
+---
+
+###### 2. Generowanie nowych elementów
+
+Dla każdego linku tworzony jest element:
+
+```html
+<li>
+  <a href="..." target="_blank">...</a>
+  <i class="bi bi-trash"></i>
+</li>
+```
+
+---
+
+##### Elementy renderowane
+
+###### Link
+
+```html
+<a href="..." target="_blank"></a>
+```
+
+Po kliknięciu otwierany jest w nowej karcie przeglądarki.
+
+---
+
+###### Ikona usuwania
+
+```html
+<i class="bi bi-trash"></i>
+```
+
+Służy do usuwania linku.
+
+---
+
+#### Powiązania z innymi modułami
+
+Plik współpracuje z:
+
+- `orders_controller.js`
+- formularzem tworzenia i edycji zamówienia,
+- modalem `#links-showbox`.
+
+Tablica `links` jest wykorzystywana podczas zapisu zamówienia do backendu.
+
+---
+
+#### Zastosowane technologie
+
+- JavaScript
+- jQuery
+- Bootstrap Icons
+- dynamiczna manipulacja DOM
+- event delegation (`.on()`)
+
+---
+
+#### Logika działania modułu
+
+##### Schemat
+
+1. Użytkownik klika „Dodaj link”
+2. Otwiera się modal
+3. Użytkownik wpisuje dane
+4. Dane trafiają do tablicy `links`
+5. `renderLinks()` odświeża widok
+6. Link pojawia się na liście załączników
+
+---
+
+#### Uwagi techniczne
+
+##### Delegacja zdarzeń
+
+```js
+$("#links").on("click", ".link-title", ...)
+```
+
+Zastosowano delegację zdarzeń, ponieważ elementy listy są tworzone dynamicznie.
+
+---
+
+##### Przechowywanie danych
+
+Dane przechowywane są wyłącznie po stronie klienta do momentu zapisania zamówienia.
+
+---
+
+##### Renderowanie dynamiczne
+
+Widok listy jest każdorazowo generowany od nowa na podstawie aktualnej zawartości tablicy `links`.
+
+### `order_types_controller.js`
+
+#### Opis pliku
+
+Plik odpowiada za obsługę typów zamówień w systemie.
+
+Moduł realizuje:
+
+- pobieranie typów zamówień z backendu,
+- generowanie listy typów w formularzu zamówienia,
+- generowanie filtrów typów w widoku tabeli zamówień,
+- cache danych po stronie klienta.
+
+Typy zamówień są wykorzystywane podczas:
+
+- tworzenia zamówienia,
+- edycji zamówienia,
+- filtrowania listy zamówień.
+
+---
+
+#### Zmienne globalne
+
+```js
+let orderTypes = [];
+```
+
+###### Opis
+
+Tablica przechowująca wszystkie pobrane typy zamówień.
+
+Przykładowy obiekt:
+
+```js
+{
+  id: 1,
+  tytul: "Projekt graficzny"
+}
+```
+
+---
+
+#### Funkcja `loadOrderTypesController()`
+
+```js
+function loadOrderTypesController() {}
+```
+
+###### Opis
+
+Funkcja inicjalizacyjna kontrolera.
+
+Obecnie nie zawiera logiki.
+
+Może zostać wykorzystana w przyszłości do:
+
+- inicjalizacji event listenerów,
+- preloadingu danych,
+- konfiguracji modułu.
+
+---
+
+#### Sekcja formularza zamówienia
+
+##### Funkcja `loadOrderTypes(selectedId = null)`
+
+###### Opis
+
+Funkcja pobiera typy zamówień z backendu i generuje listę `<select>` w formularzu zamówienia.
+
+---
+
+##### Parametry
+
+###### `selectedId`
+
+```js
+selectedId = null;
+```
+
+ID typu zamówienia, który ma zostać automatycznie zaznaczony.
+
+Wykorzystywane głównie podczas edycji istniejącego zamówienia.
+
+---
+
+##### Mechanizm cache
+
+```js
+if (orderTypes.length > 0)
+```
+
+Jeżeli dane zostały już wcześniej pobrane:
+
+- nie wykonywany jest kolejny request HTTP,
+- wykorzystywana jest lokalna tablica `orderTypes`.
+
+Zmniejsza to liczbę zapytań do backendu.
+
+---
+
+##### Pobieranie danych
+
+```js
+fetch("api/fetch_order_types.php");
+```
+
+Endpoint zwraca listę wszystkich typów zamówień w formacie JSON.
+
+---
+
+##### Przetwarzanie danych
+
+Po pobraniu:
+
+1. dane zapisywane są do `orderTypes`,
+2. wywoływana jest funkcja renderująca formularz.
+
+---
+
+#### Funkcja `renderOrderTypesForm(selectedId = null)`
+
+###### Opis
+
+Funkcja generuje elementy `<option>` w formularzu zamówienia.
+
+---
+
+##### Generowanie domyślnej opcji
+
+```js
+<select>
+  <option value="">-- wybierz --</option>
+</select>
+```
+
+Pusta opcja wymusza świadomy wybór typu zamówienia przez użytkownika.
+
+---
+
+##### Generowanie listy typów
+
+Dla każdego typu tworzony jest:
+
+```html
+<option value="ID">NAZWA</option>
+```
+
+---
+
+##### Automatyczne zaznaczenie wartości
+
+```js
+const selected = selectedId == t.id ? "selected" : "";
+```
+
+Jeżeli `selectedId` odpowiada aktualnemu elementowi:
+
+- opcja zostaje automatycznie zaznaczona.
+
+Mechanizm używany przy edycji zamówień.
+
+---
+
+#### Sekcja filtrowania tabeli
+
+##### Funkcja `loadOrderTypesFilter()`
+
+###### Opis
+
+Pobiera typy zamówień z backendu i generuje filtr typów w tabeli zamówień.
+
+---
+
+##### Pobieranie danych
+
+```js
+fetch("api/fetch_order_types.php");
+```
+
+Wykorzystywany jest ten sam endpoint co w formularzu zamówienia.
+
+---
+
+##### Renderowanie
+
+Po pobraniu danych wykonywana jest funkcja:
+
+```js
+renderOrderTypesFilter(data);
+```
+
+---
+
+#### Funkcja `renderOrderTypesFilter(data)`
+
+###### Opis
+
+Generuje listę typów zamówień w filtrze tabeli.
+
+---
+
+##### Element docelowy
+
+```js
+const select = $("#title-sort");
+```
+
+Filtr odpowiada za wybór typu zamówienia.
+
+---
+
+##### Opcja domyślna
+
+```html
+<option value="">-- wszystkie --</option>
+```
+
+Pozwala wyświetlić wszystkie typy zamówień bez filtrowania.
+
+---
+
+##### Generowanie opcji
+
+Dla każdego typu zamówienia tworzony jest:
+
+```html
+<option value="ID">NAZWA</option>
+```
+
+---
+
+#### Powiązania z innymi modułami
+
+Plik współpracuje z:
+
+- `orders_controller.js`
+- formularzem tworzenia zamówienia,
+- formularzem edycji zamówienia,
+- systemem filtrowania tabeli.
+
+---
+
+#### Zastosowane technologie
+
+- JavaScript
+- jQuery
+- Fetch API
+- dynamiczna manipulacja DOM
+- REST API
+
+---
+
+#### Logika działania modułu
+
+##### Formularz zamówienia
+
+1. Wywołanie `loadOrderTypes()`
+2. Pobranie danych z backendu
+3. Zapis danych w `orderTypes`
+4. Wygenerowanie listy `<option>`
+5. Wyświetlenie danych użytkownikowi
+
+---
+
+##### Filtrowanie tabeli
+
+1. Wywołanie `loadOrderTypesFilter()`
+2. Pobranie listy typów
+3. Wygenerowanie filtra
+4. Użytkownik wybiera typ
+5. Tabela zamówień zostaje przefiltrowana
+
+---
+
+#### Uwagi techniczne
+
+##### Cache danych
+
+Mechanizm:
+
+```js
+if (orderTypes.length > 0)
+```
+
+eliminuje zbędne pobieranie danych.
+
+To dobre rozwiązanie wydajnościowe.
+
+---
+
+##### Oddzielenie renderowania od pobierania
+
+Kod został poprawnie podzielony na:
+
+- pobieranie danych,
+- renderowanie widoku.
+
+Ułatwia to utrzymanie i rozwój modułu.
+
+---
+
+##### Brak obsługi błędów
+
+W module nie zastosowano `.catch()` dla requestów `fetch()`.
+
+W przypadku błędu API użytkownik nie otrzyma informacji o problemie.
