@@ -5,3 +5,8 @@
   - [clients_controler](README/CLIENTS_CONTROLLER.md)
   - [links_controler](README/LINKS_CONTROLER.md)
   - [order_types_controler](README/ORDER_TYPES_CONTROLER.md)
+  - [orders_controler](README/ORDERS_CONTROLER.md)
+  - [orders](README/ORDERS.md)
+  - [photos](README/PHOTOS.md)
+- [Technologia](README/TECHNOLOGIA.md)
+- [Baza Danych](README/DATABASE.md)

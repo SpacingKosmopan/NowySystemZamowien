@@ -1,5 +1,7 @@
 # `zamowienia/index.html`
 
+![Dashboard](../orders.png)
+
 ## 1. Opis pliku
 
 Plik `zamowienia/index.html` odpowiada za główny moduł zarządzania zamówieniami w systemie.
@@ -37,6 +39,8 @@ Strona składa się z następujących sekcji:
 
 ## 4. Tabela zamówień
 
+![Tabela zamówień](../images/orders_table.png)
+
 ### Sekcja
 
 ```html
@@ -64,6 +68,8 @@ Tabela zawiera kolumny:
 
 ## 5. System filtrowania
 
+![Filtry zamówień](../images/orders_filters.png)
+
 ### Filtry
 
 System umożliwia filtrowanie po:
@@ -88,6 +94,8 @@ przywraca domyślne ustawienia filtrowania.
 ---
 
 ## 6. Modal dodawania i edycji zamówienia
+
+![Nowe zamówienie](../images/new_order.png)
 
 ### Kontener
 
@@ -199,6 +207,8 @@ links_controller.js
 ---
 
 ## 11. System zdjęć
+
+![System zdjęć](../images/photos_system.png)
 
 ### Sekcja zdjęć
 
@@ -332,6 +342,8 @@ await loadOrders();
 ---
 
 ## 16. Tryb podglądu (`view only`)
+
+![Tryb Podglądu](../images/view_only.png)
 
 System obsługuje tryb tylko do odczytu.
 
