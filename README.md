@@ -1,6 +1,6 @@
 # Dokumentacja techniczna – System Zarządzania Zamówieniami
 
-## 1. Dashboard
+## Dashboard
 
 ![Dashboard](images/dashboard.png)
 
@@ -17,9 +17,9 @@ Użytkownik po zalogowaniu może:
 
 ---
 
-### 2. Struktura HTML
+### 1. Struktura HTML
 
-#### 2.1 Sekcja `<head>`
+#### 1.1 Sekcja `<head>`
 
 W sekcji `head` znajdują się:
 
@@ -55,7 +55,7 @@ Font Rubik jest używany jako główna czcionka aplikacji.
 
 ---
 
-#### 3. Nawigacja boczna (`aside`)
+#### 2. Nawigacja boczna (`aside`)
 
 Sekcja:
 
@@ -93,9 +93,9 @@ Funkcja została zaimplementowana w pliku `script.js`.
 
 ---
 
-#### 4. Główna zawartość strony (`main`)
+#### 3. Główna zawartość strony (`main`)
 
-##### 4.1 Sekcja użytkownika
+##### 3.1 Sekcja użytkownika
 
 ```html
 <div id="user-section"></div>
@@ -118,7 +118,7 @@ powoduje przejście do modułu logowania.
 
 ---
 
-#### 5. Mechanizm autoryzacji użytkownika
+#### 4. Mechanizm autoryzacji użytkownika
 
 ##### Funkcja `checkAuth()`
 
@@ -162,7 +162,7 @@ if (res.status === 401) {
 
 ---
 
-#### 6. Zegar analogowy Canvas
+#### 5. Zegar analogowy Canvas
 
 Dashboard zawiera zegar analogowy renderowany przy pomocy elementu:
 
@@ -197,7 +197,7 @@ Zegar odświeżany jest co 1 sekundę.
 
 ---
 
-#### 7. Statystyki zamówień
+#### 6. Statystyki zamówień
 
 Dashboard wyświetla liczbę:
 
@@ -228,7 +228,7 @@ Każde zapytanie posiada obsługę błędów:
 
 ---
 
-#### 8. Funkcja odmiany języka polskiego
+#### 7. Funkcja odmiany języka polskiego
 
 ##### Funkcja `getPolishEnding()`
 
@@ -252,7 +252,7 @@ Funkcja wykorzystuje instrukcję `switch` oraz analizę wartości liczbowych.
 
 ---
 
-#### 9. Najbliższe terminy realizacji
+#### 8. Najbliższe terminy realizacji
 
 Sekcja:
 
@@ -289,7 +289,7 @@ Po kliknięciu użytkownik zostaje przekierowany do widoku szczegółowego zamó
 
 ---
 
-#### 10. Szybkie dodawanie zamówienia
+#### 9. Szybkie dodawanie zamówienia
 
 Sekcja umożliwia utworzenie zamówienia bez przechodzenia do pełnego formularza.
 
@@ -311,7 +311,7 @@ Sekcja umożliwia utworzenie zamówienia bez przechodzenia do pełnego formularz
 
 ---
 
-#### 11. Ładowanie danych formularza
+#### 10. Ładowanie danych formularza
 
 ##### Typy zamówień
 
@@ -339,7 +339,7 @@ Sortowanie odbywa się alfabetycznie według nazwiska.
 
 ---
 
-#### 12. Walidacja formularza
+#### 11. Walidacja formularza
 
 Przed wysłaniem formularza wykonywana jest walidacja:
 
@@ -361,7 +361,7 @@ if (selectedClient === "") {
 
 ---
 
-#### 13. Dodawanie zamówienia
+#### 12. Dodawanie zamówienia
 
 ##### Endpoint API
 
@@ -397,7 +397,7 @@ window.location.href = "zamowienia/index.html";
 
 ---
 
-#### 14. Zegar cyfrowy
+#### 13. Zegar cyfrowy
 
 Funkcja:
 
@@ -426,7 +426,7 @@ Odświeżanie następuje co 10 sekund.
 
 ---
 
-# 15. Architektura komunikacji
+#### 14. Architektura komunikacji
 
 Frontend komunikuje się z backendem poprzez endpointy API zwracające dane JSON.
 
@@ -434,4 +434,317 @@ Schemat działania:
 
 ```text
 Frontend → fetch() → API PHP → Baza danych → JSON → Frontend
+```
+
+---
+
+### 2. Moduł `update_manager.js`
+
+#### Cel modułu
+
+Plik `update_manager.js` odpowiada za sprawdzanie dostępności aktualizacji aplikacji poprzez porównanie lokalnej wersji systemu z wersją opublikowaną w repozytorium GitHub.
+
+---
+
+#### Mechanizm działania
+
+System wykorzystuje dwa pliki tekstowe:
+
+| Plik                    | Funkcja                        |
+| ----------------------- | ------------------------------ |
+| `version.txt` (lokalny) | aktualnie zainstalowana wersja |
+| `version.txt` (GitHub)  | najnowsza dostępna wersja      |
+
+---
+
+#### Pobieranie wersji zdalnej
+
+Funkcja:
+
+```javascript id="f7i7hu"
+getRemoteVersion();
+```
+
+pobiera numer najnowszej wersji z repozytorium GitHub przy użyciu `fetch()`.
+
+Źródło:
+
+```javascript id="7a5xg5"
+https://raw.githubusercontent.com/SpacingKosmopan/NowySystemZamowien/main/version.txt
+```
+
+---
+
+#### Pobieranie wersji lokalnej
+
+Funkcja:
+
+```javascript id="3m7pov"
+getLocalVersion();
+```
+
+odczytuje lokalny plik `version.txt` znajdujący się w katalogu aplikacji.
+
+---
+
+#### Sprawdzanie aktualizacji
+
+Funkcja:
+
+```javascript id="7f03cm"
+checkUpdate();
+```
+
+porównuje:
+
+- lokalną wersję aplikacji,
+- wersję zdalną.
+
+Porównanie wykonywane jest po usunięciu białych znaków metodą:
+
+```javascript id="g6c0c2"
+trim();
+```
+
+---
+
+#### Informowanie użytkownika
+
+Po wykryciu nowej wersji system wyświetla komunikat:
+
+```text id="whgt8x"
+Dostępna jest aktualizacja!
+```
+
+Informacja renderowana jest w elemencie:
+
+```html id="xh0hbm"
+#upd-text
+```
+
+---
+
+#### Obsługa błędów
+
+Każda operacja `fetch()` posiada obsługę wyjątków:
+
+```javascript id="90n1o2"
+try/catch
+```
+
+Błędy są logowane do konsoli przeglądarki.
+
+---
+
+### 3. Moduł ustawień (`settings.html`)
+
+Moduł umożliwia personalizację kolorystyki aplikacji poprzez konfigurację kolorów statusów zamówień i kalendarza.
+
+---
+
+#### 2. Funkcjonalność modułu
+
+##### Konfigurowane elementy
+
+###### Kalendarz
+
+- nowe zamówienie,
+- zrealizowane,
+- w realizacji,
+- anulowane,
+- zaległe.
+
+###### Zamówienia
+
+- nowe,
+- zrealizowane,
+- w realizacji,
+- anulowane.
+
+---
+
+#### 3. System trwałego zapisu ustawień
+
+##### Mechanizm działania
+
+Ustawienia zapisywane są do pliku:
+
+```text
+colors.json
+```
+
+Komunikacja odbywa się przez endpoint:
+
+```text
+/api/filesystem.php
+```
+
+---
+
+#### 4. Architektura API filesystem
+
+##### Operacje API
+
+| Operacja | Opis         |
+| -------- | ------------ |
+| save     | zapis pliku  |
+| load     | odczyt pliku |
+
+---
+
+#### 5. Zapis ustawień
+
+##### Funkcja
+
+```javascript
+saveColorsToFile();
+```
+
+odpowiada za:
+
+- pobranie danych z formularza,
+- serializację do JSON,
+- wysłanie danych do backendu.
+
+##### Format danych
+
+```json
+{
+  "calNew": "#ffe29a",
+  "calDone": "#98ff9d"
+}
+```
+
+---
+
+#### 6. Odczyt ustawień
+
+##### Funkcja
+
+```javascript
+loadColorsFromFile();
+```
+
+odpowiada za:
+
+- pobranie danych z pliku,
+- parsowanie JSON,
+- ustawienie wartości pól formularza.
+
+---
+
+#### 7. Domyślna konfiguracja
+
+System posiada fallback defaults:
+
+```javascript
+const defaultColorsData = {
+```
+
+W przypadku braku pliku konfiguracyjnego system wykorzystuje domyślne wartości kolorów zapisane po stronie frontendowej.
+
+---
+
+#### 8. Persystencja ustawień
+
+System:
+
+- zapisuje konfigurację,
+- odczytuje ją po restarcie,
+- utrzymuje stan aplikacji.
+  Tutaj dokumentacja powinna być już bardzo krótka, bo ten moduł jest prosty i robi jedną rzecz.
+
+Ale są 2 rzeczy, które są naprawdę ważne technicznie:
+
+- dynamiczny rendering Markdown,
+- renderowanie HTML z zewnętrznego pliku.
+
+To już jest coś więcej niż zwykły statyczny HTML.
+
+---
+
+### 4. Moduł changeloga (`changelog.html`)
+
+Moduł odpowiada za wyświetlanie historii zmian aplikacji w formacie Markdown.
+
+---
+
+### 2. Źródło danych
+
+Treść changeloga pobierana jest z pliku:
+
+```text id="rjx9r2"
+changelog.md
+```
+
+Plik zawiera historię zmian projektu w formacie Markdown.
+
+---
+
+### 3. Dynamiczne renderowanie Markdown
+
+#### Mechanizm działania
+
+1. Frontend pobiera plik `.md` metodą `fetch()`
+2. Zawartość konwertowana jest do HTML
+3. HTML renderowany jest w kontenerze strony
+
+---
+
+### 4. Biblioteka `marked.js`
+
+Aplikacja wykorzystuje bibliotekę:
+
+```html id="4v4xq0"
+https://cdn.jsdelivr.net/npm/marked/marked.min.js
+```
+
+Biblioteka odpowiada za konwersję Markdown → HTML.
+
+---
+
+### 5. Funkcja `loadMd()`
+
+#### Odpowiedzialność funkcji
+
+```javascript id="i9d89j"
+async function loadMd()
+```
+
+Funkcja:
+
+- pobiera plik Markdown,
+- parsuje zawartość,
+- renderuje HTML w interfejsie użytkownika.
+
+---
+
+### 6. Renderowanie treści
+
+Wygenerowany HTML umieszczany jest w elemencie:
+
+```html id="m91m2g"
+#changelog-content
+```
+
+przy użyciu:
+
+```javascript id="ryv7d7"
+$("#changelog-content").html(html);
+```
+
+---
+
+### 7. Stylowanie Markdown
+
+Do formatowania treści wykorzystywany jest plik:
+
+```text id="2uw8sv"
+markdown.css
+```
+
+oraz klasa:
+
+```html id="dfszpo"
+markdown-body
 ```
