@@ -1,6 +1,6 @@
 ## Dashboard
 
-![Dashboard](images/dashboard.png)
+![Dashboard](../images/dashboard.png)
 
 Podstrona pełni rolę głównego panelu administracyjnego aplikacji do zarządzania zamówieniami. Dashboard agreguje najważniejsze informacje systemowe oraz umożliwia szybki dostęp do kluczowych funkcji aplikacji.
 
