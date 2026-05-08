@@ -2,6 +2,8 @@
 
 # Baza danych
 
+![Schemat Bazy Danych](../images/data_base_schema.png)
+
 System wykorzystuje relacyjną bazę danych MySQL o nazwie:
 
 ```sql
