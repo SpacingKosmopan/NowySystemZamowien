@@ -2,7 +2,7 @@
 
 # `zamowienia/index.html`
 
-![Dashboard](../orders.png)
+![Zamówienia](../images/orders.png)
 
 ## 1. Opis pliku
 
@@ -70,7 +70,7 @@ Tabela zawiera kolumny:
 
 ## 5. System filtrowania
 
-![Filtry zamówień](../images/orders_filters.png)
+![Filtry zamówień](../images/orders_filter.png)
 
 ### Filtry
 

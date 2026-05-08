@@ -2,7 +2,7 @@
 
 - [Dashboard](README/DASHBOARD.md)
 - [Zamówienia](README/ZAMOWIENIA.md)
-  - [clients_controler](README/CLIENTS_CONTROLLER.md)
+  - [clients_controler](README/CLIENTS_CONTROLER.md)
   - [links_controler](README/LINKS_CONTROLER.md)
   - [order_types_controler](README/ORDER_TYPES_CONTROLER.md)
   - [orders_controler](README/ORDERS_CONTROLER.md)
