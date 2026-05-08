@@ -180,6 +180,7 @@
               { style: "currency", currency: "PLN" },
             );
           });
+
         fetch("api/get_best_clients.php")
           .then((res) => res.json())
           .then((data) => {
