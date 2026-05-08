@@ -1,3 +1,5 @@
+> [Strona Główna](../README.md)
+
 # `zamowienia/index.html`
 
 ![Dashboard](../orders.png)

@@ -1,3 +1,5 @@
+> [Strona Główna](../README.md)
+
 # `links_controller.js`
 
 ## Opis pliku

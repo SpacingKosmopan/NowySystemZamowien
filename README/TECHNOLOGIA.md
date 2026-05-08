@@ -1,3 +1,5 @@
+> [Strona Główna](../README.md)
+
 # Wykorzystane technologie
 
 ## JavaScript (Frontend)

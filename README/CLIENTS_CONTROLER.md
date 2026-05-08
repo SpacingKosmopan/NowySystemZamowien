@@ -1,3 +1,5 @@
+> [Strona Główna](../README.md)
+
 # `clients_controller.js`
 
 ## 1. Opis pliku

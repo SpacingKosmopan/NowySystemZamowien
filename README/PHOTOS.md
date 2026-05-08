@@ -1,3 +1,5 @@
+> [Strona Główna](../README.md)
+
 # `photos.js`
 
 ## Opis

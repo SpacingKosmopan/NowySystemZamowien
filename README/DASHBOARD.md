@@ -1,4 +1,6 @@
-## Dashboard
+> [Strona Główna](../README.md)
+
+# Dashboard
 
 ![Dashboard](../images/dashboard.png)
 
@@ -15,13 +17,13 @@ Użytkownik po zalogowaniu może:
 
 ---
 
-### 1. Struktura HTML
+## 1. Struktura HTML
 
-#### 1.1 Sekcja `<head>`
+### 1.1 Sekcja `<head>`
 
 W sekcji `head` znajdują się:
 
-##### Import biblioteki ikon Bootstrap Icons
+#### Import biblioteki ikon Bootstrap Icons
 
 ```html
 <link
@@ -32,7 +34,7 @@ W sekcji `head` znajdują się:
 
 Biblioteka odpowiada za wyświetlanie ikon używanych w interfejsie użytkownika.
 
-##### Import pliku CSS
+#### Import pliku CSS
 
 ```html
 <link rel="stylesheet" href="style.css" />
@@ -40,7 +42,7 @@ Biblioteka odpowiada za wyświetlanie ikon używanych w interfejsie użytkownika
 
 Plik zawiera style całego dashboardu.
 
-##### Import fontu Rubik
+#### Import fontu Rubik
 
 ```html
 <link
@@ -53,7 +55,7 @@ Font Rubik jest używany jako główna czcionka aplikacji.
 
 ---
 
-#### 2. Nawigacja boczna (`aside`)
+### 2. Nawigacja boczna (`aside`)
 
 Sekcja:
 
@@ -63,7 +65,7 @@ Sekcja:
 
 odpowiada za menu boczne aplikacji.
 
-##### Funkcje menu:
+#### Funkcje menu:
 
 - przejście do strony głównej,
 - przejście do modułu zamówień,
@@ -73,7 +75,7 @@ odpowiada za menu boczne aplikacji.
 - przejście do tekstów,
 - przejście do galerii.
 
-##### Mechanizm zwijania menu
+#### Mechanizm zwijania menu
 
 Element:
 
@@ -91,9 +93,9 @@ Funkcja została zaimplementowana w pliku `script.js`.
 
 ---
 
-#### 3. Główna zawartość strony (`main`)
+### 3. Główna zawartość strony (`main`)
 
-##### 3.1 Sekcja użytkownika
+#### 3.1 Sekcja użytkownika
 
 ```html
 <div id="user-section"></div>
@@ -116,9 +118,9 @@ powoduje przejście do modułu logowania.
 
 ---
 
-#### 4. Mechanizm autoryzacji użytkownika
+### 4. Mechanizm autoryzacji użytkownika
 
-##### Funkcja `checkAuth()`
+#### Funkcja `checkAuth()`
 
 ```javascript
 async function checkAuth() {
@@ -130,7 +132,7 @@ Funkcja sprawdza stan autoryzacji użytkownika poprzez żądanie:
 fetch("logowanie/api/auth.php");
 ```
 
-###### Możliwe odpowiedzi serwera:
+##### Możliwe odpowiedzi serwera:
 
 | Kod HTTP | Znaczenie                |
 | -------- | ------------------------ |
@@ -138,7 +140,7 @@ fetch("logowanie/api/auth.php");
 | 403      | konto zablokowane        |
 | 200      | użytkownik zalogowany    |
 
-##### Funkcja `init()`
+#### Funkcja `init()`
 
 Funkcja uruchamiana podczas startu aplikacji.
 
@@ -149,7 +151,7 @@ Odpowiada za:
 - blokadę dostępu dla nieaktywnych kont,
 - inicjalizację danych dashboardu.
 
-###### Fragment odpowiedzialny za przekierowanie:
+##### Fragment odpowiedzialny za przekierowanie:
 
 ```javascript
 if (res.status === 401) {
@@ -160,7 +162,7 @@ if (res.status === 401) {
 
 ---
 
-#### 5. Zegar analogowy Canvas
+### 5. Zegar analogowy Canvas
 
 Dashboard zawiera zegar analogowy renderowany przy pomocy elementu:
 
@@ -168,7 +170,7 @@ Dashboard zawiera zegar analogowy renderowany przy pomocy elementu:
 <canvas id="clock" width="300" height="300"></canvas>
 ```
 
-##### Funkcja `drawClock()`
+#### Funkcja `drawClock()`
 
 Funkcja odpowiada za:
 
@@ -177,7 +179,7 @@ Funkcja odpowiada za:
 - rysowanie wskazówek,
 - aktualizację czasu.
 
-###### Aktualizacja zegara
+##### Aktualizacja zegara
 
 ```javascript
 setInterval(drawClock, 1000);
@@ -185,7 +187,7 @@ setInterval(drawClock, 1000);
 
 Zegar odświeżany jest co 1 sekundę.
 
-##### Wykorzystane elementy Canvas API
+#### Wykorzystane elementy Canvas API
 
 - `ctx.arc()` – rysowanie okręgu,
 - `ctx.fill()` – wypełnienie tarczy,
@@ -195,7 +197,7 @@ Zegar odświeżany jest co 1 sekundę.
 
 ---
 
-#### 6. Statystyki zamówień
+### 6. Statystyki zamówień
 
 Dashboard wyświetla liczbę:
 
@@ -204,7 +206,7 @@ Dashboard wyświetla liczbę:
 - zamówień zakończonych,
 - zaległych zamówień.
 
-##### Pobieranie danych
+#### Pobieranie danych
 
 Dane pobierane są metodą `fetch()` z endpointów API:
 
@@ -214,7 +216,7 @@ api / get_orders_count.php;
 api / get_old_orders_count.php;
 ```
 
-##### Obsługa błędów
+#### Obsługa błędów
 
 Każde zapytanie posiada obsługę błędów:
 
@@ -226,13 +228,13 @@ Każde zapytanie posiada obsługę błędów:
 
 ---
 
-#### 7. Funkcja odmiany języka polskiego
+### 7. Funkcja odmiany języka polskiego
 
-##### Funkcja `getPolishEnding()`
+#### Funkcja `getPolishEnding()`
 
 Funkcja odpowiada za poprawną odmianę słowa „zamówienie”.
 
-###### Przykłady:
+##### Przykłady:
 
 | Liczba | Wynik      |
 | ------ | ---------- |
@@ -240,7 +242,7 @@ Funkcja odpowiada za poprawną odmianę słowa „zamówienie”.
 | 2      | zamówienia |
 | 5      | zamówień   |
 
-##### Implementacja
+#### Implementacja
 
 ```javascript
 function getPolishEnding(number, originalEnding)
@@ -250,7 +252,7 @@ Funkcja wykorzystuje instrukcję `switch` oraz analizę wartości liczbowych.
 
 ---
 
-#### 8. Najbliższe terminy realizacji
+### 8. Najbliższe terminy realizacji
 
 Sekcja:
 
@@ -260,13 +262,13 @@ Sekcja:
 
 wyświetla zamówienia o najbliższym terminie realizacji.
 
-##### Endpoint API
+#### Endpoint API
 
 ```javascript
 api / get_closest_orders.php;
 ```
 
-##### Dynamiczne generowanie elementów
+#### Dynamiczne generowanie elementów
 
 Każde zamówienie jest dodawane metodą:
 
@@ -274,7 +276,7 @@ Każde zamówienie jest dodawane metodą:
 closestOrdersDiv.append();
 ```
 
-##### Obsługa kliknięcia
+#### Obsługa kliknięcia
 
 ```javascript
 $("#closest-orders-container").on(
@@ -287,17 +289,17 @@ Po kliknięciu użytkownik zostaje przekierowany do widoku szczegółowego zamó
 
 ---
 
-#### 9. Szybkie dodawanie zamówienia
+### 9. Szybkie dodawanie zamówienia
 
 Sekcja umożliwia utworzenie zamówienia bez przechodzenia do pełnego formularza.
 
-##### Formularz
+#### Formularz
 
 ```html
 <form id="fast-add-order-form"></form>
 ```
 
-##### Pola formularza
+#### Pola formularza
 
 | Pole           | Opis              |
 | -------------- | ----------------- |
@@ -309,9 +311,9 @@ Sekcja umożliwia utworzenie zamówienia bez przechodzenia do pełnego formularz
 
 ---
 
-#### 10. Ładowanie danych formularza
+### 10. Ładowanie danych formularza
 
-##### Typy zamówień
+#### Typy zamówień
 
 Dane pobierane z endpointu:
 
@@ -319,7 +321,7 @@ Dane pobierane z endpointu:
 fetch("typy_tagi/api/get_all_types.php");
 ```
 
-##### Lista klientów
+#### Lista klientów
 
 Dane pobierane z:
 
@@ -327,7 +329,7 @@ Dane pobierane z:
 fetch("klienci/api/list.php");
 ```
 
-###### Sortowanie klientów
+##### Sortowanie klientów
 
 ```javascript
 data.sort((a, b) => a.nazwisko.localeCompare(b.nazwisko, "pl"));
@@ -337,18 +339,18 @@ Sortowanie odbywa się alfabetycznie według nazwiska.
 
 ---
 
-#### 11. Walidacja formularza
+### 11. Walidacja formularza
 
 Przed wysłaniem formularza wykonywana jest walidacja:
 
-##### Sprawdzane warunki
+#### Sprawdzane warunki
 
 - czy wybrano klienta,
 - czy podano tytuł,
 - czy wybrano typ zamówienia,
 - poprawność identyfikatorów liczbowych.
 
-##### Przykład walidacji
+#### Przykład walidacji
 
 ```javascript
 if (selectedClient === "") {
@@ -359,21 +361,21 @@ if (selectedClient === "") {
 
 ---
 
-#### 12. Dodawanie zamówienia
+### 12. Dodawanie zamówienia
 
-##### Endpoint API
+#### Endpoint API
 
 ```javascript
 api / fast_add_order.php;
 ```
 
-##### Metoda HTTP
+#### Metoda HTTP
 
 ```javascript
 POST;
 ```
 
-##### Format danych
+#### Format danych
 
 ```javascript
 body: JSON.stringify({
@@ -385,7 +387,7 @@ body: JSON.stringify({
 });
 ```
 
-##### Po poprawnym dodaniu
+#### Po poprawnym dodaniu
 
 Użytkownik zostaje przekierowany do modułu zamówień:
 
@@ -395,7 +397,7 @@ window.location.href = "zamowienia/index.html";
 
 ---
 
-#### 13. Zegar cyfrowy
+### 13. Zegar cyfrowy
 
 Funkcja:
 
@@ -408,13 +410,13 @@ odpowiada za wyświetlanie:
 - aktualnej daty,
 - aktualnej godziny.
 
-##### Format daty
+#### Format daty
 
 ```text
 DD.MM.RRRR HH:MM
 ```
 
-##### Automatyczna aktualizacja
+#### Automatyczna aktualizacja
 
 ```javascript
 setTimeout(() => loadTimer(), 10000);
@@ -424,7 +426,7 @@ Odświeżanie następuje co 10 sekund.
 
 ---
 
-#### 14. Architektura komunikacji
+### 14. Architektura komunikacji
 
 Frontend komunikuje się z backendem poprzez endpointy API zwracające dane JSON.
 
@@ -436,15 +438,15 @@ Frontend → fetch() → API PHP → Baza danych → JSON → Frontend
 
 ---
 
-### 2. Moduł `update_manager.js`
+## 2. Moduł `update_manager.js`
 
-#### Cel modułu
+### Cel modułu
 
 Plik `update_manager.js` odpowiada za sprawdzanie dostępności aktualizacji aplikacji poprzez porównanie lokalnej wersji systemu z wersją opublikowaną w repozytorium GitHub.
 
 ---
 
-#### Mechanizm działania
+### Mechanizm działania
 
 System wykorzystuje dwa pliki tekstowe:
 
@@ -455,7 +457,7 @@ System wykorzystuje dwa pliki tekstowe:
 
 ---
 
-#### Pobieranie wersji zdalnej
+### Pobieranie wersji zdalnej
 
 Funkcja:
 
@@ -473,7 +475,7 @@ https://raw.githubusercontent.com/SpacingKosmopan/NowySystemZamowien/main/versio
 
 ---
 
-#### Pobieranie wersji lokalnej
+### Pobieranie wersji lokalnej
 
 Funkcja:
 
@@ -485,7 +487,7 @@ odczytuje lokalny plik `version.txt` znajdujący się w katalogu aplikacji.
 
 ---
 
-#### Sprawdzanie aktualizacji
+### Sprawdzanie aktualizacji
 
 Funkcja:
 
@@ -506,7 +508,7 @@ trim();
 
 ---
 
-#### Informowanie użytkownika
+### Informowanie użytkownika
 
 Po wykryciu nowej wersji system wyświetla komunikat:
 
@@ -522,7 +524,7 @@ Informacja renderowana jest w elemencie:
 
 ---
 
-#### Obsługa błędów
+### Obsługa błędów
 
 Każda operacja `fetch()` posiada obsługę wyjątków:
 
@@ -534,17 +536,17 @@ Błędy są logowane do konsoli przeglądarki.
 
 ---
 
-### 3. Moduł ustawień (`settings.html`)
+## 3. Moduł ustawień (`settings.html`)
 
 Moduł umożliwia personalizację kolorystyki aplikacji poprzez konfigurację kolorów statusów zamówień i kalendarza.
 
 ---
 
-#### 2. Funkcjonalność modułu
+### 2. Funkcjonalność modułu
 
-##### Konfigurowane elementy
+#### Konfigurowane elementy
 
-###### Kalendarz
+##### Kalendarz
 
 - nowe zamówienie,
 - zrealizowane,
@@ -552,7 +554,7 @@ Moduł umożliwia personalizację kolorystyki aplikacji poprzez konfigurację ko
 - anulowane,
 - zaległe.
 
-###### Zamówienia
+##### Zamówienia
 
 - nowe,
 - zrealizowane,
@@ -561,9 +563,9 @@ Moduł umożliwia personalizację kolorystyki aplikacji poprzez konfigurację ko
 
 ---
 
-#### 3. System trwałego zapisu ustawień
+### 3. System trwałego zapisu ustawień
 
-##### Mechanizm działania
+#### Mechanizm działania
 
 Ustawienia zapisywane są do pliku:
 
@@ -579,9 +581,9 @@ Komunikacja odbywa się przez endpoint:
 
 ---
 
-#### 4. Architektura API filesystem
+### 4. Architektura API filesystem
 
-##### Operacje API
+#### Operacje API
 
 | Operacja | Opis         |
 | -------- | ------------ |
@@ -590,9 +592,9 @@ Komunikacja odbywa się przez endpoint:
 
 ---
 
-#### 5. Zapis ustawień
+### 5. Zapis ustawień
 
-##### Funkcja
+#### Funkcja
 
 ```javascript
 saveColorsToFile();
@@ -604,7 +606,7 @@ odpowiada za:
 - serializację do JSON,
 - wysłanie danych do backendu.
 
-##### Format danych
+#### Format danych
 
 ```json
 {
@@ -615,9 +617,9 @@ odpowiada za:
 
 ---
 
-#### 6. Odczyt ustawień
+### 6. Odczyt ustawień
 
-##### Funkcja
+#### Funkcja
 
 ```javascript
 loadColorsFromFile();
@@ -631,7 +633,7 @@ odpowiada za:
 
 ---
 
-#### 7. Domyślna konfiguracja
+### 7. Domyślna konfiguracja
 
 System posiada fallback defaults:
 
@@ -643,7 +645,7 @@ W przypadku braku pliku konfiguracyjnego system wykorzystuje domyślne wartości
 
 ---
 
-#### 8. Persystencja ustawień
+### 8. Persystencja ustawień
 
 System:
 
@@ -661,13 +663,13 @@ To już jest coś więcej niż zwykły statyczny HTML.
 
 ---
 
-### 4. Moduł changeloga (`changelog.html`)
+## 4. Moduł changeloga (`changelog.html`)
 
 Moduł odpowiada za wyświetlanie historii zmian aplikacji w formacie Markdown.
 
 ---
 
-### 2. Źródło danych
+## 2. Źródło danych
 
 Treść changeloga pobierana jest z pliku:
 
@@ -679,9 +681,9 @@ Plik zawiera historię zmian projektu w formacie Markdown.
 
 ---
 
-### 3. Dynamiczne renderowanie Markdown
+## 3. Dynamiczne renderowanie Markdown
 
-#### Mechanizm działania
+### Mechanizm działania
 
 1. Frontend pobiera plik `.md` metodą `fetch()`
 2. Zawartość konwertowana jest do HTML
@@ -689,7 +691,7 @@ Plik zawiera historię zmian projektu w formacie Markdown.
 
 ---
 
-### 4. Biblioteka `marked.js`
+## 4. Biblioteka `marked.js`
 
 Aplikacja wykorzystuje bibliotekę:
 
@@ -701,9 +703,9 @@ Biblioteka odpowiada za konwersję Markdown → HTML.
 
 ---
 
-### 5. Funkcja `loadMd()`
+## 5. Funkcja `loadMd()`
 
-#### Odpowiedzialność funkcji
+### Odpowiedzialność funkcji
 
 ```javascript id="i9d89j"
 async function loadMd()
@@ -717,7 +719,7 @@ Funkcja:
 
 ---
 
-### 6. Renderowanie treści
+## 6. Renderowanie treści
 
 Wygenerowany HTML umieszczany jest w elemencie:
 
@@ -733,7 +735,7 @@ $("#changelog-content").html(html);
 
 ---
 
-### 7. Stylowanie Markdown
+## 7. Stylowanie Markdown
 
 Do formatowania treści wykorzystywany jest plik:
 
