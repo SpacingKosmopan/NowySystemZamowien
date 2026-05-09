@@ -9,6 +9,7 @@
   - [orders](README/ORDERS.md)
   - [photos](README/PHOTOS.md)
   - [tags](README/TAGS_CONTROLER.md)
+- [Kalendarz](README/KALENDARZ.md)
 - [Klienci](README/KLIENCI.md)
 
 ---

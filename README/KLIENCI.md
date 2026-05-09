@@ -1,4 +1,4 @@
-# Dokumentacja modułu „Klienci”
+# Moduł „Klienci”
 
 ![Klienci](../images/clients.png)
 
@@ -11,8 +11,6 @@ Moduł „Klienci” odpowiada za zarządzanie bazą klientów w systemie. Umoż
 - edycję danych klienta,
 - usuwanie klientów,
 - przechodzenie do listy zamówień przypisanych do konkretnego klienta.
-
-Moduł został wykonany w technologii HTML, CSS, JavaScript oraz PHP z wykorzystaniem bazy danych MySQL.
 
 ---
 
