@@ -8,5 +8,10 @@
   - [orders_controler](README/ORDERS_CONTROLER.md)
   - [orders](README/ORDERS.md)
   - [photos](README/PHOTOS.md)
+  - [tags](README/TAGS_CONTROLER.md)
+- [Klienci](README/KLIENCI.md)
+
+---
+
 - [Technologia](README/TECHNOLOGIA.md)
 - [Baza Danych](README/DATABASE.md)

@@ -32,7 +32,7 @@ Wywoływana podczas startu strony `zamowienia/index.html`.
 
 ## Otwieranie formularza nowego zamówienia
 
-```js id="4f7r7j"
+```js
 $("#add-order").on("click", function ()
 ```
 
@@ -48,7 +48,7 @@ Po kliknięciu przycisku:
 
 ### Wyświetlenie modala
 
-```js id="glmy7q"
+```js
 $("#new-order-overlay").removeClass("hidden");
 ```
 
@@ -58,7 +58,7 @@ Usuwana jest klasa ukrywająca formularz.
 
 ### Ładowanie typów zamówień
 
-```js id="pwm8fz"
+```js
 loadOrderTypes();
 ```
 
@@ -68,7 +68,7 @@ Pobierane są typy zamówień z backendu.
 
 ### Ustawienie daty utworzenia
 
-```js id="hjga1j"
+```js
 setCreationDateFromNow();
 ```
 
@@ -78,7 +78,7 @@ W formularzu ustawiana jest aktualna data i godzina.
 
 ## Anulowanie formularza
 
-```js id="4rxstx"
+```js id
 $("#btn-cancel").on("click", function ()
 ```
 
@@ -96,7 +96,7 @@ Po kliknięciu:
 
 ### Reset formularza
 
-```js id="fsvl93"
+```js
 $("#new-order-form")[0].reset();
 ```
 
@@ -106,7 +106,7 @@ Przywraca domyślne wartości pól formularza.
 
 ### Wyłączenie trybu edycji
 
-```js id="kk7m2s"
+```js
 editingOrderId = null;
 ```
 
@@ -116,7 +116,7 @@ Oznacza przejście z trybu edycji do trybu tworzenia nowego zamówienia.
 
 ## Usuwanie zamówienia
 
-```js id="z8k7wu"
+```js
 $("#btn-delete").on("click", function ()
 ```
 
@@ -132,7 +132,7 @@ $("#btn-delete").on("click", function ()
 
 ### Potwierdzenie usunięcia
 
-```js id="7o6d4o"
+```js
 confirm(...)
 ```
 
@@ -142,7 +142,7 @@ Chroni przed przypadkowym usunięciem danych.
 
 ### Endpoint usuwania
 
-```js id="nsmgki"
+```js
 api / delete_order.php;
 ```
 
@@ -152,7 +152,7 @@ Do backendu wysyłane jest ID usuwanego zamówienia.
 
 ### Aktualizacja danych lokalnych
 
-```js id="a0tfzq"
+```js
 ordersData = ordersData.filter((o) => o.id != editingOrderId);
 ```
 
@@ -162,7 +162,7 @@ Usunięte zamówienie znika z lokalnej tablicy bez konieczności pełnego reload
 
 ## Zapisywanie zamówienia
 
-```js id="bb6mn0"
+```js
 $("#btn-save").on("click", function (e)
 ```
 
@@ -185,7 +185,7 @@ Odpowiada za:
 
 #### Klient
 
-```js id="ngq7j6"
+```js
 $("#client-id").val();
 ```
 
@@ -193,7 +193,7 @@ $("#client-id").val();
 
 #### Typ zamówienia
 
-```js id="g0m9gi"
+```js
 $("#order-type").val();
 ```
 
@@ -201,7 +201,7 @@ $("#order-type").val();
 
 #### Tytuł
 
-```js id="n9dl6m"
+```js
 $("#order-title").val();
 ```
 
@@ -209,7 +209,7 @@ $("#order-title").val();
 
 #### Termin realizacji
 
-```js id="ec8mw2"
+```js
 $("#order-date").val();
 ```
 
@@ -219,7 +219,7 @@ $("#order-date").val();
 
 Dla każdego błędnego pola:
 
-```js id="x0ll1e"
+```js
 .removeClass("hidden")
 ```
 
@@ -231,7 +231,7 @@ pokazywany jest tooltip błędu.
 
 ### Obiekt danych
 
-```js id="yvz0k4"
+```js
 const payload = {
   client_id,
   opis,
@@ -272,7 +272,7 @@ const payload = {
 
 ### Wybór endpointu
 
-```js id="mbrj0j"
+```js
 const url = editingOrderId ? "api/update_order.php" : "api/add_order.php";
 ```
 
@@ -282,13 +282,13 @@ const url = editingOrderId ? "api/update_order.php" : "api/add_order.php";
 
 Jeżeli:
 
-```js id="6l3x1h"
+```js
 editingOrderId === null;
 ```
 
 wykorzystywany jest endpoint:
 
-```txt id="t6oyy0"
+```txt
 api/add_order.php
 ```
 
@@ -305,7 +305,7 @@ Jeżeli istnieje `editingOrderId`:
 
 ## Wysyłanie danych
 
-```js id="9pd6zc"
+```js
 fetch(url, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
@@ -328,7 +328,7 @@ Po poprawnym zapisie:
 
 ## Zmienna `editingOrderId`
 
-```js id="w8kwut"
+```js
 let editingOrderId = null;
 ```
 
@@ -366,7 +366,7 @@ Czyszczone są m.in.:
 
 ### Tagi
 
-```js id="24o0di"
+```js
 selectedTags = [];
 ```
 
@@ -374,7 +374,7 @@ selectedTags = [];
 
 ### Zdjęcia
 
-```js id="pjz4yl"
+```js
 selectedPhotoIds = [];
 ```
 
@@ -382,7 +382,7 @@ selectedPhotoIds = [];
 
 ### Linki
 
-```js id="a0x4e8"
+```js
 links = [];
 ```
 
@@ -410,7 +410,7 @@ Ustawia datę utworzenia zamówienia w formularzu.
 
 Wykorzystuje funkcję:
 
-```js id="c1m5i8"
+```js
 formatDatePL(date);
 ```
 
@@ -418,7 +418,7 @@ formatDatePL(date);
 
 ### Aktualizacja pola
 
-```js id="jvubmx"
+```js
 $("#creation-date").val(formatted);
 ```
 

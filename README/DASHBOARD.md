@@ -461,7 +461,7 @@ System wykorzystuje dwa pliki tekstowe:
 
 Funkcja:
 
-```javascript id="f7i7hu"
+```javascript
 getRemoteVersion();
 ```
 
@@ -469,7 +469,7 @@ pobiera numer najnowszej wersji z repozytorium GitHub przy użyciu `fetch()`.
 
 Źródło:
 
-```javascript id="7a5xg5"
+```javascript
 https://raw.githubusercontent.com/SpacingKosmopan/NowySystemZamowien/main/version.txt
 ```
 
@@ -479,7 +479,7 @@ https://raw.githubusercontent.com/SpacingKosmopan/NowySystemZamowien/main/versio
 
 Funkcja:
 
-```javascript id="3m7pov"
+```javascript
 getLocalVersion();
 ```
 
@@ -491,7 +491,7 @@ odczytuje lokalny plik `version.txt` znajdujący się w katalogu aplikacji.
 
 Funkcja:
 
-```javascript id="7f03cm"
+```javascript
 checkUpdate();
 ```
 
@@ -502,7 +502,7 @@ porównuje:
 
 Porównanie wykonywane jest po usunięciu białych znaków metodą:
 
-```javascript id="g6c0c2"
+```javascript
 trim();
 ```
 
@@ -512,13 +512,13 @@ trim();
 
 Po wykryciu nowej wersji system wyświetla komunikat:
 
-```text id="whgt8x"
+```text
 Dostępna jest aktualizacja!
 ```
 
 Informacja renderowana jest w elemencie:
 
-```html id="xh0hbm"
+```html
 #upd-text
 ```
 
@@ -528,7 +528,7 @@ Informacja renderowana jest w elemencie:
 
 Każda operacja `fetch()` posiada obsługę wyjątków:
 
-```javascript id="90n1o2"
+```javascript
 try/catch
 ```
 
@@ -673,7 +673,7 @@ Moduł odpowiada za wyświetlanie historii zmian aplikacji w formacie Markdown.
 
 Treść changeloga pobierana jest z pliku:
 
-```text id="rjx9r2"
+```text
 changelog.md
 ```
 
@@ -695,7 +695,7 @@ Plik zawiera historię zmian projektu w formacie Markdown.
 
 Aplikacja wykorzystuje bibliotekę:
 
-```html id="4v4xq0"
+```html
 https://cdn.jsdelivr.net/npm/marked/marked.min.js
 ```
 
@@ -707,7 +707,7 @@ Biblioteka odpowiada za konwersję Markdown → HTML.
 
 ### Odpowiedzialność funkcji
 
-```javascript id="i9d89j"
+```javascript
 async function loadMd()
 ```
 
@@ -723,13 +723,13 @@ Funkcja:
 
 Wygenerowany HTML umieszczany jest w elemencie:
 
-```html id="m91m2g"
+```html
 #changelog-content
 ```
 
 przy użyciu:
 
-```javascript id="ryv7d7"
+```javascript
 $("#changelog-content").html(html);
 ```
 
@@ -739,12 +739,12 @@ $("#changelog-content").html(html);
 
 Do formatowania treści wykorzystywany jest plik:
 
-```text id="2uw8sv"
+```text
 markdown.css
 ```
 
 oraz klasa:
 
-```html id="dfszpo"
+```html
 markdown-body
 ```

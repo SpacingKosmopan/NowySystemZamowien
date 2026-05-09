@@ -25,11 +25,11 @@ Projekt opiera się na relacjach pomiędzy tabelami oraz wykorzystuje identyfika
 
 ---
 
-# Tabela `zamowienia`
+## Tabela `zamowienia`
 
 Najważniejsza tabela systemu odpowiedzialna za przechowywanie zamówień.
 
-## Pola
+### Pola
 
 | Pole                | Typ           | Opis                     |
 | ------------------- | ------------- | ------------------------ |
@@ -48,7 +48,7 @@ Najważniejsza tabela systemu odpowiedzialna za przechowywanie zamówień.
 
 ---
 
-## Statusy zamówień
+### Statusy zamówień
 
 Pole `status` wykorzystuje typ `ENUM`.
 
@@ -70,7 +70,7 @@ Status wykorzystywany jest między innymi do:
 
 ---
 
-## Relacje
+### Relacje
 
 Tabela `zamowienia` posiada relacje:
 
@@ -81,11 +81,11 @@ Tabela `zamowienia` posiada relacje:
 
 ---
 
-# Tabela `klienci`
+## Tabela `klienci`
 
 Tabela przechowująca dane klientów.
 
-## Pola
+### Pola
 
 | Pole              | Typ          |
 | ----------------- | ------------ |
@@ -99,7 +99,7 @@ Tabela przechowująca dane klientów.
 
 ---
 
-## Zastosowanie
+### Zastosowanie
 
 Tabela wykorzystywana jest do:
 
@@ -110,11 +110,11 @@ Tabela wykorzystywana jest do:
 
 ---
 
-# Tabela `typy_zamowien`
+## Tabela `typy_zamowien`
 
 Tabela przechowuje typy zamówień.
 
-## Pola
+### Pola
 
 | Pole    | Typ          |
 | ------- | ------------ |
@@ -123,7 +123,7 @@ Tabela przechowuje typy zamówień.
 
 ---
 
-## Zastosowanie
+### Zastosowanie
 
 Typy zamówień wykorzystywane są do:
 
@@ -133,11 +133,11 @@ Typy zamówień wykorzystywane są do:
 
 ---
 
-# Tabela `tagi`
+## Tabela `tagi`
 
 Tabela przechowuje tagi możliwe do przypisania do zamówień.
 
-## Pola
+### Pola
 
 | Pole    | Typ          |
 | ------- | ------------ |
@@ -146,7 +146,7 @@ Tabela przechowuje tagi możliwe do przypisania do zamówień.
 
 ---
 
-## Zastosowanie
+### Zastosowanie
 
 Tagi służą do:
 
@@ -158,11 +158,11 @@ Lista przypisanych tagów zapisywana jest w tabeli `zamowienia` jako JSON.
 
 ---
 
-# Tabela `zdjecia`
+## Tabela `zdjecia`
 
 Tabela przechowująca informacje o przesłanych plikach graficznych.
 
-## Pola
+### Pola
 
 | Pole           | Typ          |
 | -------------- | ------------ |
@@ -174,7 +174,7 @@ Tabela przechowująca informacje o przesłanych plikach graficznych.
 
 ---
 
-## Zastosowanie
+### Zastosowanie
 
 Tabela wykorzystywana jest przez moduł galerii oraz system załączania zdjęć do zamówień.
 
@@ -187,11 +187,11 @@ Przechowywane są:
 
 ---
 
-# Tabela `uzytkownicy`
+## Tabela `uzytkownicy`
 
 Tabela przechowuje dane użytkowników systemu.
 
-## Pola
+### Pola
 
 | Pole                 | Typ          |
 | -------------------- | ------------ |
@@ -204,7 +204,7 @@ Tabela przechowuje dane użytkowników systemu.
 
 ---
 
-## Statusy użytkowników
+### Statusy użytkowników
 
 ```sql
 'oczekujacy'
@@ -214,7 +214,7 @@ Tabela przechowuje dane użytkowników systemu.
 
 ---
 
-## Zastosowanie
+### Zastosowanie
 
 Tabela odpowiada za:
 
@@ -226,11 +226,11 @@ Tabela odpowiada za:
 
 ---
 
-# Tabela `teksty`
+## Tabela `teksty`
 
 Tabela przechowująca gotowe teksty i szablony.
 
-## Pola
+### Pola
 
 | Pole           | Typ          |
 | -------------- | ------------ |
@@ -242,7 +242,7 @@ Tabela przechowująca gotowe teksty i szablony.
 
 ---
 
-## Relacje
+### Relacje
 
 | Pole           | Relacja          |
 | -------------- | ---------------- |
@@ -250,11 +250,11 @@ Tabela przechowująca gotowe teksty i szablony.
 
 ---
 
-# Tabela `struktury`
+## Tabela `struktury`
 
 Tabela organizująca strukturę katalogów i kategorii tekstów.
 
-## Pola
+### Pola
 
 | Pole        | Typ          |
 | ----------- | ------------ |
@@ -265,7 +265,7 @@ Tabela organizująca strukturę katalogów i kategorii tekstów.
 
 ---
 
-## Typy struktur
+### Typy struktur
 
 ```sql
 'catalogue'
@@ -274,7 +274,7 @@ Tabela organizująca strukturę katalogów i kategorii tekstów.
 
 ---
 
-## Zastosowanie
+### Zastosowanie
 
 Tabela wykorzystywana jest do:
 
@@ -286,9 +286,9 @@ Pole `rodzic_id` umożliwia tworzenie struktur zagnieżdżonych.
 
 ---
 
-# Relacje w bazie danych
+## Relacje w bazie danych
 
-## Zamówienia ↔ Klienci
+### Zamówienia ↔ Klienci
 
 Jedno zamówienie należy do jednego klienta:
 
@@ -300,7 +300,7 @@ Jeden klient może posiadać wiele zamówień.
 
 ---
 
-## Zamówienia ↔ Typy zamówień
+### Zamówienia ↔ Typy zamówień
 
 Każde zamówienie posiada przypisany typ:
 
@@ -310,7 +310,7 @@ zamowienia.typ_id → typy_zamowien.id
 
 ---
 
-## Teksty ↔ Struktury
+### Teksty ↔ Struktury
 
 Teksty przypisywane są do struktury katalogów:
 
@@ -320,7 +320,7 @@ teksty.struktura_id → struktury.id
 
 ---
 
-# Typy danych wykorzystywane w bazie
+## Typy danych wykorzystywane w bazie
 
 W projekcie wykorzystywane są między innymi:
 
@@ -338,7 +338,7 @@ W projekcie wykorzystywane są między innymi:
 
 ---
 
-# JSON w bazie danych
+## JSON w bazie danych
 
 Część danych przechowywana jest jako JSON.
 

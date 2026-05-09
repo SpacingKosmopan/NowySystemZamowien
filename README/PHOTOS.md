@@ -29,7 +29,7 @@ Inicjalizuje event listenery modułu zdjęć.
 
 Uruchamiana podczas startu aplikacji:
 
-```js id="6q7yzp"
+```js
 loadPhotosController();
 ```
 
@@ -39,13 +39,13 @@ loadPhotosController();
 
 ### Event
 
-```js id="9iqwbo"
+```js
 #edit-photos
 ```
 
 ### Działanie
 
-```js id="gsyc4k"
+```js
 document.getElementById("photos-showbox").classList.remove("hidden");
 ```
 
@@ -57,7 +57,7 @@ Pokazuje modal wyboru zdjęć.
 
 Po otwarciu wykonywane jest:
 
-```js id="c4hyb6"
+```js
 await loadPhotos();
 ```
 
@@ -69,13 +69,13 @@ Dzięki temu lista zdjęć jest zawsze aktualna.
 
 ### Event
 
-```js id="n0eqxu"
+```js
 #photos-showbox-close-button
 ```
 
 ### Działanie
 
-```js id="vnp7z2"
+```js
 classList.add("hidden");
 ```
 
@@ -87,7 +87,7 @@ Ukrywa modal bez zapisywania zmian wizualnych.
 
 ### Event
 
-```js id="0p5sxe"
+```js
 #photos-showbox-save-close-button
 ```
 
@@ -95,7 +95,7 @@ Ukrywa modal bez zapisywania zmian wizualnych.
 
 ### Działanie
 
-```js id="bh2d8r"
+```js
 renderSelectedPhotos();
 ```
 
@@ -109,7 +109,7 @@ Następnie modal zostaje zamknięty.
 
 ### Event
 
-```js id="v2uw5q"
+```js
 #photos-search
 ```
 
@@ -117,7 +117,7 @@ Następnie modal zostaje zamknięty.
 
 ## Mechanizm
 
-```js id="r6ncz4"
+```js
 .addEventListener("input", loadPhotos);
 ```
 
@@ -132,7 +132,7 @@ Każda zmiana tekstu:
 
 ### `selectedPhotoIds`
 
-```js id="2h6j0d"
+```js
 let selectedPhotoIds = [];
 ```
 
@@ -140,7 +140,7 @@ Przechowuje ID zaznaczonych zdjęć.
 
 Przykład:
 
-```js id="b90b88"
+```js
 [1, 5, 12];
 ```
 
@@ -148,7 +148,7 @@ Przykład:
 
 ### `allPhotos`
 
-```js id="3kfg5w"
+```js
 let allPhotos = [];
 ```
 
@@ -168,7 +168,7 @@ Renderuje miniatury wybranych zdjęć w formularzu zamówienia.
 
 Na początku wykonywane jest:
 
-```js id="s86r1n"
+```js
 await loadPhotos();
 ```
 
@@ -178,7 +178,7 @@ Zapewnia aktualną listę zdjęć.
 
 ## Kontener miniatur
 
-```js id="h7o3kx"
+```js
 #photos-selected
 ```
 
@@ -186,7 +186,7 @@ Zapewnia aktualną listę zdjęć.
 
 ## Czyszczenie widoku
 
-```js id="9vf6aa"
+```js
 container.innerHTML = "";
 ```
 
@@ -196,7 +196,7 @@ container.innerHTML = "";
 
 Dla każdego ID:
 
-```js id="tx6pq4"
+```js
 const photo = allPhotos.find(...)
 ```
 
@@ -206,7 +206,7 @@ wyszukiwane jest odpowiadające zdjęcie.
 
 ## Obsługiwane rozszerzenia
 
-```js id="1t6pbj"
+```js
 jpg;
 jpeg;
 png;
@@ -214,7 +214,7 @@ png;
 
 Sprawdzanie:
 
-```js id="s0rq8m"
+```js
 photo.sciezka.match(/\.(jpg|jpeg|png)$/i);
 ```
 
@@ -224,7 +224,7 @@ photo.sciezka.match(/\.(jpg|jpeg|png)$/i);
 
 Tworzony jest:
 
-```html id="wj9e4x"
+```html
 <a>
   <img />
 </a>
@@ -234,7 +234,7 @@ Tworzony jest:
 
 ## Link do zdjęcia
 
-```js id="fmxwz6"
+```js
 link.href = "../galeria/uploads/" + photo.sciezka;
 ```
 
@@ -244,7 +244,7 @@ Kliknięcie otwiera oryginalny plik.
 
 ## Miniatura
 
-```js id="p95e6j"
+```js
 img.src = "../galeria/uploads/" + photo.sciezka;
 ```
 
@@ -252,7 +252,7 @@ img.src = "../galeria/uploads/" + photo.sciezka;
 
 ## Rozmiar miniatur
 
-```js id="i5ht5o"
+```js
 80x80
 ```
 
@@ -262,7 +262,7 @@ img.src = "../galeria/uploads/" + photo.sciezka;
 
 Ustawiane dynamicznie:
 
-```js id="zw2l2h"
+```js
 objectFit = "cover";
 borderRadius = "5px";
 margin = "5px";
@@ -274,7 +274,7 @@ margin = "5px";
 
 Jeżeli plik nie jest obrazem:
 
-```js id="jlwmql"
+```js
 const span = document.createElement("span");
 ```
 
@@ -292,7 +292,7 @@ Pobiera zdjęcia z backendu i renderuje listę wyboru w modalu.
 
 ## API
 
-```js id="ehjzmx"
+```js
 fetch("../galeria/api/files.php");
 ```
 
@@ -302,7 +302,7 @@ fetch("../galeria/api/files.php");
 
 Przykładowy format:
 
-```js id="k0zvte"
+```js
 [
   {
     id: 1,
@@ -316,7 +316,7 @@ Przykładowy format:
 
 ## Cache zdjęć
 
-```js id="wgsjml"
+```js
 allPhotos = photos;
 ```
 
@@ -324,7 +324,7 @@ allPhotos = photos;
 
 ## Kontener listy
 
-```js id="2l2fho"
+```js
 #photos-list
 ```
 
@@ -332,7 +332,7 @@ allPhotos = photos;
 
 ## Czyszczenie listy
 
-```js id="bch2y6"
+```js
 photosList.innerHTML = "";
 ```
 
@@ -340,7 +340,7 @@ photosList.innerHTML = "";
 
 ## Pobieranie tekstu wyszukiwania
 
-```js id="2i1nn6"
+```js
 #photos-search
 ```
 
@@ -348,7 +348,7 @@ photosList.innerHTML = "";
 
 ## Filtrowanie
 
-```js id="n6m2zd"
+```js
 photo.nazwa_pliku.toLowerCase().includes(searchTerm);
 ```
 
@@ -358,7 +358,7 @@ photo.nazwa_pliku.toLowerCase().includes(searchTerm);
 
 Każdy wpis generuje:
 
-```html id="w9t8og"
+```html
 <div class="photo-item"></div>
 ```
 
@@ -366,7 +366,7 @@ Każdy wpis generuje:
 
 ## Checkbox wyboru
 
-```html id="w7g4rt"
+```html
 <input type="checkbox" />
 ```
 
@@ -374,7 +374,7 @@ Każdy wpis generuje:
 
 ## Synchronizacja zaznaczenia
 
-```js id="wqxb4v"
+```js
 checkbox.checked = selectedPhotoIds.includes(Number(photo.id));
 ```
 
@@ -384,7 +384,7 @@ checkbox.checked = selectedPhotoIds.includes(Number(photo.id));
 
 ### Dodawanie zdjęcia
 
-```js id="x8i0p0"
+```js
 selectedPhotoIds.push(pid);
 ```
 
@@ -392,7 +392,7 @@ selectedPhotoIds.push(pid);
 
 ### Usuwanie zdjęcia
 
-```js id="k1y4ol"
+```js
 selectedPhotoIds =
   selectedPhotoIds.filter(...)
 ```
@@ -411,7 +411,7 @@ Renderowane są:
 
 ## Nazwa pliku
 
-```js id="j4gcfz"
+```js
 photo.nazwa_pliku;
 ```
 
@@ -421,7 +421,7 @@ photo.nazwa_pliku;
 
 Jeżeli plik jest obrazem:
 
-```js id="czh1tw"
+```js
 <img>
 ```
 
@@ -439,7 +439,7 @@ Ustawia zaznaczone zdjęcia podczas edycji zamówienia.
 
 ## Konwersja ID
 
-```js id="4p5e0q"
+```js
 photoIds.map(Number);
 ```
 
@@ -449,7 +449,7 @@ Zapewnia typ `number`.
 
 ## Odświeżenie widoku
 
-```js id="s8yx0s"
+```js
 renderSelectedPhotos();
 ```
 
@@ -466,7 +466,7 @@ renderSelectedPhotos();
 5. ID trafiają do `selectedPhotoIds`.
 6. Po zapisie wykonywane jest:
 
-   ```js id="f7p3p2"
+   ```js
    renderSelectedPhotos();
    ```
 
