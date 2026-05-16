@@ -160,7 +160,7 @@
 
           const formData = Object.fromEntries(new FormData(this));
 
-          const res = await fetch("api/create.php", {
+          const res = await fetch("api/clients.php", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -170,18 +170,26 @@
 
           const data = await res.json();
 
-          if (data.success) {
+          if (res.ok) {
             alert("Dodano klienta");
             renderClients();
           } else {
-            alert("Błąd: " + data.error);
+            const err = await res.json();
+            alert("Błąd: " + (err.error || "UNKNOWN_ERROR"));
           }
         });
       }
 
       async function renderClients() {
-        const res = await fetch("api/list.php");
-        let clients = await res.json();
+        const res = await fetch("api/clients.php");
+
+        if (!res.ok) {
+          alert("Błąd pobierania klientów");
+          return;
+        }
+
+        let data = await res.json();
+        let clients = data.clients;
 
         clients.sort((a, b) => {
           const valA = (a[clientSortBy] || "").toLowerCase();
@@ -227,27 +235,32 @@
       async function deleteClient(id) {
         if (!confirm("Na pewno usunąć?")) return;
 
-        const res = await fetch("api/delete.php", {
-          method: "POST",
+        const res = await fetch("api/clients.php", {
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ id }),
         });
 
-        const data = await res.json();
-
-        if (data.success) {
+        if (res.ok) {
           renderClients();
         } else {
-          alert("Błąd");
+          const err = await res.json();
+          alert("Błąd: " + (err.error || "DELETE_FAILED"));
         }
       }
 
       async function editClient(id) {
         $("#content-header").addClass("hidden");
 
-        const res = await fetch(`api/get.php?id=${id}`);
+        const res = await fetch(`api/clients.php?id=${id}`);
+
+        if (!res.ok) {
+          alert("Nie udało się pobrać klienta");
+          return;
+        }
+
         const client = await res.json();
         const c = client.client;
 
@@ -279,21 +292,20 @@
 
           const formData = Object.fromEntries(new FormData(this));
 
-          const res = await fetch("api/update.php", {
-            method: "POST",
+          const res = await fetch("api/clients.php", {
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(formData),
           });
 
-          const data = await res.json();
-
-          if (data.success) {
+          if (res.ok) {
             renderClients();
             $("#content-header").removeClass("hidden");
           } else {
-            alert("Błąd");
+            const err = await res.json();
+            alert("Błąd: " + (err.error || "UPDATE_FAILED"));
           }
         });
       }
