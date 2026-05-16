@@ -1,4 +1,8 @@
+> [Strona Główna](../README.md)
+
 # „Galeria”
+
+![Zamówienia](../images/photos.png)
 
 ## Opis modułu
 

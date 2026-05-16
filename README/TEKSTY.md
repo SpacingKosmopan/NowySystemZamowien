@@ -1,4 +1,8 @@
+> [Strona Główna](../README.md)
+
 # „Teksty”
+
+![Zamówienia](../images/texts.png)
 
 ## Opis podstrony
 
