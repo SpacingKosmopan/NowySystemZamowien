@@ -11,6 +11,11 @@
   - [tags](README/TAGS_CONTROLER.md)
 - [Kalendarz](README/KALENDARZ.md)
 - [Klienci](README/KLIENCI.md)
+- [Galeria](README/GALERIA.md)
+- [Logowanie](README/LOGOWANIE.md)
+- [Teksty](README/TEKSTY.md)
+- [Tekst](README/TEKST.md)
+- [Typy i Tagi](README/TYPY_TAGI.md)
 
 ---
 

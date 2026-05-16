@@ -83,36 +83,36 @@
         } else {
         require '../api/db.php';
     
-    // Pobieramy dane tekstu oraz rodzica z tabeli struktury
-    $stmt = $conn->prepare("
-        SELECT t.id, t.tytul, t.tresc, t.struktura_id, s.rodzic_id 
-        FROM teksty t 
-        JOIN struktury s ON t.struktura_id = s.id 
-        WHERE t.id = ?
-    ");
-    $stmt->bind_param("i", $tekst_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $data = $result->fetch_assoc();
+        // Pobieramy dane tekstu oraz rodzica z tabeli struktury
+        $stmt = $conn->prepare("
+          SELECT t.id, t.tytul, t.tresc, t.struktura_id, s.rodzic_id 
+          FROM teksty t 
+          JOIN struktury s ON t.struktura_id = s.id 
+          WHERE t.id = ?
+          ");
+        $stmt->bind_param("i", $tekst_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
 
-    if (!$data) {
-        echo "<h1>Błąd: Nie znaleziono tekstu</h1>";
-    } else {
-        // Renderowanie formularza
-        echo "<h1>" . htmlspecialchars($data['tytul']) . "</h1>
-        <p>
-            <button id='text-save'>Zapisz</button>
-            <button id='text-cancel'>Anuluj</button>
-            <button id='text-delete'>Usuń</button>
-        </p>
-        <textarea id='text-content'>" . htmlspecialchars($data['tresc']) . "</textarea>
-        <input type='hidden' id='tekst-id' value='{$data['id']}'>
-        <input type='hidden' id='parent-id' value='{$data['rodzic_id']}'>
-        <input type='hidden' id='struktura-id' value='{$data['struktura_id']}'>
-        ";
-    }
-}
-?>
+        if (!$data) {
+          echo "<h1>Błąd: Nie znaleziono tekstu</h1>";
+        } else {
+          // Renderowanie formularza
+          echo "<h1>" . htmlspecialchars($data['tytul']) . "</h1>
+            <p>
+              <button id='text-save'>Zapisz</button>
+              <button id='text-cancel'>Anuluj</button>
+              <button id='text-delete'>Usuń</button>
+            </p>
+            <textarea id='text-content'>" . htmlspecialchars($data['tresc']) . "</textarea>
+            <input type='hidden' id='tekst-id' value='{$data['id']}'>
+            <input type='hidden' id='parent-id' value='{$data['rodzic_id']}'>
+            <input type='hidden' id='struktura-id' value='{$data['struktura_id']}'>
+            ";
+          }
+        }
+      ?>
 
       </section>
     </main>
